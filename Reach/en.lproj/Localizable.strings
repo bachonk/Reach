@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  Reach
+
+  Created by Tom Bachant on 5/20/14.
+  Copyright (c) 2014 Tom Bachant. All rights reserved.
+*/
+
+"Permission was not granted for Contacts." = "Permission was not granted for Contacts.";
+"Privacy Warning" = "Privacy Warning";
+"Set reminder" = "Set reminder";
+"No number found" = "No number found";
+"No email found" = "No email found";
+"No email address" = "No email address";
+"No phone number" = "No phone number";
+"First name" = "First name";
+"Last name" = "Last name";
+"No Name" = "No Name";
+"Emailing not available on this device :(" = "Emailing not available on this device :(";
+"Phone calls not available on this device :(" = "Phone calls not available on this device :(";
+"Texting not available on this device :(" = "Texting not available on this device :(";
+"them" = "them";
+"Call" = "Call";
+"Text" = "Text";
+"Email" = "Email";
+"Open" = "Open";
+"Reminder Set :)" = "Reminder Set :)";
+"Search for contacts" = "Search for contacts";
+"Contact Name" = "Contact Name";
+"in an hour" = "in an hour";
+"tomorrow" = "tomorrow";
+"in 3 days" = "in 3 days";
+"next week" = "next week";
+"Thanks for sharing :)" = "Thanks for sharing :)";
+"Reach makes it easy to manage your contacts with the swipe of a finger" = "Reach makes it easy to manage your contacts with the swipe of a finger";
+"Welcome to Reach" = "Welcome to Reach";
+"Swipe Right to Text" = "Swipe Right to Text";
+"Swipe your finger to the right to text a contact" = "Swipe your finger to the right to text a contact";
+"Long Swipe to Call" = "Long Swipe to Call";
+"Swipe your finger all the way to the right to make a call" = "Swipe your finger all the way to the right to make a call";
+"Good!" = "Good!";
+"Swipe Left to Email" = "Swipe Left to Email";
+"Swipe your finger to the left to email a contact" = "Swipe your finger to the left to email a contact";
+"Long Swipe to Set Reminder" = "Long Swipe to Set Reminder";
+"Swipe your finger all the way to the left to set a reminder" = "Swipe your finger all the way to the left to set a reminder";
+"Go to my Contacts" = "Go to my Contacts";
+"Access to Contacts has been Denied :(" = "Access to Contacts has been Denied :(";
+"Release!" = "Release!";
+"Keep swiping!" = "Keep swiping!";
+"New Contact" = "New Contact";
+"Add notes for this contact" = "Add notes for this contact";
+"Name" = "Name";
+"Phone" = "Phone";
+"Tags" = "Tags";
+"Notes" = "Notes";
+"set date..." = "set date...";
+"Add tag..." = "Add tag...";
+"in 10 minutes" = "in 10 minutes";
+"Reminder" = "Reminder";
+"Phone Contacts" = "Phone Contacts";
+"Contacts" = "Contacts";
+"LinkedIn account successfully removed" = "LinkedIn account successfully removed";
+"Connect" = "Connect";
+"Open in LinkedIn App" = "Open in LinkedIn App";
+"Open in Safari" = "Open in Safari";
+"Updating" = "Updating";

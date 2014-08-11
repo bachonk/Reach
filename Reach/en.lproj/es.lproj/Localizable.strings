@@ -1,0 +1,34 @@
+/* 
+  Localizable.strings
+  Reach
+
+  Created by Tom Bachant on 5/20/14.
+  Copyright (c) 2014 Tom Bachant. All rights reserved.
+*/
+
+"Permission was not granted for Contacts." = "Permission was not granted for Contacts.";
+"Privacy Warning" = "Privacy Warning";
+"Set reminder" = "Set reminder";
+"No number found" = "No number found";
+"No email found" = "No email found";
+"No email address" = "No email address";
+"No phone number" = "No phone number";
+"First name" = "First name";
+"Last name" = "Last name";
+"No Name" = "No Name";
+"Emailing not available on this device :(" = "Emailing not available on this device :(";
+"Phone calls not available on this device :(" = "Phone calls not available on this device :(";
+"Texting not available on this device :(" = "Texting not available on this device :(";
+"them" = "them";
+"Call" = "Call";
+"Text" = "Text";
+"Email" = "Email";
+"Open" = "Open";
+"Reminder Set :)" = "Reminder Set :)";
+"Search for contacts" = "Search for contacts";
+"Contact Name" = "Contact Name";
+"in an hour" = "in an hour";
+"tomorrow" = "mañana";
+"in 3 days" = "in 3 days";
+"next week" = "next week";
+"Thanks for sharing :)" = "Thanks for sharing :)";
