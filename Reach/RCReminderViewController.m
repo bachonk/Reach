@@ -46,6 +46,8 @@ static CGFloat const kPickerRowHeight = 50.0f;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.view.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
+    
     //
     // Set all frames manually
     //
@@ -63,17 +65,37 @@ static CGFloat const kPickerRowHeight = 50.0f;
     
     _detailsTextField.frame = CGRectMake(0, CGRectGetMinY(_cancelButton.frame) - 40, CGRectGetWidth(screenFrame), 40);
     
-    // Add the white borders to the picker
-    _whiteLineUpper = [[UIView alloc] initWithFrame:CGRectMake(0, _reminderPicker.center.y - (kPickerRowHeight / 2), CGRectGetWidth(screenFrame), 1)];
-    _whiteLineUpper.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
-    [self.view addSubview:_whiteLineUpper];
-    _whiteLineLower = [[UIView alloc] initWithFrame:CGRectMake(0, _reminderPicker.center.y + (kPickerRowHeight / 2), CGRectGetWidth(screenFrame), 1)];
-    _whiteLineLower.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
-    [self.view addSubview:_whiteLineLower];
-    
     // Add tap gesture recognizer to dismiss keyboard
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tapGesture];
+    
+    // Alrighty, now let's get this scroll view setup
+    _containerScrollView.contentSize = CGSizeMake(CGRectGetWidth(screenFrame) * 2, CGRectGetHeight(screenFrame));
+    _containerScrollView.pagingEnabled = YES;
+    _containerScrollView.showsHorizontalScrollIndicator = NO;
+    _containerScrollView.showsVerticalScrollIndicator = NO;
+    _containerScrollView.backgroundColor = [UIColor clearColor];
+    [self.view sendSubviewToBack:_containerScrollView];
+    
+    // Add the white borders to the picker
+    _whiteSeparatorView = [[UIView alloc] initWithFrame:CGRectMake(-2, _reminderPicker.center.y - (kPickerRowHeight / 2), CGRectGetWidth(screenFrame) + 4, kPickerRowHeight)];
+    _whiteSeparatorView.backgroundColor = [UIColor clearColor];
+    _whiteSeparatorView.layer.borderWidth = 1.0f;
+    _whiteSeparatorView.layer.borderColor = [[UIColor whiteColor] CGColor];
+    _whiteSeparatorView.userInteractionEnabled = NO;
+    [self.view addSubview:_whiteSeparatorView];
+    [self.view sendSubviewToBack:_whiteSeparatorView];
+    
+    _datePicker.center = CGPointMake(CGRectGetWidth(screenFrame) * 1.5, _reminderPicker.center.y);
+    _datePicker.minimumDate = [NSDate date];
+    [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    [_datePicker setDate:[NSDate dateWithTimeInterval:60 * 10 sinceDate:[NSDate date]] animated:YES];
+    [_containerScrollView addSubview:_datePicker];
+    
+    UIImageView *bgImage = [[UIImageView alloc] initWithFrame:screenFrame];
+    bgImage.image = [UIImage imageNamed:@"navigation-bar"];
+    [self.view addSubview:bgImage];
+    [self.view sendSubviewToBack:bgImage];
     
 }
 
@@ -99,7 +121,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
     NSString *firstName = [_contact.fullName length] ? [_contact.fullName componentsSeparatedByString:@" "][0] : NSLocalizedString(@"them", nil);
     CGSize nameSize = [firstName boundingRectWithSize:CGSizeMake(fullWidth - leftWidthMin - rightWidthMin, 20)
                                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                           attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kPickerRowTextSize],NSFontAttributeName, nil]context:nil].size;
+                                           attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontName size:kPickerRowTextSize],NSFontAttributeName, nil]context:nil].size;
     
     return nameSize.width + 20;
 }
@@ -122,7 +144,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             break;
         }
         case 2: {
-            return 4;
+            return 5;
             break;
         }
         default:
@@ -159,7 +181,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
     
     UILabel *label = [[UILabel alloc] init];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:17.0f];
+    label.font = [UIFont fontWithName:kFontName size:17.0f];
     label.textColor = [UIColor whiteColor];
     
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
@@ -184,7 +206,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             
             label.frame = CGRectMake(0, 0, remainder * 0.35, kPickerRowHeight);
             
-            label.font = [UIFont boldSystemFontOfSize:kPickerRowTextSize];
+            label.font = [UIFont fontWithName:kExtraBoldFontName size:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentRight;
             
             break;
@@ -194,7 +216,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             
             label.frame = CGRectMake(0, 0, nameWidth, kPickerRowHeight);
             
-            label.font = [UIFont fontWithName:@"Helvetica-Light" size:kPickerRowTextSize];
+            label.font = [UIFont fontWithName:kFontName size:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentCenter;
             
             break;
@@ -209,12 +231,12 @@ static CGFloat const kPickerRowHeight = 50.0f;
             } else if (row == RCReminderTimePeriod3Days) {
                 title = NSLocalizedString(@"in 3 days", nil);
             } else if (row == RCReminderTimePeriodCustom) {
-                title = NSLocalizedString(@"next week", nil);
+                title = NSLocalizedString(@"set date...", nil);
             }
             
             label.frame = CGRectMake(0, 0, remainder * 0.65, kPickerRowHeight);
             
-            label.font = [UIFont boldSystemFontOfSize:kPickerRowTextSize];
+            label.font = [UIFont fontWithName:kExtraBoldFontName size:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentLeft;
             
             break;
@@ -231,6 +253,45 @@ static CGFloat const kPickerRowHeight = 50.0f;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     
+    if (component == 2) {
+        
+        if (row == RCReminderTimePeriodCustom) {
+            [_containerScrollView scrollRectToVisible:_datePicker.frame animated:YES];
+        }
+        
+    }
+    
+}
+
+#pragma mark - Scrolling Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat threshold = scrollView.contentSize.width / 2;
+    CGFloat scrollOffset = scrollView.contentOffset.x;
+    
+    CGFloat topShrunk = _reminderPicker.center.y - (kPickerRowHeight / 2);
+    CGFloat topExpanded = CGRectGetMinY(_datePicker.frame);
+    
+    [_whiteSeparatorView setFrameOriginY:topShrunk + ((scrollOffset / threshold) * (topExpanded - topShrunk))];
+    
+    CGFloat minY = topShrunk + ((scrollOffset / threshold) * (topExpanded - topShrunk));
+    if (minY > topShrunk) minY = topShrunk;
+    else if (minY < topExpanded) minY = topExpanded;
+    
+    CGFloat height = kPickerRowHeight + ((scrollOffset / threshold) * (_datePicker.frame.size.height - kPickerRowHeight));
+    if (height < kPickerRowHeight) height = kPickerRowHeight;
+    else if (height > _datePicker.frame.size.height) height = _datePicker.frame.size.height;
+    
+    CGFloat alpha = (scrollOffset / threshold) * 0.7;
+    if (alpha > 0.7) alpha = 0.7f;
+    else if (alpha < 0) alpha = 0.0f;
+    
+    CGRect separatorFrame = _whiteSeparatorView.frame;
+    separatorFrame.origin.y = minY;
+    separatorFrame.size.height = height;
+    _whiteSeparatorView.frame = separatorFrame;
+    _whiteSeparatorView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:alpha];
     
 }
 
@@ -245,8 +306,9 @@ static CGFloat const kPickerRowHeight = 50.0f;
         
         _headerLabelContainer.alpha = 0.32f;
         _reminderPicker.alpha = 0.0f;
-        _whiteLineUpper.alpha = 0.0f;
-        _whiteLineLower.alpha = 0.0f;
+        _whiteSeparatorView.alpha = 0.0f;
+        
+        _datePicker.alpha = 0.0f;
         
     }];
 }
@@ -260,8 +322,9 @@ static CGFloat const kPickerRowHeight = 50.0f;
         
         _headerLabelContainer.alpha = 1.0f;
         _reminderPicker.alpha = 1.0f;
-        _whiteLineUpper.alpha = 1.0f;
-        _whiteLineLower.alpha = 1.0f;
+        _whiteSeparatorView.alpha = 1.0f;
+        
+        _datePicker.alpha = 1.0f;
         
     }];
 }
@@ -290,30 +353,35 @@ static CGFloat const kPickerRowHeight = 50.0f;
     //
     // Fire date
     //
-    //NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *comps = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay|NSCalendarUnitWeekday|NSCalendarUnitWeekOfYear|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
-    
     NSInteger row = [_reminderPicker selectedRowInComponent:2];
-    if (row == RCReminderTimePeriod10Minutes) {
-        comps.minute += 10;
-    } else if (row == RCReminderTimePeriod1Hour) {
-        comps.hour += 1;
-    } else if (row == RCReminderTimePeriodTomorrow) {
-        comps.day += 1;
-        comps.hour = 10; // set 10am
-        comps.minute = 0;
-    } else if (row == RCReminderTimePeriod3Days) {
-        comps.day += 3;
-        comps.hour = 10; // set 10am
-        comps.minute = 0;
-    } else if (row == RCReminderTimePeriodCustom) {
-        comps.day += 7;
-        comps.hour = 10; // set 10am
-        comps.minute = 0;
+    
+    if (row == RCReminderTimePeriodCustom) {
+        
+        notification.fireDate = _datePicker.date;
+        
+    }
+    else {
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSDateComponents *comps = [calendar components:NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay|NSCalendarUnitWeekday|NSCalendarUnitWeekOfYear|NSCalendarUnitMonth|NSCalendarUnitYear fromDate:[NSDate date]];
+        
+        if (row == RCReminderTimePeriod10Minutes) {
+            comps.minute += 10;
+        } else if (row == RCReminderTimePeriod1Hour) {
+            comps.hour += 1;
+        } else if (row == RCReminderTimePeriodTomorrow) {
+            comps.day += 1;
+            comps.hour = 10; // set 10am
+            comps.minute = 0;
+        } else if (row == RCReminderTimePeriod3Days) {
+            comps.day += 3;
+            comps.hour = 10; // set 10am
+            comps.minute = 0;
+        }
+        
+        notification.fireDate = [calendar dateFromComponents:comps];
     }
     
-    notification.fireDate = [calendar dateFromComponents:comps];
+    
     
     //
     // Alert message

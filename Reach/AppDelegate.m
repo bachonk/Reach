@@ -27,7 +27,7 @@
     //[self.window addSubview:self.windowBackgroundView];
     
     // Red nav bar appearance
-    [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setBackgroundImage:[[UIImage imageNamed:@"navigation-bar.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setBackgroundImage:[[UIImage imageNamed:@"navigation-bar.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kLightFontName size:18.0f], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
     [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setTintColor:[UIColor whiteColor]];
     [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setBarTintColor:[UIColor whiteColor]];
@@ -40,8 +40,18 @@
     
     // Bar button appearance
     [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kBoldFontName size:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLOR_DEFAULT_RED, NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedIn:[RCNavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil]
+     setTitleTextAttributes:@{
+                              NSFontAttributeName : [UIFont fontWithName:kBoldFontName size:17.0f],
+                              NSForegroundColorAttributeName : COLOR_DEFAULT_RED
+                              }
+     forState:UIControlStateNormal];
+    [[UIBarButtonItem appearanceWhenContainedIn:[RCNavigationController class], nil]
+     setTitleTextAttributes:@{
+                              NSFontAttributeName : [UIFont fontWithName:kBoldFontName size:17.0f],
+                              NSForegroundColorAttributeName : [UIColor whiteColor]
+                              }
+     forState:UIControlStateNormal];
     
     // Back button
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"back-indicator"]];

@@ -41,6 +41,7 @@
 		C874048917A0D765002F8146 /* MNMToastConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = C874048317A0D765002F8146 /* MNMToastConstants.m */; };
 		C874048A17A0D765002F8146 /* MNMToastValue.m in Sources */ = {isa = PBXBuildFile; fileRef = C874048517A0D765002F8146 /* MNMToastValue.m */; };
 		C874048B17A0D765002F8146 /* MNMToastView.m in Sources */ = {isa = PBXBuildFile; fileRef = C874048717A0D765002F8146 /* MNMToastView.m */; };
+		C879C61419D6174B00380E4B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C879C61319D6174B00380E4B /* LaunchScreen.xib */; };
 		C8843CC5194BC713008E6DC9 /* UIView+FrameResizing.m in Sources */ = {isa = PBXBuildFile; fileRef = C8843CC4194BC713008E6DC9 /* UIView+FrameResizing.m */; };
 		C8843CCB194BDC5D008E6DC9 /* NSString+PhoneFormatting.m in Sources */ = {isa = PBXBuildFile; fileRef = C8843CCA194BDC5D008E6DC9 /* NSString+PhoneFormatting.m */; };
 		C8843CCF194D3DD4008E6DC9 /* RCPhoneController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8843CCD194D3DD4008E6DC9 /* RCPhoneController.m */; };
@@ -156,6 +157,8 @@
 		C8E8166C1997F9A600F789A8 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E8166B1997F9A600F789A8 /* MapKit.framework */; };
 		C8E8166E1997F9F400F789A8 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E8166D1997F9F400F789A8 /* ImageIO.framework */; };
 		C8E816741998059100F789A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E816731998059100F789A8 /* Crashlytics.framework */; };
+		C8E816F3199EA89E00F789A8 /* RCMergeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */; };
+		C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */; };
 		C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8F5C3C51902E85000DB7C52 /* Images.xcassets */; };
 		C8F5C3E019030A5200DB7C52 /* RCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */; };
 /* End PBXBuildFile section */
@@ -216,6 +219,7 @@
 		C874048517A0D765002F8146 /* MNMToastValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastValue.m; sourceTree = "<group>"; };
 		C874048617A0D765002F8146 /* MNMToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MNMToastView.h; sourceTree = "<group>"; };
 		C874048717A0D765002F8146 /* MNMToastView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MNMToastView.m; sourceTree = "<group>"; };
+		C879C61319D6174B00380E4B /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Reach/LaunchScreen.xib; sourceTree = "<group>"; };
 		C8843CC3194BC713008E6DC9 /* UIView+FrameResizing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+FrameResizing.h"; sourceTree = "<group>"; };
 		C8843CC4194BC713008E6DC9 /* UIView+FrameResizing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+FrameResizing.m"; sourceTree = "<group>"; };
 		C8843CC9194BDC5D008E6DC9 /* NSString+PhoneFormatting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+PhoneFormatting.h"; sourceTree = "<group>"; };
@@ -383,6 +387,9 @@
 		C8E8166B1997F9A600F789A8 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C8E8166D1997F9F400F789A8 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		C8E816731998059100F789A8 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		C8E816F0199EA89E00F789A8 /* RCMergeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMergeTableViewCell.h; sourceTree = "<group>"; };
+		C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMergeTableViewCell.m; sourceTree = "<group>"; };
+		C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCMergeTableViewCell.xib; sourceTree = "<group>"; };
 		C8F5C3C51902E85000DB7C52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8F5C3DE19030A5200DB7C52 /* RCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSettingsTableViewController.h; sourceTree = "<group>"; };
 		C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSettingsTableViewController.m; sourceTree = "<group>"; };
@@ -593,6 +600,7 @@
 		C8E4FA7B17131898006FEEE0 = {
 			isa = PBXGroup;
 			children = (
+				C879C61319D6174B00380E4B /* LaunchScreen.xib */,
 				C8E4FA9017131898006FEEE0 /* Reach */,
 				C8E4FA8917131898006FEEE0 /* Frameworks */,
 				C8E4FA8717131898006FEEE0 /* Products */,
@@ -754,6 +762,9 @@
 				C8E815CF198FF20C00F789A8 /* RCMergeViewController.h */,
 				C8E815D0198FF20C00F789A8 /* RCMergeViewController.m */,
 				C8E815D1198FF20C00F789A8 /* RCMergeViewController.xib */,
+				C8E816F0199EA89E00F789A8 /* RCMergeTableViewCell.h */,
+				C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */,
+				C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */,
 			);
 			name = Merge;
 			sourceTree = "<group>";
@@ -971,6 +982,7 @@
 				C8E816251994794800F789A8 /* phone-home-active@2x.png in Resources */,
 				C8E8162B1994794800F789A8 /* search-bar@2x.png in Resources */,
 				C8E816301994794800F789A8 /* text-active.png in Resources */,
+				C879C61419D6174B00380E4B /* LaunchScreen.xib in Resources */,
 				C8E8162E1994794800F789A8 /* tag-active@2x.png in Resources */,
 				C82685121951EA8300C36452 /* tokenHighlighted.png in Resources */,
 				C8E816221994794800F789A8 /* navigation-bar@2x.png in Resources */,
@@ -981,6 +993,7 @@
 				C84AEFB2192945F400C7F017 /* highlighter-selected@2x.png in Resources */,
 				C8299A1F17B55C5600F16189 /* highlighter@2x.png in Resources */,
 				C8E816361997E81F00F789A8 /* linkedin-active@2x.png in Resources */,
+				C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */,
 				C8E815F01994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				C8E816191994794800F789A8 /* close-profile-icon@2x.png in Resources */,
 				C8E816281994794800F789A8 /* privacy-warning@2x.png in Resources */,
@@ -1022,6 +1035,7 @@
 				C8E815B2198C7C9F00F789A8 /* AFURLRequestSerialization.m in Sources */,
 				C8E4FAD617131909006FEEE0 /* Contact.m in Sources */,
 				C8E815D619905B9300F789A8 /* RCListSelectorTableViewController.m in Sources */,
+				C8E816F3199EA89E00F789A8 /* RCMergeTableViewCell.m in Sources */,
 				C8E8155B198C755300F789A8 /* NSString+LIAEncode.m in Sources */,
 				C8E4FADA17131909006FEEE0 /* RCSwipeViewController.m in Sources */,
 				C8843CCB194BDC5D008E6DC9 /* NSString+PhoneFormatting.m in Sources */,

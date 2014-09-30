@@ -13,19 +13,19 @@
 #define LETTER_FONT [UIFont boldSystemFontOfSize:10]
 #define LETTER_COLOR [UIColor colorWithWhite:0.2f alpha: 1.0f];
 
-#define HIGHLIGHTER_FONT [UIFont fontWithName:@"Helvetica-Light" size:28.0f]
+#define HIGHLIGHTER_FONT [UIFont fontWithName:@"Helvetica-Light" size:36.0f]
 
 // Padding above and below the letters of the main search view
 static const CGFloat paddingSearchView = 4.0f;
 
 // Height of highlight view
-static const CGFloat heightHighlightView = 60.0f;
+static const CGFloat heightHighlightView = 86.0f;
 
 // How far the highlighter is offset to the left of the main view
-static const CGFloat movementSelectionThreshold = 72.0f;
+static const CGFloat movementSelectionThreshold = 82.0f;
 
 // Inner padding for text with respect to highlight view bounds
-static const CGFloat paddingHighlightView = 22.0f;
+static const CGFloat paddingHighlightView = 42.0f;
 
 @interface CCSlideSearchView ()
 

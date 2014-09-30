@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RCMergeViewController : UIViewController
+@interface RCMergeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A709DF9D-84E3-45B7-A8ED-F22D43B6101C</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Reach</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</key>
+		<string>https://github.com/bachonk/Reach.git</string>
+		<key>9FFD21C6A65AE22198CFA6E939DC569037B4263C</key>
+		<string>https://github.com/bachonk/UIImageView-Letters.git</string>
+		<key>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</key>
+		<string>https://github.com/bachonk/UIImageView-Letters.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Reach.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</key>
+		<string>../..</string>
+		<key>9FFD21C6A65AE22198CFA6E939DC569037B4263C</key>
+		<string>../../../Code/Open%20Source/UIImageView-Letters</string>
+		<key>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</key>
+		<string>../../../Code/Open Source/UIImageView-Letters</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/bachonk/Reach.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Reach</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9FFD21C6A65AE22198CFA6E939DC569037B4263C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UIImageView-Letters</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>UIImageView-Letters</string>
+		</dict>
+	</array>
+</dict>
+</plist>

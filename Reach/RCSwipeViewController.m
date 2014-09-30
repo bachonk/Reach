@@ -94,8 +94,8 @@ static const CGFloat headerHeight = 34.0f;
     
     theTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
     theTableView.rowHeight = 48.0f;
+    theTableView.separatorInset = UIEdgeInsetsMake(0, kCellHeightDefault, 0, 0);
     theTableView.separatorColor = COLOR_NAVIGATION_BAR;
-    theTableView.separatorInset = UIEdgeInsetsZero;
     theTableView.delegate = self;
     theTableView.dataSource = self;
     theTableView.backgroundColor = COLOR_TABLE_CELL;
@@ -209,7 +209,7 @@ static const CGFloat headerHeight = 34.0f;
     contactHeaderRightButton.frame = CGRectMake(CGRectGetWidth(contactHeaderView.bounds) - 60, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), 55, 40);
     [contactHeaderRightButton setTitle:@"Save" forState:UIControlStateNormal];
     [contactHeaderRightButton setTitleColor:COLOR_DEFAULT_RED forState:UIControlStateNormal];
-    [contactHeaderRightButton.titleLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:17.0f]];
+    [contactHeaderRightButton.titleLabel setFont:[UIFont fontWithName:kBoldFontName size:17.0f]];
     [contactHeaderRightButton addTarget:self action:@selector(saveNewContact) forControlEvents:UIControlEventTouchUpInside];
     [contactHeaderView addSubview:contactHeaderRightButton];
     
@@ -340,8 +340,11 @@ static const CGFloat headerHeight = 34.0f;
                 switch (actionType) {
                     case RCReminderTypeCall:
                     {
-                        if ([contact.phoneArray count]) {
-                            [weakSelf call:contact.phoneArray[0]];
+                        if ([contact.mobile length]) {
+                            [weakSelf call:contact.mobile];
+                        }
+                        else if ([contact.home length]) {
+                            [weakSelf call:contact.home];
                         }
                         else {
                             [weakSelf showContactDetails:contact];
@@ -390,8 +393,11 @@ static const CGFloat headerHeight = 34.0f;
                 switch (actionType) {
                     case RCReminderTypeCall:
                     {
-                        if ([contact.phoneArray count]) {
-                            [weakDetail call:contact.phoneArray[0]];
+                        if ([contact.mobile length]) {
+                            [weakDetail call:contact.mobile];
+                        }
+                        else if ([contact.home length]) {
+                            [weakDetail call:contact.home];
                         }
                         
                         break;
@@ -498,7 +504,7 @@ static const CGFloat headerHeight = 34.0f;
 
 - (void)swapInHeaderView:(UIView *)view contentView:(UIView *)contentView animated:(BOOL)animated {
     
-    [UIView animateWithDuration:animated ? 0.43 : 0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:animated ? 0.43 : 0 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         
         // Header
         
@@ -628,7 +634,7 @@ static const CGFloat headerHeight = 34.0f;
             [_searchTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexPathRowForLetter inSection:[_filteredContactListFirstName count] ? 0 : 1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
         
-    } else if ([[_contactList objectAtIndex:index] count]) {
+    } else if ([[[self contacts] objectAtIndex:index] count]) {
         
         [theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:NO];
         
@@ -1901,8 +1907,16 @@ static const CGFloat headerHeight = 34.0f;
         if (opacity > SEARCH_BACKGROUND_OPACITY) {
             opacity = SEARCH_BACKGROUND_OPACITY;
         }
+        
         if (opacity < 0.02f) {
             opacity = 0.02f;
+            
+            // Trying this out... Let's hide it when it reaches this point
+            // Hide automatically rather than when user releases
+            if (scrollView.tracking) {
+                [self hideSearchViewAnimated:YES dismissDownward:scrollDistance > 1 ? NO : YES];
+            }
+            
         }
         
         scrollView.alpha = opacity / SEARCH_BACKGROUND_OPACITY;

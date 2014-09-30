@@ -19,15 +19,16 @@
 #pragma mark - Cell customization - 
 
 // Layout
-static const CGFloat kCellHeightDefault = 56.0f;
+static const CGFloat kCellHeightDefault = 48.0f;
 
 // Design
-static NSString *kFontName = @"Helvetica-Light";
-static NSString *kBoldFontName = @"Helvetica";
-static NSString *kItalicFontName = @"Helvetica-Italic";
-static NSString *kLightFontName = @"Helvetica-Light";
-#define CELL_TEXT_FONT_DEFAULT [UIFont systemFontOfSize:17.0f]
-#define CELL_TEXT_FONT_DISABLED [UIFont italicSystemFontOfSize:17.0f]
+static NSString *kFontName = @"Avenir-Light";
+static NSString *kBoldFontName = @"Avenir";
+static NSString *kExtraBoldFontName = @"Avenir-Medium";
+static NSString *kItalicFontName = @"Avenir-Italic";
+static NSString *kLightFontName = @"Avenir-Light";
+#define CELL_TEXT_FONT_DEFAULT [UIFont fontWithName:kExtraBoldFontName size:18.0f]
+#define CELL_TEXT_FONT_DISABLED [UIFont fontWithName:kItalicFontName size:18.0f]
 
 // Colors
 #define COLOR_WINDOW_BACKGROUND [UIColor colorWithWhite:0.84f alpha:1.0f]

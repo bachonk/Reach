@@ -137,18 +137,14 @@ secondStateIconName:(NSString *)secondIconName
     [_slidingImageView setContentMode:UIViewContentModeCenter];
     [_colorIndicatorView addSubview:_slidingImageView];
     
-    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(6, 5, 38, 38)];
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kCellHeightDefault, kCellHeightDefault)];
     _iconImageView.clipsToBounds = YES;
     _iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:_iconImageView];
     
-    UIImageView *clipper = [[UIImageView alloc] initWithFrame:_iconImageView.frame];
-    clipper.image = [UIImage imageNamed:@"image-clip-circular"];
-    [self.contentView addSubview:clipper];
-    
-    _mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame) + 8, 2, CGRectGetWidth(self.frame) - CGRectGetMaxX(_iconImageView.frame) - 16, 44)];
+    _mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame) + 9, 2, CGRectGetWidth(self.frame) - CGRectGetMaxX(_iconImageView.frame) - 16, 44)];
     _mainLabel.textColor = [UIColor colorWithWhite:0.02f alpha:1.0f];
-    _mainLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:19.0f];
+    _mainLabel.font = [UIFont fontWithName:kFontName size:19.0f];
     _mainLabel.backgroundColor = COLOR_TABLE_CELL;
     [self.contentView addSubview:_mainLabel];
     

@@ -33,7 +33,8 @@ typedef enum {
     RCContactSectionMeta
 } RCContactSection;
 
-static const CGFloat kUserImageHeight = 96.0f;
+static const CGFloat kUserImageHeight = 92.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 131.0f;
 
 static const CGFloat kButtonWidth = 52.0f;
 static const CGFloat kButtonPadding = 9.0f;
@@ -67,7 +68,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         self.view.backgroundColor = COLOR_TABLE_CELL;
         
-        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetWidth(frame))];
+        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), kHeaderHeight)];
         _contactHeaderBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
         _contactHeaderBackgroundImage.clipsToBounds = YES;
         [self.view addSubview:_contactHeaderBackgroundImage];
@@ -76,9 +77,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderView.backgroundColor = [UIColor clearColor];
         _contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
         _contactHeaderView.layer.shadowRadius = 3;
-        _contactHeaderView.layer.shadowOpacity = 0.35;
+        _contactHeaderView.layer.shadowOpacity = 0.3;
         
-        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), CGRectGetMidY(_contactHeaderView.frame) - (kUserImageHeight / 2), kUserImageHeight, kUserImageHeight)];
+        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 40, kUserImageHeight, kUserImageHeight)];
         _userImage.layer.cornerRadius = CGRectGetWidth(_userImage.frame) / 2;
         _userImage.contentMode = UIViewContentModeScaleAspectFill;
         _userImage.clipsToBounds = YES;
@@ -86,7 +87,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _userImage.layer.borderWidth = 2.0f;
         [_contactHeaderView addSubview:_userImage];
         
-        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 13, CGRectGetWidth(frame) - 40, 34)];
+        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 9, CGRectGetWidth(frame) - 40, 34)];
         _userName.backgroundColor = [UIColor clearColor];
         _userName.font = [UIFont fontWithName:kBoldFontName size:22.0f];
         _userName.textColor = [UIColor whiteColor];
@@ -122,7 +123,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _theTableView.delegate = self;
         _theTableView.backgroundColor = [UIColor clearColor];
         _theTableView.showsVerticalScrollIndicator = NO;
-        _theTableView.contentInset = UIEdgeInsetsMake(_contactHeaderView.frame.size.height, 0, 0, 0);
+        _theTableView.contentInset = UIEdgeInsetsMake(_contactHeaderView.frame.size.height - 64, 0, 0, 0);
         [self.view addSubview:_theTableView];
         
         _remindButtonOverlay = [[UIButton alloc] initWithFrame:_remindButton.frame];
@@ -171,7 +172,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [super viewWillAppear:animated];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-
+    
     _contactHeaderView.transform = CGAffineTransformMakeScale(1.16, 1.16);
     
     _contactHeaderBackgroundImage.alpha = 0.0f;
@@ -181,6 +182,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     tableFrame.origin.y = CGRectGetWidth(self.view.frame);
     _theTableView.frame = tableFrame;
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    
     [UIView animateWithDuration:animated ? 0.82 : 0 delay:0 usingSpringWithDamping:0.75 initialSpringVelocity:0 options:0  animations:^{
         
         _contactHeaderView.transform = CGAffineTransformMakeScale(0.97f, 0.97f);
@@ -188,19 +192,18 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderBackgroundImage.alpha = 1.0f;
         _contactHeaderView.alpha = 1.0f;
         
-        _theTableView.frame = self.view.bounds;
+        _theTableView.frame = CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), CGRectGetWidth(tableFrame), CGRectGetHeight([[UIScreen mainScreen] bounds]) - CGRectGetMaxY(self.navigationController.navigationBar.frame));
         
-    } completion:^(BOOL finished) {
-        
-        
-        
-    }];
+    } completion:nil];
+
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
     [self.view endEditing:YES];
+    
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning
@@ -391,7 +394,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     else if (tag < 0) {
         // Email
         
-        NSInteger index = (tag * -1) + TAG_BUTTON_OFFSET;
+        NSInteger index = tag + TAG_BUTTON_OFFSET;
         
         [self email:_contact.emailArray[index]];
         
@@ -1019,11 +1022,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _remindButtonOverlay.alpha = 1.0f;
     }
     
+    CGFloat offset = yOffset / CGRectGetHeight(_theTableView.frame);
+
     if (yOffset < 0) {
         // Scrolling up
-        
-        // Will be negative
-        CGFloat offset = yOffset / CGRectGetHeight(_theTableView.frame);
+        // Offset is negative
         
         CGFloat scaleFg = 1 - (offset * 0.75);
         CGFloat scaleBg = 1 - (offset * 1.5);
@@ -1039,13 +1042,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     }
     else if (yOffset > 0) {
         // Scrolling down
+        // Offset is positive
         
-        if (yOffset > CGRectGetMinY(_userImage.frame)) {
-            self.title = _contact.fullName;
-        }
-        else {
-            self.title = nil;
-        }
+        CGFloat reminderAlpha = 1 - (yOffset / 108.0f);
+        
+        _contactHeaderView.alpha = reminderAlpha;
+        
+        self.title = yOffset > kHeaderHeight - 64 ? _contact.fullName : nil;
         
     }
     else {
@@ -1053,6 +1056,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         _contactHeaderView.alpha = 1.0f;
         _contactHeaderView.transform = CGAffineTransformIdentity;
+        
         self.title = nil;
         
     }
@@ -1118,7 +1122,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
-    tableInsets.bottom = 216;
+    tableInsets.bottom = 260;
     tableInsets.top = 0;
     _theTableView.contentInset = tableInsets;
     
@@ -1138,7 +1142,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 0;
-    tableInsets.top = _contactHeaderView.frame.size.height;
+    tableInsets.top = _contactHeaderView.frame.size.height - 64;
     _theTableView.contentInset = tableInsets;
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -1196,7 +1200,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 260;
-    tableInsets.top = 0;
     _theTableView.contentInset = tableInsets;
     
     [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionTags] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -1215,7 +1218,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 0;
-    tableInsets.top = _contactHeaderView.frame.size.height;
+    tableInsets.top = _contactHeaderView.frame.size.height - 64;
     _theTableView.contentInset = tableInsets;
     
     [UIView animateWithDuration:0.2 animations:^{
