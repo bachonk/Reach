@@ -33,7 +33,7 @@ static NSString *kLightFontName = @"Avenir-Light";
 // Colors
 #define COLOR_WINDOW_BACKGROUND [UIColor colorWithWhite:0.84f alpha:1.0f]
 #define COLOR_NAVIGATION_BAR [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:218.0/255.0f alpha:1.0f]
-#define COLOR_TABLE_CELL [UIColor colorWithWhite:1.0f alpha:1.0f]
+#define COLOR_TABLE_CELL [UIColor colorWithWhite:0.98f alpha:1.0f]
 #define COLOR_DEFAULT_RED [UIColor colorWithRed:223.0/255.0 green:81.0/255.0 blue:53.0/255.0f alpha:1.0f]
 
 #define COLOR_TEXT_BLUE [UIColor colorWithRed:25.0/255.0 green:144.0/255.0 blue:255.0/255.0 alpha:1.0f]

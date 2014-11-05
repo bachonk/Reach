@@ -34,7 +34,7 @@ typedef enum {
 } RCContactSection;
 
 static const CGFloat kUserImageHeight = 92.0f;
-static const CGFloat kHeaderHeight = kUserImageHeight + 131.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 136.0f;
 
 static const CGFloat kButtonWidth = 52.0f;
 static const CGFloat kButtonPadding = 9.0f;
@@ -68,7 +68,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         self.view.backgroundColor = COLOR_TABLE_CELL;
         
-        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), kHeaderHeight)];
+        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight([[UIScreen mainScreen] bounds]))];
         _contactHeaderBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
         _contactHeaderBackgroundImage.clipsToBounds = YES;
         [self.view addSubview:_contactHeaderBackgroundImage];
@@ -76,7 +76,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderView = [[UIView alloc] initWithFrame:_contactHeaderBackgroundImage.frame];
         _contactHeaderView.backgroundColor = [UIColor clearColor];
         _contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
-        _contactHeaderView.layer.shadowRadius = 3;
+        _contactHeaderView.layer.shadowRadius = 1.5;
         _contactHeaderView.layer.shadowOpacity = 0.3;
         
         _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 40, kUserImageHeight, kUserImageHeight)];
@@ -123,7 +123,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _theTableView.delegate = self;
         _theTableView.backgroundColor = [UIColor clearColor];
         _theTableView.showsVerticalScrollIndicator = NO;
-        _theTableView.contentInset = UIEdgeInsetsMake(_contactHeaderView.frame.size.height - 64, 0, 0, 0);
+        _theTableView.contentInset = UIEdgeInsetsMake(kHeaderHeight - 64, 0, 0, 0);
         [self.view addSubview:_theTableView];
         
         _remindButtonOverlay = [[UIButton alloc] initWithFrame:_remindButton.frame];
@@ -681,7 +681,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = COLOR_TABLE_CELL;
+    cell.backgroundColor = [UIColor colorWithWhite:0.05f alpha:0.4f];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -937,6 +937,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
     }
     
+    cell.mainLabel.textColor = [UIColor whiteColor];
+    cell.colorIndicatorView.backgroundColor = [UIColor clearColor];
+    
     return cell;
 }
 
@@ -1016,7 +1019,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     CGFloat yOffset = scrollView.contentOffset.y + scrollView.contentInset.top;
     
     // Determine if the remind button overlay should be present
-    if (yOffset > CGRectGetHeight(_contactHeaderView.frame) - CGRectGetMinY(_remindButtonOverlay.frame)) {
+    if (yOffset > kHeaderHeight - CGRectGetMinY(_remindButtonOverlay.frame)) {
         _remindButtonOverlay.alpha = 0.0f;
     } else {
         _remindButtonOverlay.alpha = 1.0f;
@@ -1142,7 +1145,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 0;
-    tableInsets.top = _contactHeaderView.frame.size.height - 64;
+    tableInsets.top = kHeaderHeight - 64;
     _theTableView.contentInset = tableInsets;
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -1218,7 +1221,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 0;
-    tableInsets.top = _contactHeaderView.frame.size.height - 64;
+    tableInsets.top = kHeaderHeight - 64;
     _theTableView.contentInset = tableInsets;
     
     [UIView animateWithDuration:0.2 animations:^{

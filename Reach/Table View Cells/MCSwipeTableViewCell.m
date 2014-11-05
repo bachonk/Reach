@@ -58,10 +58,6 @@ static NSTimeInterval const kMCDurationHightLimit = 0.1; // Highest duration whe
 @property(nonatomic, assign) MCSwipeTableViewCellDirection direction;
 @property(nonatomic, assign) CGFloat currentPercentage;
 
-@property(nonatomic, strong) UIImageView *slidingImageView;
-@property(nonatomic, strong) NSString *currentImageName;
-@property(nonatomic, strong) UIView *colorIndicatorView;
-
 @end
 
 @implementation MCSwipeTableViewCell
