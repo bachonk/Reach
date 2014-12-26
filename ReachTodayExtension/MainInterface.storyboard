@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--Today View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ft6-oW-KC0"/>
+                        <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPh-U8-aN8">
+                                <rect key="frame" x="8" y="8" width="94" height="54"/>
+                                <state key="normal" title="Text">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newText:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="jNM-Mm-jB0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXK-iU-krn">
+                                <rect key="frame" x="113" y="8" width="94" height="54"/>
+                                <state key="normal" title="Email">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newEmail:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="51u-Om-KDh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BEq-rV-vMO">
+                                <rect key="frame" x="218" y="8" width="94" height="54"/>
+                                <state key="normal" title="Contact">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newContact:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="S64-qa-5Zg"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="BEq-rV-vMO" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="2Rb-2t-VfD"/>
+                            <constraint firstItem="BEq-rV-vMO" firstAttribute="leading" secondItem="fXK-iU-krn" secondAttribute="trailing" constant="8" id="7ej-Pa-ShU"/>
+                            <constraint firstItem="BEq-rV-vMO" firstAttribute="leading" secondItem="fXK-iU-krn" secondAttribute="trailing" constant="8" id="8P6-38-Ule"/>
+                            <constraint firstItem="zPh-U8-aN8" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="IAb-ua-ZCe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BEq-rV-vMO" secondAttribute="trailing" constant="-8" id="Skg-xu-8Xl"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="zPh-U8-aN8" secondAttribute="bottom" constant="8" id="Voo-Hp-ZTe"/>
+                            <constraint firstItem="fXK-iU-krn" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" constant="8" id="cYX-rQ-rSq"/>
+                            <constraint firstItem="fXK-iU-krn" firstAttribute="leading" secondItem="zPh-U8-aN8" secondAttribute="trailing" constant="8" id="nTB-nd-BpV"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="fXK-iU-krn" secondAttribute="bottom" constant="8" id="tzs-m1-Lg2"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="BEq-rV-vMO" secondAttribute="bottom" constant="8" id="zox-S8-N8W"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="70"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="516" y="285"/>
+        </scene>
+    </scenes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
