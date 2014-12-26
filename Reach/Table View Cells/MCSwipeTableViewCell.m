@@ -133,8 +133,9 @@ secondStateIconName:(NSString *)secondIconName
     [_slidingImageView setContentMode:UIViewContentModeCenter];
     [_colorIndicatorView addSubview:_slidingImageView];
     
-    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kCellHeightDefault, kCellHeightDefault)];
+    _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kCellImageInset, kCellImageInset, kCellHeightDefault - (kCellImageInset * 2), kCellHeightDefault - (kCellImageInset * 2))];
     _iconImageView.clipsToBounds = YES;
+    _iconImageView.layer.cornerRadius = CGRectGetHeight(_iconImageView.frame) / 2;
     _iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:_iconImageView];
     

@@ -14,19 +14,15 @@
 		<string>https://github.com/bachonk/Reach.git</string>
 		<key>9FFD21C6A65AE22198CFA6E939DC569037B4263C</key>
 		<string>https://github.com/bachonk/UIImageView-Letters.git</string>
-		<key>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</key>
-		<string>https://github.com/bachonk/UIImageView-Letters.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Reach.xcodeproj/project.xcworkspace</string>
+	<string>Reach.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</key>
 		<string>../..</string>
 		<key>9FFD21C6A65AE22198CFA6E939DC569037B4263C</key>
-		<string>../../../Code/Open%20Source/UIImageView-Letters</string>
-		<key>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</key>
-		<string>../../../Code/Open Source/UIImageView-Letters</string>
+		<string>../../../../Code/Open%20Source/UIImageView-Letters</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/bachonk/Reach.git</string>
@@ -43,14 +39,6 @@
 			<string>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Reach</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>BBB71103-F4FB-4729-8F4E-4928FEB6D00E</string>
-			<key>IDESourceControlWCCName</key>
-			<string>UIImageView-Letters</string>
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>

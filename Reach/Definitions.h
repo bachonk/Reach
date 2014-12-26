@@ -20,13 +20,14 @@
 
 // Layout
 static const CGFloat kCellHeightDefault = 48.0f;
+static const CGFloat kCellImageInset = 4.0f;
 
 // Design
-static NSString *kFontName = @"Avenir-Light";
-static NSString *kBoldFontName = @"Avenir";
-static NSString *kExtraBoldFontName = @"Avenir-Medium";
-static NSString *kItalicFontName = @"Avenir-Italic";
-static NSString *kLightFontName = @"Avenir-Light";
+static NSString *kFontName = @"Helvetica-Light";
+static NSString *kBoldFontName = @"Helvetica";
+static NSString *kExtraBoldFontName = @"Helvetica-Medium";
+static NSString *kItalicFontName = @"Helvetica-Italic";
+static NSString *kLightFontName = @"Helvetica-Light";
 #define CELL_TEXT_FONT_DEFAULT [UIFont fontWithName:kExtraBoldFontName size:18.0f]
 #define CELL_TEXT_FONT_DISABLED [UIFont fontWithName:kItalicFontName size:18.0f]
 
