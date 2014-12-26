@@ -34,9 +34,9 @@ typedef enum {
 } RCContactSection;
 
 static const CGFloat kUserImageHeight = 92.0f;
-static const CGFloat kHeaderHeight = kUserImageHeight + 136.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 156.0f;
 
-static const CGFloat kButtonWidth = 52.0f;
+static const CGFloat kButtonWidth = 54.0f;
 static const CGFloat kButtonPadding = 9.0f;
 
 static const CGFloat kMainLabelHeight = kButtonWidth;
@@ -75,16 +75,16 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         _contactHeaderView = [[UIView alloc] initWithFrame:_contactHeaderBackgroundImage.frame];
         _contactHeaderView.backgroundColor = [UIColor clearColor];
-        _contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
-        _contactHeaderView.layer.shadowRadius = 1.5;
-        _contactHeaderView.layer.shadowOpacity = 0.3;
+        //_contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
+        //_contactHeaderView.layer.shadowRadius = 1.5;
+        //_contactHeaderView.layer.shadowOpacity = 0.3;
         
-        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 40, kUserImageHeight, kUserImageHeight)];
+        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 50, kUserImageHeight, kUserImageHeight)];
         _userImage.layer.cornerRadius = CGRectGetWidth(_userImage.frame) / 2;
         _userImage.contentMode = UIViewContentModeScaleAspectFill;
         _userImage.clipsToBounds = YES;
         _userImage.layer.borderColor = [[UIColor whiteColor] CGColor];
-        _userImage.layer.borderWidth = 2.0f;
+        _userImage.layer.borderWidth = 1.0f;
         [_contactHeaderView addSubview:_userImage];
         
         _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 9, CGRectGetWidth(frame) - 40, 34)];
@@ -94,12 +94,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _userName.textAlignment = NSTextAlignmentCenter;
         [_contactHeaderView addSubview:_userName];
         
-        _remindButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(frame) - 53, CGRectGetMaxY(_userName.frame) + 5, 106, 23)];
+        _remindButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(frame) - 58, CGRectGetMaxY(_userName.frame) + 7, 116, 26)];
         [_remindButton setImage:[[UIImage imageNamed:@"remind-small"] imageWithTintColor:COLOR_REMIND_YELLOW] forState:UIControlStateNormal];
         [_remindButton setTitle:NSLocalizedString(@"Set reminder", nil) forState:UIControlStateNormal];
         [_remindButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:1.000] forState:UIControlStateNormal];
         [_remindButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 2, 0, 0)];
-        [_remindButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10)];
+        [_remindButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 13)];
         _remindButton.tintColor = COLOR_REMIND_YELLOW;
         _remindButton.titleLabel.font = [UIFont fontWithName:kBoldFontName size:12.0f];
         [_remindButton addTarget:self action:@selector(remind:) forControlEvents:UIControlStateNormal];
@@ -124,6 +124,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _theTableView.backgroundColor = [UIColor clearColor];
         _theTableView.showsVerticalScrollIndicator = NO;
         _theTableView.contentInset = UIEdgeInsetsMake(kHeaderHeight - 64, 0, 0, 0);
+        _theTableView.separatorColor = [UIColor colorWithWhite:0.6f alpha:0.6f];
         [self.view addSubview:_theTableView];
         
         _remindButtonOverlay = [[UIButton alloc] initWithFrame:_remindButton.frame];
@@ -698,7 +699,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             UILabel *secondaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(13, 12, 200, 18)];
             secondaryLabel.backgroundColor = [UIColor clearColor];
             secondaryLabel.font = [UIFont fontWithName:kBoldFontName size:13.0f];
-            secondaryLabel.textColor = COLOR_DEFAULT_RED;
+            secondaryLabel.textColor = [UIColor whiteColor];
             secondaryLabel.textAlignment = NSTextAlignmentLeft;
             secondaryLabel.text = NSLocalizedString(@"Tags", nil);
             [cell.contentView addSubview:secondaryLabel];
@@ -938,6 +939,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     }
     
     cell.mainLabel.textColor = [UIColor whiteColor];
+    cell.secondaryLabel.textColor = [UIColor whiteColor];
     cell.colorIndicatorView.backgroundColor = [UIColor clearColor];
     
     return cell;
