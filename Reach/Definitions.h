@@ -80,4 +80,7 @@ static NSString *kLocalNotificationUserInfoUserID = @"reachUserID";
 static NSString *kLocalNotificationUserInfoActionType = @"reachActionType";
 static NSString *kLocalNotificationUserInfoActionString = @"reachActionString";
 
+// URL Scheme
+static NSString *kURLSchemeNewContact = @"new";
+
 #endif

@@ -135,7 +135,7 @@ secondStateIconName:(NSString *)secondIconName
     
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kCellImageInset, kCellImageInset, kCellHeightDefault - (kCellImageInset * 2), kCellHeightDefault - (kCellImageInset * 2))];
     _iconImageView.clipsToBounds = YES;
-    _iconImageView.layer.cornerRadius = CGRectGetHeight(_iconImageView.frame) / 2;
+    _iconImageView.layer.cornerRadius = 3.0f;
     _iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:_iconImageView];
     
