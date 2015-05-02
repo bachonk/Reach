@@ -22,7 +22,7 @@
 		<key>1D4A6B7142B8AB0EA077046570FE8FDE6825670F</key>
 		<string>../..</string>
 		<key>9FFD21C6A65AE22198CFA6E939DC569037B4263C</key>
-		<string>../../../../Code/Open%20Source/UIImageView-Letters</string>
+		<string>../../../Code/Open%20Source/UIImageView-Letters</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/bachonk/Reach.git</string>

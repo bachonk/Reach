@@ -33,7 +33,6 @@ static const CGFloat percentagePanThresholdLeftReveal = 0.25f;
 static const CGFloat percentagePanThresholdRightReveal = 0.25f;
 
 // Cell heights
-static const CGFloat cellHeight = 48.0f;
 static const CGFloat headerHeight = 34.0f;
 
 @interface RCSwipeViewController ()
@@ -1527,7 +1526,7 @@ static const CGFloat headerHeight = 34.0f;
         return 44.0f;
     }
     
-    return cellHeight;
+    return kCellHeightDefault;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -1652,7 +1651,7 @@ static const CGFloat headerHeight = 34.0f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
+    cell.backgroundColor = COLOR_TABLE_CELL;
     cell.contentView.backgroundColor = COLOR_TABLE_CELL;
 }
 
@@ -1670,6 +1669,10 @@ static const CGFloat headerHeight = 34.0f;
         // For the delegate callback
         [cell setDelegate:self];
         
+        // Default background color
+        cell.defaultCellBackgroundColor = COLOR_TABLE_CELL;
+        
+        cell.mainLabel.backgroundColor = COLOR_TABLE_CELL;
     }
 
     // Setting the type of the cell

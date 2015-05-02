@@ -10,6 +10,10 @@
 
 @interface TodayViewController : UIViewController
 
+@property (nonatomic, weak) IBOutlet UIButton *textButton;
+@property (nonatomic, weak) IBOutlet UIButton *emailButton;
+@property (nonatomic, weak) IBOutlet UIButton *contactButton;
+
 - (IBAction)newText:(id)sender;
 - (IBAction)newEmail:(id)sender;
 - (IBAction)newContact:(id)sender;

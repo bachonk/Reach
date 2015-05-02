@@ -17,6 +17,9 @@
 CGFloat const kMGOffsetEffects = 40.0;
 CGFloat const kMGOffsetBlurEffect = 2.0;
 
+#define BACKGROUND_COLOR_TRANSLUCENT [UIColor colorWithWhite:0.05f alpha:0.4f]
+#define BACKGROUND_WHITE_TRANSLUCENT [UIColor colorWithWhite:0.88f alpha:0.2f]
+
 #define TAG_BUTTON_OFFSET 10
 
 #define TAG_ACTION_EDIT 20
@@ -124,7 +127,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _theTableView.backgroundColor = [UIColor clearColor];
         _theTableView.showsVerticalScrollIndicator = NO;
         _theTableView.contentInset = UIEdgeInsetsMake(kHeaderHeight - 64, 0, 0, 0);
-        _theTableView.separatorColor = [UIColor colorWithWhite:0.6f alpha:0.6f];
+        _theTableView.separatorColor = BACKGROUND_WHITE_TRANSLUCENT;
         [self.view addSubview:_theTableView];
         
         _remindButtonOverlay = [[UIButton alloc] initWithFrame:_remindButton.frame];
@@ -145,6 +148,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     // Formatter
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateStyle:NSDateFormatterLongStyle];
+    
+    // Add semi-transparency below the table
+    
+    NSLog(@"Content size is: %f", _theTableView.contentSize.height);
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, _theTableView.contentSize.height, CGRectGetWidth(_theTableView.frame), 400.0f)];
+    footerView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:0.4f];
+    [_theTableView addSubview:footerView];
     
 }
 
@@ -236,7 +246,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         //Blur effects
         [_contactHeaderBackgroundImage setImageToBlur:_userImage.image ? _userImage.image : [UIImage imageNamed:@"user-blank"]
                                            blurRadius:newBlur
-                                            tintColor:_contact.thumbnail ? nil : [UIColor colorWithRed:0.600 green:0.669 blue:0.738 alpha:0.7]
+                                            tintColor:_contact.thumbnail ? nil : [UIColor colorWithRed:0.400 green:0.469 blue:0.498 alpha:0.7]
                                       completionBlock:nil];
         
     });
@@ -265,6 +275,14 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             }
         }
         [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:minSection] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        
+        if (!_footerView) {
+            _footerView = [UIView new];
+            _footerView.backgroundColor = BACKGROUND_COLOR_TRANSLUCENT;
+            [_theTableView addSubview:_footerView];
+        }
+        _footerView.frame = CGRectMake(0.0f, _theTableView.contentSize.height, CGRectGetWidth(_theTableView.frame), CGRectGetHeight([[UIScreen mainScreen] bounds]));
+        
     });
     
 }
@@ -462,71 +480,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didChangeState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
 {
-    cell.contentView.backgroundColor = COLOR_TABLE_CELL;
-    
-    Contact *addressBook = _contact;
-    
-    NSString *mainString;
-    
-    switch (state) {
-        case MCSwipeTableViewCellStateNone:
-        {
-            // No header view
-            // Should default to regular title
-            break;
-        }
-        case MCSwipeTableViewCellState1: // Text
-        {
-            
-            if ([addressBook.mobile length]) {
-                mainString = addressBook.mobile;
-            } else {
-                mainString = NSLocalizedString(@"No number found", nil);
-            }
-            
-            break;
-        }
-        case MCSwipeTableViewCellState3: // Email
-        {
-            
-            if ([addressBook.email length]) {
-                mainString = addressBook.email;
-            } else {
-                mainString = NSLocalizedString(@"No email found", nil);
-            }
-            
-            break;
-        }
-        case MCSwipeTableViewCellState2: // Call
-        {
-            
-            if ([addressBook.mobile length]) {
-                mainString = addressBook.mobile;
-            } else if ([addressBook.home length]) {
-                mainString = addressBook.home;
-            } else {
-                mainString = NSLocalizedString(@"No number found", nil);
-            }
-            
-            break;
-        }
-        case MCSwipeTableViewCellState4: // Reminder
-        {
-            
-            if ([addressBook.email length]) {
-                mainString = addressBook.email;
-            } else {
-                mainString = NSLocalizedString(@"No email found", nil);
-            }
-            
-            break;
-        }
-        default:
-            break;
-    }
-    
-    cell.phoneLabel.text = mainString;
-    
+    /*
+     Not implemented because we don't need the label on the swipe view
+     The text in the cells already indicate the action
+     */
 }
 
 - (void)swipeTableViewCell:(MCSwipeTableViewCell *)cell didTriggerState:(MCSwipeTableViewCellState)state withMode:(MCSwipeTableViewCellMode)mode
@@ -682,7 +639,17 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor colorWithWhite:0.05f alpha:0.4f];
+    cell.backgroundColor = BACKGROUND_COLOR_TRANSLUCENT;
+}
+
+- (void)tableView:(UITableView *)tableView didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor colorWithWhite:0.05f alpha:0.2f];
+}
+
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = BACKGROUND_COLOR_TRANSLUCENT;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -721,16 +688,16 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     if (cell == nil) {
         cell = [[RCContactDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
         
+        cell.defaultCellBackgroundColor = [UIColor clearColor];
+        
         cell.buttonRight.layer.cornerRadius = kButtonWidth / 2;
         cell.buttonRight.clipsToBounds = YES;
-        cell.buttonRight.layer.borderColor = [[UIColor colorWithWhite:0.767 alpha:1.000] CGColor];
+        cell.buttonRight.layer.borderColor = [BACKGROUND_WHITE_TRANSLUCENT CGColor];
         cell.buttonRight.layer.borderWidth = 1.0f;
         [cell.buttonRight addTarget:self action:@selector(rightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.buttonLeft.layer.cornerRadius = kButtonWidth / 2;
         cell.buttonLeft.clipsToBounds = YES;
-        //cell.buttonLeft.layer.borderColor = [[UIColor colorWithWhite:0.767 alpha:1.000] CGColor];
-        //cell.buttonLeft.layer.borderWidth = 1.0f;
         [cell.buttonLeft addTarget:self action:@selector(leftButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.mainLabel.frame = CGRectMake(12, 18, 200, 27);
@@ -742,6 +709,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         cell.mainLabel.minimumScaleFactor = 14.0f/21.0f;
         
         cell.notesTextView.delegate = self;
+        cell.notesTextView.textColor = [UIColor whiteColor];
         cell.notesTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -792,8 +760,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.delegate = self;
             cell.panGestureRecognizer.enabled = YES;
             
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-            
             break;
         }
         case RCContactSectionEmail:
@@ -832,8 +798,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.delegate = self;
             cell.panGestureRecognizer.enabled = YES;
-
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
             
             break;
         }
@@ -871,8 +835,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.delegate = nil;
             cell.panGestureRecognizer.enabled = NO;
 
-            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
-
             break;
         }
         case RCContactSectionTags:
@@ -902,8 +864,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.delegate = nil;
             cell.panGestureRecognizer.enabled = NO;
-
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             break;
         }
@@ -928,8 +888,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.delegate = nil;
             cell.panGestureRecognizer.enabled = NO;
-            
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
             break;
         }

@@ -57,6 +57,8 @@ static CGFloat const kPickerRowHeight = 50.0f;
     headerCenter.x = CGRectGetMidX(screenFrame);
     _headerLabelContainer.center = headerCenter;
     
+    NSLog(@"Width is : %f", CGRectGetWidth(screenFrame));
+    
     _reminderPicker.frame = CGRectMake(0, CGRectGetMidY(screenFrame) - 110, CGRectGetWidth(screenFrame), 216);
     _reminderPicker.showsSelectionIndicator = NO;
     
@@ -96,6 +98,16 @@ static CGFloat const kPickerRowHeight = 50.0f;
     bgImage.image = [UIImage imageNamed:@"navigation-bar"];
     [self.view addSubview:bgImage];
     [self.view sendSubviewToBack:bgImage];
+    
+    // Observe keyboard changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
 }
 
@@ -297,38 +309,6 @@ static CGFloat const kPickerRowHeight = 50.0f;
 
 #pragma mark - Text field delegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    [UIView animateWithDuration:0.33 animations:^{
-        CGRect screenFrame = [[UIScreen mainScreen] bounds];
-
-        _detailsTextField.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
-        _detailsTextField.frame = CGRectMake(0, CGRectGetMaxY(screenFrame) - 216 - 70, CGRectGetWidth(screenFrame), 70);
-        
-        _headerLabelContainer.alpha = 0.32f;
-        _reminderPicker.alpha = 0.0f;
-        _whiteSeparatorView.alpha = 0.0f;
-        
-        _datePicker.alpha = 0.0f;
-        
-    }];
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    [UIView animateWithDuration:0.33 animations:^{
-        CGRect screenFrame = [[UIScreen mainScreen] bounds];
-        
-        _detailsTextField.backgroundColor = [UIColor colorWithWhite:1.0f alpha:[_detailsTextField.text length] ? 0.2f : 0.0f];
-        _detailsTextField.frame = CGRectMake(0, CGRectGetMinY(_cancelButton.frame) - 40, CGRectGetWidth(screenFrame), 40);
-        
-        _headerLabelContainer.alpha = 1.0f;
-        _reminderPicker.alpha = 1.0f;
-        _whiteSeparatorView.alpha = 1.0f;
-        
-        _datePicker.alpha = 1.0f;
-        
-    }];
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
@@ -336,6 +316,59 @@ static CGFloat const kPickerRowHeight = 50.0f;
 
 - (void)dismissKeyboard {
     [self.view endEditing:YES];
+}
+
+#pragma mark - Keyboard changes
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+    
+    NSDictionary *options = [notification userInfo];
+    
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardEndFrame;
+    [[options objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[options objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    keyboardEndFrame = [[options objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    [UIView animateWithDuration:animationDuration delay:0 options:(UIViewAnimationOptions)animationCurve animations:^{
+        
+        _detailsTextField.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.3f];
+        _detailsTextField.frame = CGRectMake(0, CGRectGetMaxY(self.view.bounds) - CGRectGetHeight(keyboardEndFrame) - 70, CGRectGetWidth(self.view.bounds), 70);
+        
+        _headerLabelContainer.alpha = 0.32f;
+        _reminderPicker.alpha = 0.0f;
+        _whiteSeparatorView.alpha = 0.0f;
+        
+        _datePicker.alpha = 0.0f;
+        
+    } completion:nil];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSDictionary *options = [notification userInfo];
+    
+    NSTimeInterval animationDuration;
+    UIViewAnimationCurve animationCurve;
+    CGRect keyboardEndFrame;
+    [[options objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
+    [[options objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
+    [[options objectForKey:UIKeyboardFrameEndUserInfoKey] getValue:&keyboardEndFrame];
+    
+    [UIView animateWithDuration:animationDuration delay:0 options:(UIViewAnimationOptions)animationCurve animations:^{
+        
+        _detailsTextField.backgroundColor = [UIColor colorWithWhite:1.0f alpha:[_detailsTextField.text length] ? 0.2f : 0.0f];
+        _detailsTextField.frame = CGRectMake(0, CGRectGetMinY(_cancelButton.frame) - 40, CGRectGetWidth(self.view.bounds), 40);
+        
+        _headerLabelContainer.alpha = 1.0f;
+        _reminderPicker.alpha = 1.0f;
+        _whiteSeparatorView.alpha = 1.0f;
+        
+        _datePicker.alpha = 1.0f;
+    
+    } completion:nil];
+    
 }
 
 #pragma mark - Actions

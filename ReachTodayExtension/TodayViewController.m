@@ -18,6 +18,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    _textButton.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor];
+    _textButton.layer.cornerRadius = 3.0f;
+    
+    _emailButton.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor];
+    _emailButton.layer.cornerRadius = 3.0f;
+    
+    _contactButton.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.2f] CGColor];
+    _contactButton.layer.cornerRadius = 3.0f;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,7 +41,7 @@
     // If there's no update required, use NCUpdateResultNoData
     // If there's an update, use NCUpdateResultNewData
 
-    completionHandler(NCUpdateResultNewData);
+    completionHandler(NCUpdateResultNoData);
 }
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {

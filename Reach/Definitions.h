@@ -19,8 +19,8 @@
 #pragma mark - Cell customization - 
 
 // Layout
-static const CGFloat kCellHeightDefault = 48.0f;
-static const CGFloat kCellImageInset = 4.0f;
+static const CGFloat kCellHeightDefault = 52.0f;
+static const CGFloat kCellImageInset = 3.0f;
 
 // Design
 static NSString *kFontName = @"Helvetica-Light";

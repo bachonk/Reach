@@ -34,6 +34,7 @@
 @property (nonatomic, strong) UILabel *userName;
 @property (nonatomic, strong) UIButton *remindButton;
 @property (nonatomic, strong) JSTokenField *tagField;
+@property (nonatomic, strong) UIView *footerView;
 
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIButton *editButton;

@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellMode){
 @property (nonatomic, strong) UILabel *mainLabel;
 @property (nonatomic, strong) UILabel *phoneLabel;
 @property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) UIColor *defaultCellBackgroundColor;
 
 @property(nonatomic, strong) UIImageView *slidingImageView;
 @property(nonatomic, strong) NSString *currentImageName;

@@ -8,7 +8,7 @@
 
 #import "MCSwipeTableViewCell.h"
 
-static CGFloat const kMCStop1 = 0.20; // Percentage limit to trigger the first action
+static CGFloat const kMCStop1 = 0.17; // Percentage limit to trigger the first action
 static CGFloat const kMCStop2 = 0.52; // Percentage limit to trigger the second action
 static CGFloat const kMCBounceAmplitude = 20.0; // Maximum bounce amplitude when using the MCSwipeTableViewCellModeSwitch mode
 static NSTimeInterval const kMCBounceDuration1 = 0.2; // Duration of the first part of the bounce animation
@@ -123,10 +123,10 @@ secondStateIconName:(NSString *)secondIconName
 - (void)initializer {
     _mode = MCSwipeTableViewCellModeSwitch;
     _state = MCSwipeTableViewCellStateNone;
-
+    
     _colorIndicatorView = [[UIView alloc] initWithFrame:self.bounds];
     [_colorIndicatorView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
-    [_colorIndicatorView setBackgroundColor:COLOR_TABLE_CELL];
+    [_colorIndicatorView setBackgroundColor:_defaultCellBackgroundColor];
     [self insertSubview:_colorIndicatorView belowSubview:self.contentView];
 
     _slidingImageView = [[UIImageView alloc] init];
@@ -135,14 +135,13 @@ secondStateIconName:(NSString *)secondIconName
     
     _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(kCellImageInset, kCellImageInset, kCellHeightDefault - (kCellImageInset * 2), kCellHeightDefault - (kCellImageInset * 2))];
     _iconImageView.clipsToBounds = YES;
-    _iconImageView.layer.cornerRadius = 3.0f;
     _iconImageView.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:_iconImageView];
     
-    _mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame) + 9, 2, CGRectGetWidth(self.frame) - CGRectGetMaxX(_iconImageView.frame) - 16, 44)];
+    _mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame) + 9, 2, CGRectGetWidth(self.frame) - CGRectGetMaxX(_iconImageView.frame) - 16, kCellHeightDefault - 4)];
     _mainLabel.textColor = [UIColor colorWithWhite:0.02f alpha:1.0f];
     _mainLabel.font = [UIFont fontWithName:kFontName size:19.0f];
-    _mainLabel.backgroundColor = COLOR_TABLE_CELL;
+    _mainLabel.backgroundColor = _defaultCellBackgroundColor;
     [self.contentView addSubview:_mainLabel];
     
     _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(-370, 8, 320, 38)];
@@ -158,7 +157,7 @@ secondStateIconName:(NSString *)secondIconName
     
     [self sendSubviewToBack:_colorIndicatorView];
     
-    self.backgroundColor = COLOR_TABLE_CELL;
+    self.backgroundColor = _defaultCellBackgroundColor;
 }
 
 #pragma mark - Handle Gestures
@@ -292,9 +291,10 @@ secondStateIconName:(NSString *)secondIconName
         color = _thirdColor;
     else if (percentage <= -kMCStop2)
         color = _fourthColor;
-    else
-        color = COLOR_TABLE_CELL;
-
+    else {
+        color = _defaultCellBackgroundColor;
+    }
+    
     return color;
 }
 
@@ -519,6 +519,7 @@ secondStateIconName:(NSString *)secondIconName
                                               [self.contentView setFrame:frame];
                                           }
                                           completion:^(BOOL finished2) {
+                                              self.colorIndicatorView.backgroundColor = _defaultCellBackgroundColor;
                                               [self notifyDelegate];
                                           }];
                      }];
@@ -533,7 +534,7 @@ secondStateIconName:(NSString *)secondIconName
         if (_delegate != nil && [_delegate respondsToSelector:@selector(swipeTableViewCell:didTriggerState:withMode:)]) {
             [_delegate swipeTableViewCell:self didTriggerState:_state withMode:_mode];
             [_delegate swipeTableViewCell:self didChangeState:_state withMode:_mode];
-            [_colorIndicatorView setBackgroundColor:COLOR_TABLE_CELL];
+            [_colorIndicatorView setBackgroundColor:_defaultCellBackgroundColor];
         }
     }
 }
