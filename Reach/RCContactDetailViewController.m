@@ -111,6 +111,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _remindButton.layer.borderWidth = 0.6f;
         [_contactHeaderView addSubview:_remindButton];
         
+        _largeUserImage = [[UIImageView alloc] init];
+        _largeUserImage.clipsToBounds = YES;
+        _largeUserImage.contentMode = UIViewContentModeScaleAspectFill;
+        _largeUserImage.alpha = 0.0f;
+        _largeUserImage.userInteractionEnabled = NO;
+        [_contactHeaderView addSubview:_largeUserImage];
+        
         [self.view addSubview:_contactHeaderView];
         
         // Tag view
@@ -233,9 +240,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     if (_contact.thumbnail) {
         _userImage.image = _contact.thumbnail;
+        _largeUserImage.image = _contact.thumbnail;
     }
     else {
         [_userImage setImageWithString:_contact.fullName color:nil];
+        _largeUserImage.image = nil;
     }
         
     // Update the blur view
@@ -618,7 +627,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         return kNotesTextViewHeight;
     }
     if (indexPath.section == RCContactSectionEmail ||
-        indexPath.section == RCContactSectionLinkedIn) {
+        indexPath.section == RCContactSectionLinkedIn ||
+        indexPath.section == RCContactSectionTags) {
         return kMainLabelHeight;
     }
     return kCellHeight;
@@ -663,19 +673,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TagCellID];
             
-            UILabel *secondaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(13, 12, 200, 18)];
-            secondaryLabel.backgroundColor = [UIColor clearColor];
-            secondaryLabel.font = [UIFont fontWithName:kBoldFontName size:13.0f];
-            secondaryLabel.textColor = [UIColor whiteColor];
-            secondaryLabel.textAlignment = NSTextAlignmentLeft;
-            secondaryLabel.text = NSLocalizedString(@"Tags", nil);
-            [cell.contentView addSubview:secondaryLabel];
-            
-            UIImageView *tagImage = [[UIImageView alloc] initWithFrame:CGRectMake(11, 35, 22, 22)];
-            tagImage.image = [[UIImage imageNamed:@"tag-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
+            UIImageView *tagImage = [[UIImageView alloc] initWithFrame:CGRectMake(16, 16, 22, 22)];
+            tagImage.image = [[UIImage imageNamed:@"tag-active"] imageWithTintColor:COLOR_TAG_BLUE];
             [cell.contentView addSubview:tagImage];
             
-            [_tagField setFrameOriginY:CGRectGetMaxY(secondaryLabel.frame) + 4];
+            _tagField.frame = CGRectMake(kButtonWidth, 16, CGRectGetWidth(_theTableView.frame) - kButtonWidth - (kButtonPadding * 2), 22);
             [cell.contentView addSubview:_tagField];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -985,6 +987,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _remindButtonOverlay.alpha = 1.0f;
     }
     
+    _largeUserImage.frame = CGRectMake(0, 0, CGRectGetWidth(_theTableView.frame), -yOffset + 64 + _theTableView.contentInset.top);
+    
     CGFloat offset = yOffset / CGRectGetHeight(_theTableView.frame);
 
     if (yOffset < 0) {
@@ -996,9 +1000,24 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         CGFloat reminderAlpha = 1 + (yOffset / 78.0f);
         
-        _contactHeaderView.transform = CGAffineTransformMakeScale(scaleFg, scaleFg);
+        //_contactHeaderView.transform = CGAffineTransformMakeScale(scaleFg, scaleFg);
         _contactHeaderBackgroundImage.transform = CGAffineTransformMakeScale(scaleBg, scaleBg);
         _remindButton.alpha = reminderAlpha;
+        
+        if (_contact.thumbnail && yOffset < -78.0f) {
+            if (!_largeUserImage.alpha) {
+                [UIView animateWithDuration:0.26f animations:^{
+                    _largeUserImage.alpha = 1.0f;
+                }];
+            }
+        }
+        else {
+            if (_largeUserImage.alpha) {
+                [UIView animateWithDuration:0.26f animations:^{
+                    _largeUserImage.alpha = 0.0f;
+                }];
+            }
+        }
         
         self.title = nil;
         
@@ -1010,6 +1029,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         CGFloat reminderAlpha = 1 - (yOffset / 108.0f);
         
         _contactHeaderView.alpha = reminderAlpha;
+        _largeUserImage.alpha = 0.0f;
         
         self.title = yOffset > kHeaderHeight - 64 ? _contact.fullName : nil;
         
@@ -1019,6 +1039,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         _contactHeaderView.alpha = 1.0f;
         _contactHeaderView.transform = CGAffineTransformIdentity;
+        
+        _largeUserImage.alpha = 0.0f;
         
         self.title = nil;
         

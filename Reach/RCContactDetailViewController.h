@@ -39,6 +39,8 @@
 @property (nonatomic, strong) UIButton *closeButton;
 @property (nonatomic, strong) UIButton *editButton;
 
+@property (nonatomic, strong) UIImageView *largeUserImage;
+
 @property (nonatomic, strong) Contact *contact;
 
 @property (nonatomic, weak) id <RCContactDetailViewControllerDelegate> delegate;
