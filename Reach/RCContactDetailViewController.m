@@ -36,8 +36,8 @@ typedef enum {
     RCContactSectionMeta
 } RCContactSection;
 
-static const CGFloat kUserImageHeight = 92.0f;
-static const CGFloat kHeaderHeight = kUserImageHeight + 156.0f;
+static const CGFloat kUserImageHeight = 96.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 138.0f;
 
 static const CGFloat kButtonWidth = 54.0f;
 static const CGFloat kButtonPadding = 9.0f;
@@ -52,8 +52,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @property (nonatomic, strong) UIImagePickerController *imgPicker;
-
-@property (nonatomic, strong) UIButton *remindButtonOverlay;
 
 @property (nonatomic) BOOL shouldUpdateOnAppear;
 
@@ -71,18 +69,33 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         self.view.backgroundColor = COLOR_TABLE_CELL;
         
-        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight([[UIScreen mainScreen] bounds]))];
+        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectInset(frame, -25, -25)];
         _contactHeaderBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
         _contactHeaderBackgroundImage.clipsToBounds = YES;
+        
+        UIInterpolatingMotionEffect *xMotionEffect;
+        xMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
+                                                                        type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        xMotionEffect.minimumRelativeValue = @(-25);
+        xMotionEffect.maximumRelativeValue = @(25);
+        
+        UIInterpolatingMotionEffect *yMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
+                                                                                                     type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        yMotionEffect.minimumRelativeValue = @(-25);
+        yMotionEffect.maximumRelativeValue = @(25);
+        
+        [_contactHeaderBackgroundImage addMotionEffect:xMotionEffect];
+        [_contactHeaderBackgroundImage addMotionEffect:yMotionEffect];
+        
         [self.view addSubview:_contactHeaderBackgroundImage];
         
-        _contactHeaderView = [[UIView alloc] initWithFrame:_contactHeaderBackgroundImage.frame];
+        _contactHeaderView = [[UIView alloc] initWithFrame:frame];
         _contactHeaderView.backgroundColor = [UIColor clearColor];
         //_contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
         //_contactHeaderView.layer.shadowRadius = 1.5;
         //_contactHeaderView.layer.shadowOpacity = 0.3;
         
-        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 50, kUserImageHeight, kUserImageHeight)];
+        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 56, kUserImageHeight, kUserImageHeight)];
         _userImage.layer.cornerRadius = CGRectGetWidth(_userImage.frame) / 2;
         _userImage.contentMode = UIViewContentModeScaleAspectFill;
         _userImage.clipsToBounds = YES;
@@ -90,26 +103,14 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _userImage.layer.borderWidth = 1.0f;
         [_contactHeaderView addSubview:_userImage];
         
-        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 9, CGRectGetWidth(frame) - 40, 34)];
+        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 15, CGRectGetWidth(frame) - 40, 40)];
         _userName.backgroundColor = [UIColor clearColor];
         _userName.font = [UIFont fontWithName:kBoldFontName size:22.0f];
         _userName.textColor = [UIColor whiteColor];
         _userName.textAlignment = NSTextAlignmentCenter;
+        _userName.adjustsFontSizeToFitWidth = YES;
+        _userName.minimumScaleFactor = 0.5f;
         [_contactHeaderView addSubview:_userName];
-        
-        _remindButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMidX(frame) - 58, CGRectGetMaxY(_userName.frame) + 7, 116, 26)];
-        [_remindButton setImage:[[UIImage imageNamed:@"remind-small"] imageWithTintColor:COLOR_REMIND_YELLOW] forState:UIControlStateNormal];
-        [_remindButton setTitle:NSLocalizedString(@"Set reminder", nil) forState:UIControlStateNormal];
-        [_remindButton setTitleColor:[UIColor colorWithWhite:1.0f alpha:1.000] forState:UIControlStateNormal];
-        [_remindButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 2, 0, 0)];
-        [_remindButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 13)];
-        _remindButton.tintColor = COLOR_REMIND_YELLOW;
-        _remindButton.titleLabel.font = [UIFont fontWithName:kBoldFontName size:12.0f];
-        [_remindButton addTarget:self action:@selector(remind:) forControlEvents:UIControlStateNormal];
-        _remindButton.layer.cornerRadius = CGRectGetHeight(_remindButton.frame) / 2;
-        _remindButton.layer.borderColor = [COLOR_REMIND_YELLOW CGColor];
-        _remindButton.layer.borderWidth = 0.6f;
-        [_contactHeaderView addSubview:_remindButton];
         
         _largeUserImage = [[UIImageView alloc] init];
         _largeUserImage.clipsToBounds = YES;
@@ -137,9 +138,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _theTableView.separatorColor = BACKGROUND_WHITE_TRANSLUCENT;
         [self.view addSubview:_theTableView];
         
-        _remindButtonOverlay = [[UIButton alloc] initWithFrame:_remindButton.frame];
-        [_remindButtonOverlay addTarget:self action:@selector(remind:) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_remindButtonOverlay];
     }
     return self;
 }
@@ -982,13 +980,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     // Get the distance the view has dragged
     CGFloat yOffset = scrollView.contentOffset.y + scrollView.contentInset.top;
     
-    // Determine if the remind button overlay should be present
-    if (yOffset > kHeaderHeight - CGRectGetMinY(_remindButtonOverlay.frame)) {
-        _remindButtonOverlay.alpha = 0.0f;
-    } else {
-        _remindButtonOverlay.alpha = 1.0f;
-    }
-    
     _largeUserImage.frame = CGRectMake(0, 0, CGRectGetWidth(_theTableView.frame), -yOffset + 64 + _theTableView.contentInset.top);
     
     CGFloat offset = yOffset / CGRectGetHeight(_theTableView.frame);
@@ -997,17 +988,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         // Scrolling up
         // Offset is negative
         
-        CGFloat scaleFg = 1 - (offset * 0.75);
         CGFloat scaleBg = 1 - (offset * 1.5);
         
-        CGFloat reminderAlpha = 1 + (yOffset / 78.0f);
-        
-        _userImage.transform = CGAffineTransformMakeScale(scaleFg, scaleFg);
         _contactHeaderBackgroundImage.transform = CGAffineTransformMakeScale(scaleBg, scaleBg);
-        _remindButton.alpha = reminderAlpha;
         
         if (_contact.thumbnail && yOffset < -68.0f) {
-            if (!_largeUserImage.alpha) {
+            if (!_largeUserImage.alpha && _theTableView.isTracking) {
                 [UIView animateWithDuration:0.26f animations:^{
                     _largeUserImage.alpha = 1.0f;
                 }];
@@ -1033,14 +1019,19 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderView.alpha = reminderAlpha;
         _largeUserImage.alpha = 0.0f;
         
-        self.title = yOffset > kHeaderHeight - 64 ? _contact.fullName : nil;
+        if (yOffset > kHeaderHeight - 64) {
+            self.title = [_contact.fullName length] > 18 ? _contact.firstName : _contact.fullName;
+        }
+        else {
+            self.title = nil;
+        }
         
     }
     else {
         // Reset to all good
         
         _contactHeaderView.alpha = 1.0f;
-        _userImage.transform = CGAffineTransformIdentity;
+        _contactHeaderBackgroundImage.transform = CGAffineTransformIdentity;
         
         _largeUserImage.alpha = 0.0f;
         

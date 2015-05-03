@@ -156,9 +156,16 @@ static const CGFloat headerHeight = 34.0f;
     
     [self.view addSubview:_searchTableView];
     
+    
+    /**
+     *
+     *      Slide search view
+     *
+     */
+    
     CGFloat heightOfStatusBarAndNavBar = CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
     CGRect searchViewContainerRect = CGRectMake(CGRectGetWidth(self.view.frame) - SLIDE_SEARCH_WIDTH, heightOfStatusBarAndNavBar, SLIDE_SEARCH_WIDTH, CGRectGetHeight([[UIScreen mainScreen] bounds]) - heightOfStatusBarAndNavBar);
-    searchView = [[CCSlideSearchView alloc] initWithFrame:CGRectInset(searchViewContainerRect, 0, 10)];
+    searchView = [[CCSlideSearchView alloc] initWithFrame:CGRectInset(searchViewContainerRect, 0, 15)];
     searchView.delegate = self;
     searchView.characterLimit = 6;
     searchView.layer.cornerRadius = SLIDE_SEARCH_WIDTH / 2;
@@ -167,7 +174,7 @@ static const CGFloat headerHeight = 34.0f;
     
     /**
      *
-     *          New Contact View
+     *      New Contact View
      *
      */
     

@@ -32,7 +32,6 @@
 @property (nonatomic, strong) UIView *blurView;
 @property (nonatomic, strong) UIImageView *userImage;
 @property (nonatomic, strong) UILabel *userName;
-@property (nonatomic, strong) UIButton *remindButton;
 @property (nonatomic, strong) JSTokenField *tagField;
 @property (nonatomic, strong) UIView *footerView;
 
