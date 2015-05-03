@@ -37,6 +37,12 @@
 
 + (void)text:(NSString *)number delegate:(id<MFMessageComposeViewControllerDelegate>)delegate presentationHandler:(void (^)(BOOL))presBlock completionHandler:(void (^)(BOOL))compBlock
 {
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@", number]]];
+    
+    /*
+     * Settings for using the text modal
+     *
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     if ([MFMessageComposeViewController canSendText]) {
@@ -68,6 +74,7 @@
         
         [MNMToast showWithText:NSLocalizedString(@"Texting not available on this device :(", nil) autoHidding:YES priority:MNMToastPriorityNormal completionHandler:nil tapHandler:nil];
     }
+     */
     
 }
 

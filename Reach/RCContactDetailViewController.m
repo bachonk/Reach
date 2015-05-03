@@ -149,8 +149,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    UIBarButtonItem *remindBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reminder-icon"] style:UIBarButtonItemStyleBordered target:self action:@selector(remind:)];
+    
     UIBarButtonItem *barBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon"] style:UIBarButtonItemStyleBordered target:self action:@selector(editContact)];
-    self.navigationItem.rightBarButtonItem = barBut;
+    
+    [self.navigationItem setRightBarButtonItems:@[barBut, remindBut]];
     
     // Formatter
     _dateFormatter = [[NSDateFormatter alloc] init];
@@ -158,7 +161,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     // Add semi-transparency below the table
     
-    NSLog(@"Content size is: %f", _theTableView.contentSize.height);
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, _theTableView.contentSize.height, CGRectGetWidth(_theTableView.frame), 400.0f)];
     footerView.backgroundColor = [UIColor colorWithWhite:0.05f alpha:0.4f];
     [_theTableView addSubview:footerView];
@@ -786,11 +788,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.notesTextView.hidden = YES;
             
-            [cell setFirstColor:nil];
-            [cell setFirstIconName:nil];
+            [cell setFirstColor:COLOR_EMAIL_RED];
+            [cell setFirstIconName:@"email-active"];
             
-            [cell setSecondColor:nil];
-            [cell setSecondIconName:nil];
+            [cell setSecondColor:COLOR_EMAIL_RED];
+            [cell setSecondIconName:@"email-active"];
             
             [cell setThirdColor:COLOR_EMAIL_RED];
             [cell setThirdIconName:@"email-active"];
@@ -1000,11 +1002,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         CGFloat reminderAlpha = 1 + (yOffset / 78.0f);
         
-        //_contactHeaderView.transform = CGAffineTransformMakeScale(scaleFg, scaleFg);
+        _userImage.transform = CGAffineTransformMakeScale(scaleFg, scaleFg);
         _contactHeaderBackgroundImage.transform = CGAffineTransformMakeScale(scaleBg, scaleBg);
         _remindButton.alpha = reminderAlpha;
         
-        if (_contact.thumbnail && yOffset < -78.0f) {
+        if (_contact.thumbnail && yOffset < -68.0f) {
             if (!_largeUserImage.alpha) {
                 [UIView animateWithDuration:0.26f animations:^{
                     _largeUserImage.alpha = 1.0f;
@@ -1038,7 +1040,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         // Reset to all good
         
         _contactHeaderView.alpha = 1.0f;
-        _contactHeaderView.transform = CGAffineTransformIdentity;
+        _userImage.transform = CGAffineTransformIdentity;
         
         _largeUserImage.alpha = 0.0f;
         

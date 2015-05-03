@@ -62,6 +62,7 @@
 		C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C88B923B19721B35006B78E6 /* RCContactDetailViewController.xib */; };
 		C88B924019721B57006B78E6 /* UIImageView+Letters.m in Sources */ = {isa = PBXBuildFile; fileRef = C88B923F19721B57006B78E6 /* UIImageView+Letters.m */; };
 		C8992AFC18DF6D7000BB43DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8992AFB18DF6D7000BB43DC /* QuartzCore.framework */; };
+		C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */; };
 		C8BF064E197254BC00A6BA09 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BF064B197254BC00A6BA09 /* UIImage+ImageEffects.m */; };
 		C8BF064F197254BC00A6BA09 /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BF064D197254BC00A6BA09 /* UIImageView+LBBlurredImage.m */; };
 		C8E4FA8B17131898006FEEE0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E4FA8A17131898006FEEE0 /* UIKit.framework */; };
@@ -276,6 +277,7 @@
 		C88B923E19721B57006B78E6 /* UIImageView+Letters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+Letters.h"; path = "../../../Code/Open Source/UIImageView-Letters/UIImageView+Letters/UIImageView+Letters.h"; sourceTree = "<group>"; };
 		C88B923F19721B57006B78E6 /* UIImageView+Letters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+Letters.m"; path = "../../../Code/Open Source/UIImageView-Letters/UIImageView+Letters/UIImageView+Letters.m"; sourceTree = "<group>"; };
 		C8992AFB18DF6D7000BB43DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reminder-icon@2x.png"; path = "Reach/Resources/reminder-icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		C8BF064A197254BC00A6BA09 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		C8BF064B197254BC00A6BA09 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		C8BF064C197254BC00A6BA09 /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
@@ -474,6 +476,7 @@
 		C8174101179B5DDE007A313F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */,
 				C8E816371997F47700F789A8 /* image-clip-circular@2x.png */,
 				C8E816351997E81F00F789A8 /* linkedin-active@2x.png */,
 				C8E815F71994794800F789A8 /* back-indicator@2x.png */,
@@ -1074,6 +1077,7 @@
 				C8E815EB1994793500F789A8 /* SourceSansPro-Black.ttf in Resources */,
 				C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */,
 				C81C65B91932F5CE008CEF15 /* sample.png in Resources */,
+				C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */,
 				C8E815EE1994793500F789A8 /* SourceSansPro-BoldItalic.ttf in Resources */,
 				C8E815D3198FF20D00F789A8 /* RCMergeViewController.xib in Resources */,
 				C8E8162C1994794800F789A8 /* search-icon@2x.png in Resources */,
@@ -1425,6 +1429,7 @@
 				C832F3C51A4DEFD80035F6C7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C8E4FA8017131898006FEEE0 /* Build configuration list for PBXProject "Reach" */ = {
 			isa = XCConfigurationList;
