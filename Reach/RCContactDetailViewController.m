@@ -36,8 +36,8 @@ typedef enum {
     RCContactSectionMeta
 } RCContactSection;
 
-static const CGFloat kUserImageHeight = 96.0f;
-static const CGFloat kHeaderHeight = kUserImageHeight + 138.0f;
+static const CGFloat kUserImageHeight = 106.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 154.0f;
 
 static const CGFloat kButtonWidth = 54.0f;
 static const CGFloat kButtonPadding = 9.0f;
@@ -69,23 +69,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         self.view.backgroundColor = COLOR_TABLE_CELL;
         
-        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectInset(frame, -25, -25)];
+        _contactHeaderBackgroundImage = [[UIImageView alloc] initWithFrame:frame];
         _contactHeaderBackgroundImage.contentMode = UIViewContentModeScaleAspectFill;
         _contactHeaderBackgroundImage.clipsToBounds = YES;
-        
-        UIInterpolatingMotionEffect *xMotionEffect;
-        xMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x"
-                                                                        type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-        xMotionEffect.minimumRelativeValue = @(-25);
-        xMotionEffect.maximumRelativeValue = @(25);
-        
-        UIInterpolatingMotionEffect *yMotionEffect = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y"
-                                                                                                     type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-        yMotionEffect.minimumRelativeValue = @(-25);
-        yMotionEffect.maximumRelativeValue = @(25);
-        
-        [_contactHeaderBackgroundImage addMotionEffect:xMotionEffect];
-        [_contactHeaderBackgroundImage addMotionEffect:yMotionEffect];
         
         [self.view addSubview:_contactHeaderBackgroundImage];
         
@@ -95,15 +81,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         //_contactHeaderView.layer.shadowRadius = 1.5;
         //_contactHeaderView.layer.shadowOpacity = 0.3;
         
-        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 56, kUserImageHeight, kUserImageHeight)];
+        _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 60, kUserImageHeight, kUserImageHeight)];
         _userImage.layer.cornerRadius = CGRectGetWidth(_userImage.frame) / 2;
         _userImage.contentMode = UIViewContentModeScaleAspectFill;
         _userImage.clipsToBounds = YES;
-        _userImage.layer.borderColor = [[UIColor whiteColor] CGColor];
-        _userImage.layer.borderWidth = 1.0f;
         [_contactHeaderView addSubview:_userImage];
         
-        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 15, CGRectGetWidth(frame) - 40, 40)];
+        _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 13, CGRectGetWidth(frame) - 40, 40)];
         _userName.backgroundColor = [UIColor clearColor];
         _userName.font = [UIFont fontWithName:kBoldFontName size:22.0f];
         _userName.textColor = [UIColor whiteColor];
@@ -239,14 +223,20 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     _userName.text = _contact.fullName;
     
     if (_contact.thumbnail) {
+        _userImage.layer.borderWidth = 1.0f;
+        _userImage.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.36f] CGColor];
         _userImage.image = _contact.thumbnail;
         _largeUserImage.image = _contact.thumbnail;
     }
     else {
+        //_userImage.layer.borderWidth = 0.0f;
+        //_userImage.layer.borderColor = nil;
+        _userImage.layer.borderWidth = 1.0f;
+        _userImage.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.36f] CGColor];
         [_userImage setImageWithString:_contact.fullName color:nil];
         _largeUserImage.image = nil;
     }
-        
+    
     // Update the blur view
     CGFloat newBlur = kLBBlurredImageDefaultBlurRadius;
     
