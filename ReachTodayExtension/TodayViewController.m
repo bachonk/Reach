@@ -45,7 +45,7 @@
 }
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsZero;
+    return defaultMarginInsets;
 }
 
 #pragma mark - Actions
