@@ -142,7 +142,7 @@ static const NSString *kAppStoreLink = @"";
         
         UILabel *mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, CGRectGetWidth(v.bounds) - 40, 50)];
         mainLabel.textColor = [UIColor colorWithWhite:0.1f alpha:1.0f];
-        mainLabel.font = [UIFont fontWithName:kFontName size:14];
+        mainLabel.font = [UIFont systemFontOfSize:14];
         mainLabel.textAlignment = NSTextAlignmentCenter;
         mainLabel.numberOfLines = 2;
         mainLabel.backgroundColor = v.backgroundColor;

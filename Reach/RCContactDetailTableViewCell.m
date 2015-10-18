@@ -19,7 +19,7 @@
         
         _secondaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 18, 200, 27)];
         _secondaryLabel.backgroundColor = [UIColor clearColor];
-        _secondaryLabel.font = [UIFont fontWithName:kBoldFontName size:13.0f];
+        _secondaryLabel.font = [UIFont boldSystemFontOfSize:13.0f];
         _secondaryLabel.textColor = COLOR_DEFAULT_RED;
         _secondaryLabel.textAlignment = NSTextAlignmentLeft;
         [self.contentView addSubview:_secondaryLabel];
@@ -33,7 +33,7 @@
         _notesTextView = [[UITextView alloc] initWithFrame:CGRectMake(12, 18, 200, 27)];
         _notesTextView.editable = YES;
         _notesTextView.returnKeyType = UIReturnKeyDone;
-        _notesTextView.font = [UIFont fontWithName:kLightFontName size:15.0f];
+        _notesTextView.font = [UIFont systemFontOfSize:15.0f];
         _notesTextView.backgroundColor = [UIColor clearColor];
         _notesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_notesTextView];

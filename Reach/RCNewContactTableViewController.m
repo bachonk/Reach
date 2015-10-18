@@ -56,7 +56,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     self.tableView.showsVerticalScrollIndicator = NO;
     
     _nameField = [[UITextField alloc] initWithFrame:CGRectMake(kCellPadding + kCellUserImageWidth + kCellPadding, kCellPadding, CGRectGetWidth(self.tableView.frame) - (kCellPadding * 3) - kCellUserImageWidth, kCellUserImageWidth)];
-    _nameField.font = [UIFont fontWithName:kBoldFontName size:20.0f];
+    _nameField.font = [UIFont boldSystemFontOfSize:20.0f];
     _nameField.placeholder = NSLocalizedString(@"Name", @"");
     _nameField.borderStyle = UITextBorderStyleNone;
     _nameField.backgroundColor = [UIColor clearColor];
@@ -75,7 +75,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     CGRect inputFrame = CGRectMake(kCellPadding + kCellAccessoryImageWidth + kCellPadding, kCellPadding, CGRectGetWidth(self.tableView.frame) - (kCellPadding * 3) - kCellAccessoryImageWidth, kCellAccessoryImageWidth);
     
     _phoneField = [[UITextField alloc] initWithFrame:inputFrame];
-    _phoneField.font = [UIFont fontWithName:kLightFontName size:16.0f];
+    _phoneField.font = [UIFont systemFontOfSize:16.0f];
     _phoneField.placeholder = NSLocalizedString(@"Phone", @"");
     _phoneField.borderStyle = UITextBorderStyleNone;
     _phoneField.backgroundColor = [UIColor clearColor];
@@ -87,7 +87,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     _phoneImage.image = [[UIImage imageNamed:@"phone-home-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
     _emailField = [[UITextField alloc] initWithFrame:inputFrame];
-    _emailField.font = [UIFont fontWithName:kLightFontName size:16.0f];
+    _emailField.font = [UIFont systemFontOfSize:16.0f];
     _emailField.placeholder = NSLocalizedString(@"Email", @"");
     _emailField.borderStyle = UITextBorderStyleNone;
     _emailField.backgroundColor = [UIColor clearColor];
@@ -101,7 +101,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     _emailImage.image = [[UIImage imageNamed:@"email-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
     _notesField = [[UITextField alloc] initWithFrame:inputFrame];
-    _notesField.font = [UIFont fontWithName:kLightFontName size:16.0f];
+    _notesField.font = [UIFont systemFontOfSize:16.0f];
     _notesField.backgroundColor = [UIColor clearColor];
     _notesField.placeholder = NSLocalizedString(@"Notes", @"");
     _notesField.borderStyle = UITextBorderStyleNone;

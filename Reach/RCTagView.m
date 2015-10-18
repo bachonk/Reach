@@ -9,7 +9,7 @@
 #import "RCTagView.h"
 #import "Definitions.h"
 
-#define TAG_FONT [UIFont fontWithName:kBoldFontName size:14]
+#define TAG_FONT [UIFont boldSystemFontOfSize:14]
 
 @interface RCTagView ()
 

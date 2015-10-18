@@ -133,7 +133,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
     NSString *firstName = [_contact.fullName length] ? [_contact.fullName componentsSeparatedByString:@" "][0] : NSLocalizedString(@"them", nil);
     CGSize nameSize = [firstName boundingRectWithSize:CGSizeMake(fullWidth - leftWidthMin - rightWidthMin, 20)
                                               options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                           attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kFontName size:kPickerRowTextSize],NSFontAttributeName, nil]context:nil].size;
+                                           attributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:kPickerRowTextSize],NSFontAttributeName, nil]context:nil].size;
     
     return nameSize.width + 20;
 }
@@ -193,7 +193,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
     
     UILabel *label = [[UILabel alloc] init];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:kFontName size:17.0f];
+    label.font = [UIFont systemFontOfSize:17.0f];
     label.textColor = [UIColor whiteColor];
     
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
@@ -218,7 +218,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             
             label.frame = CGRectMake(0, 0, remainder * 0.35, kPickerRowHeight);
             
-            label.font = [UIFont fontWithName:kExtraBoldFontName size:kPickerRowTextSize];
+            label.font = [UIFont boldSystemFontOfSize:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentRight;
             
             break;
@@ -228,7 +228,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             
             label.frame = CGRectMake(0, 0, nameWidth, kPickerRowHeight);
             
-            label.font = [UIFont fontWithName:kFontName size:kPickerRowTextSize];
+            label.font = [UIFont systemFontOfSize:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentCenter;
             
             break;
@@ -248,7 +248,7 @@ static CGFloat const kPickerRowHeight = 50.0f;
             
             label.frame = CGRectMake(0, 0, remainder * 0.65, kPickerRowHeight);
             
-            label.font = [UIFont fontWithName:kExtraBoldFontName size:kPickerRowTextSize];
+            label.font = [UIFont boldSystemFontOfSize:kPickerRowTextSize];
             label.textAlignment = NSTextAlignmentLeft;
             
             break;

@@ -10,14 +10,11 @@
 #import <MessageUI/MessageUI.h>
 #import "RCSwipeViewController.h"
 #import "RCPhoneController.h"
-#import "RCNavigationController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIView *windowBackgroundView;
-
-@property (strong, nonatomic) RCNavigationController *navigationController;
 
 @property (strong, nonatomic) RCSwipeViewController *viewController;
 

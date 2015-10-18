@@ -89,7 +89,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         _userName = [[UILabel alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(_userImage.frame) + 13, CGRectGetWidth(frame) - 40, 40)];
         _userName.backgroundColor = [UIColor clearColor];
-        _userName.font = [UIFont fontWithName:kBoldFontName size:22.0f];
+        _userName.font = [UIFont boldSystemFontOfSize:22.0f];
         _userName.textColor = [UIColor whiteColor];
         _userName.textAlignment = NSTextAlignmentCenter;
         _userName.adjustsFontSizeToFitWidth = YES;
@@ -107,7 +107,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         // Tag view
         _tagField = [[JSTokenField alloc] initWithFrame:CGRectMake(37, 0 + 4, CGRectGetWidth(frame) - 44, 27)];
-        _tagField.textField.font = [UIFont fontWithName:kLightFontName size:15.0f];
+        _tagField.textField.font = [UIFont systemFontOfSize:15.0f];
         _tagField.textField.placeholder = NSLocalizedString(@"Add tag...", nil);
         _tagField.textField.tintColor = COLOR_TAG_BLUE;
         _tagField.delegate = self;
@@ -186,6 +186,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.navigationController.navigationBar.shadowImage = [UIImage new];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                                      }];
     
     [UIView animateWithDuration:animated ? 0.82 : 0 delay:0 usingSpringWithDamping:0.75 initialSpringVelocity:0 options:0  animations:^{
         
@@ -204,8 +208,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [super viewWillDisappear:animated];
     
     [self.view endEditing:YES];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar"] forBarMetrics:UIBarMetricsDefault];
 }
 
 - (void)didReceiveMemoryWarning
@@ -694,7 +696,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         cell.mainLabel.frame = CGRectMake(12, 18, 200, 27);
         cell.mainLabel.backgroundColor = [UIColor clearColor];
-        cell.mainLabel.font = [UIFont fontWithName:kFontName size:20.0f];
+        cell.mainLabel.font = [UIFont systemFontOfSize:20.0f];
         cell.mainLabel.textColor = [UIColor blackColor];
         cell.mainLabel.textAlignment = NSTextAlignmentLeft;
         cell.mainLabel.adjustsFontSizeToFitWidth = YES;
@@ -719,7 +721,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.mainLabel.frame = CGRectMake(13, CGRectGetMaxY(cell.secondaryLabel.frame) + 1, CGRectGetWidth(_theTableView.frame) - 34, 27);
             cell.mainLabel.text = value;
-            cell.mainLabel.font = [UIFont fontWithName:kFontName size:20.0f];
+            cell.mainLabel.font = [UIFont systemFontOfSize:20.0f];
             cell.mainLabel.alpha = 1.0f;
             
             cell.buttonRight.frame = CGRectMake(CGRectGetWidth(_theTableView.frame) - kButtonWidth - kButtonPadding, kButtonPadding, kButtonWidth, kButtonWidth);
@@ -760,7 +762,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.mainLabel.frame = CGRectMake(kButtonWidth, 0, CGRectGetWidth(_theTableView.frame) - kButtonWidth - (kButtonPadding * 2), kMainLabelHeight);
             cell.mainLabel.text = email;
-            cell.mainLabel.font = [UIFont fontWithName:kFontName size:16.0f];
+            cell.mainLabel.font = [UIFont systemFontOfSize:16.0f];
             cell.mainLabel.alpha = 1.0f;
             
             cell.secondaryLabel.text = nil;
@@ -797,7 +799,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         {
             cell.mainLabel.frame = CGRectMake(kButtonWidth, 0, CGRectGetWidth(_theTableView.frame) - kButtonWidth - (kButtonPadding * 2), kMainLabelHeight);
             cell.mainLabel.text = [NSString stringWithFormat:@"linkedin.com/in/%@", _contact.linkedInId];
-            cell.mainLabel.font = [UIFont fontWithName:kBoldFontName size:16.0f];
+            cell.mainLabel.font = [UIFont boldSystemFontOfSize:16.0f];
             cell.mainLabel.alpha = 1.0f;
             
             cell.secondaryLabel.text = nil;
@@ -876,7 +878,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
                 cell.mainLabel.text = [NSString stringWithFormat:@"Created: %@", [_dateFormatter stringFromDate:_contact.createdAt]];
             }
             cell.mainLabel.numberOfLines = 0;
-            cell.mainLabel.font = [UIFont fontWithName:kBoldFontName size:12.0f];
+            cell.mainLabel.font = [UIFont boldSystemFontOfSize:12.0f];
             
             cell.delegate = nil;
             cell.panGestureRecognizer.enabled = NO;
@@ -997,6 +999,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             }
         }
         
+        [_userImage setCenterY:60 + (kUserImageHeight / 2)];
+        [_userName setCenterY:60 + kUserImageHeight + 13 + 20];
+        
         self.title = nil;
         
     }
@@ -1009,7 +1014,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderView.alpha = reminderAlpha;
         _largeUserImage.alpha = 0.0f;
         
-        if (yOffset > kHeaderHeight - 64) {
+        CGFloat imageYVal = 60 + (kUserImageHeight / 2);
+        [_userImage setCenterY:imageYVal - (yOffset * 0.5)];
+        
+        CGFloat nameYVal = 60 + kUserImageHeight + 13 + 20;
+        [_userName setCenterY:nameYVal - (yOffset * 1.32)];
+        
+        if (yOffset > 116.0f) {
             self.title = [_contact.fullName length] > 18 ? _contact.firstName : _contact.fullName;
         }
         else {
@@ -1024,6 +1035,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _contactHeaderBackgroundImage.transform = CGAffineTransformIdentity;
         
         _largeUserImage.alpha = 0.0f;
+        
+        [_userImage setCenterY:60 + (kUserImageHeight / 2)];
+        [_userName setCenterY:60 + kUserImageHeight + 13 + 20];
         
         self.title = nil;
         

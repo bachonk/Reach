@@ -77,9 +77,9 @@ static const CGFloat headerHeight = 34.0f;
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchAction)];
     
-    self.title = @" ";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.title = NSLocalizedString(@"Contacts", nil);
     
     self.view.backgroundColor = COLOR_TABLE_CELL;
 
@@ -113,12 +113,8 @@ static const CGFloat headerHeight = 34.0f;
      */
     
     searchHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, -CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]), CGRectGetWidth(self.view.frame), TOP_BAR_HEIGHT + statusBarHeight)];
-    searchHeaderView.backgroundColor = COLOR_NAVIGATION_BAR;
+    searchHeaderView.backgroundColor = [UIColor whiteColor];
     searchHeaderView.alpha = 0.0f;
-    
-    UIImageView *searchHeaderBgImage = [[UIImageView alloc] initWithFrame:searchHeaderView.bounds];
-    searchHeaderBgImage.image = [[UIImage imageNamed:@"search-bar.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
-    [searchHeaderView addSubview:searchHeaderBgImage];
     
     searchClearButton = [UIButton buttonWithType:UIButtonTypeSystem];
     searchClearButton.frame = CGRectMake(5, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), 40, 40);
@@ -138,7 +134,7 @@ static const CGFloat headerHeight = 34.0f;
     searchTextField.delegate = self;
     searchTextField.placeholder = NSLocalizedString(@"Search for contacts", nil);
     searchTextField.returnKeyType = UIReturnKeySearch;
-    searchTextField.font = [UIFont fontWithName:kLightFontName size:18.0f];
+    searchTextField.font = [UIFont systemFontOfSize:18.0f];
     searchTextField.textColor = [UIColor blackColor];
     searchTextField.tintColor = COLOR_DEFAULT_RED;
     [searchHeaderView addSubview:searchTextField];
@@ -199,7 +195,7 @@ static const CGFloat headerHeight = 34.0f;
     UILabel *newContactTitleLabel = [[UILabel alloc] initWithFrame:newContactTextFrame];
     newContactTitleLabel.backgroundColor = [UIColor clearColor];
     newContactTitleLabel.textAlignment = NSTextAlignmentCenter;
-    newContactTitleLabel.font = [UIFont fontWithName:kLightFontName size:18];
+    newContactTitleLabel.font = [UIFont systemFontOfSize:18];
     newContactTitleLabel.numberOfLines = 0;
     newContactTitleLabel.textColor = [UIColor blackColor];
     newContactTitleLabel.text = NSLocalizedString(@"New Contact", nil);
@@ -215,7 +211,7 @@ static const CGFloat headerHeight = 34.0f;
     contactHeaderRightButton.frame = CGRectMake(CGRectGetWidth(contactHeaderView.bounds) - 60, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), 55, 40);
     [contactHeaderRightButton setTitle:@"Save" forState:UIControlStateNormal];
     [contactHeaderRightButton setTitleColor:COLOR_DEFAULT_RED forState:UIControlStateNormal];
-    [contactHeaderRightButton.titleLabel setFont:[UIFont fontWithName:kBoldFontName size:17.0f]];
+    [contactHeaderRightButton.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0f]];
     [contactHeaderRightButton addTarget:self action:@selector(saveNewContact) forControlEvents:UIControlEventTouchUpInside];
     [contactHeaderView addSubview:contactHeaderRightButton];
     
@@ -246,6 +242,12 @@ static const CGFloat headerHeight = 34.0f;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setTintColor:COLOR_DEFAULT_RED];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName: [UIColor blackColor]
+                                                                      }];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -291,15 +293,7 @@ static const CGFloat headerHeight = 34.0f;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
-    
-    if (self.currentState == RCSwipeViewControllerStateSearching ||
-        self.currentState == RCSwipeViewControllerStateAddingContact) {
-        
-        return UIStatusBarStyleDefault;
-    
-    }
-    
-    return UIStatusBarStyleLightContent;
+    return UIStatusBarStyleDefault;
 }
 
 - (void)setNeedsStatusBarAppearanceUpdate {
@@ -476,14 +470,14 @@ static const CGFloat headerHeight = 34.0f;
 - (void)configureView {
     [theTableView reloadData];
     
+    /***
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     titleButton.frame = CGRectMake(0, 0, 140, 44);
     [titleButton addTarget:self action:@selector(presentListSelector) forControlEvents:UIControlEventTouchUpInside];
-    titleButton.titleLabel.font = [UIFont fontWithName:kLightFontName size:18.0f];
+    titleButton.titleLabel.font = [UIFont systemFontOfSize:18.0f];
     [titleButton setBackgroundImage:[[UIImage imageNamed:@"button-dropdown.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:0] forState:UIControlStateNormal];
     
     if (_listType == RCContactTypeLinkenIn) {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar-linkedin"] forBarMetrics:UIBarMetricsDefault];
         [searchClearButton setBackgroundImage:[[UIImage imageNamed:@"search-icon.png"] imageWithTintColor:COLOR_LINKEDIN_BLUE] forState:UIControlStateNormal];
         searchTextField.tintColor = COLOR_LINKEDIN_BLUE;
         
@@ -492,7 +486,6 @@ static const CGFloat headerHeight = 34.0f;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showMergeOptions)];
         
     } else {
-        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar"] forBarMetrics:UIBarMetricsDefault];
         [searchClearButton setBackgroundImage:[[UIImage imageNamed:@"search-icon.png"] imageWithTintColor:COLOR_DEFAULT_RED] forState:UIControlStateNormal];
         searchTextField.tintColor = COLOR_DEFAULT_RED;
         
@@ -503,7 +496,7 @@ static const CGFloat headerHeight = 34.0f;
     }
     
     [self.navigationItem setTitleView:titleButton];
-    
+    ***/
 }
 
 #pragma mark - Show/hide animations
@@ -1549,7 +1542,7 @@ static const CGFloat headerHeight = 34.0f;
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 82, CGRectGetWidth(theTableView.frame)-60, 60)];
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.font = [UIFont fontWithName:kBoldFontName size:23];
+        titleLabel.font = [UIFont boldSystemFontOfSize:23];
         titleLabel.numberOfLines = 0;
         titleLabel.textColor = COLOR_DEFAULT_RED;
         titleLabel.text = NSLocalizedString(@"Access to Contacts has been Denied :(", @"");
@@ -1584,7 +1577,7 @@ static const CGFloat headerHeight = 34.0f;
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.backgroundColor = _listType == RCContactTypeLinkenIn ? COLOR_LINKEDIN_BLUE : COLOR_DEFAULT_RED;
     titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.font = [UIFont fontWithName:kBoldFontName size:14];
+    titleLabel.font = [UIFont boldSystemFontOfSize:14];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.layer.cornerRadius = 12.0f;
     titleLabel.clipsToBounds = YES;

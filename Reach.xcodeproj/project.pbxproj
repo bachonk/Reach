@@ -40,7 +40,6 @@
 		C832F3CE1A4DF6310035F6C7 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850C1951EA8300C36452 /* tokenHighlighted@2x.png */; };
 		C832F3CF1A4DF6310035F6C7 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850D1951EA8300C36452 /* tokenNormal.png */; };
 		C832F3D01A4DF6310035F6C7 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850E1951EA8300C36452 /* tokenNormal@2x.png */; };
-		C84A913E1938064C009629D2 /* RCNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84A913D1938064C009629D2 /* RCNavigationController.m */; };
 		C84AEF9B191EA2A300C7F017 /* RCReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84AEF99191EA2A300C7F017 /* RCReminderViewController.m */; };
 		C84AEF9C191EA2A300C7F017 /* RCReminderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C84AEF9A191EA2A300C7F017 /* RCReminderViewController.xib */; };
 		C84AEFA41921F21A00C7F017 /* guide-indicator-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C84AEFA21921F21A00C7F017 /* guide-indicator-left@2x.png */; };
@@ -105,18 +104,6 @@
 		C8E815D2198FF20D00F789A8 /* RCMergeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E815D0198FF20C00F789A8 /* RCMergeViewController.m */; };
 		C8E815D3198FF20D00F789A8 /* RCMergeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E815D1198FF20C00F789A8 /* RCMergeViewController.xib */; };
 		C8E815D619905B9300F789A8 /* RCListSelectorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E815D519905B9300F789A8 /* RCListSelectorTableViewController.m */; };
-		C8E815EB1994793500F789A8 /* SourceSansPro-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815DF1994793500F789A8 /* SourceSansPro-Black.ttf */; };
-		C8E815EC1994793500F789A8 /* SourceSansPro-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E01994793500F789A8 /* SourceSansPro-BlackItalic.ttf */; };
-		C8E815ED1994793500F789A8 /* SourceSansPro-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E11994793500F789A8 /* SourceSansPro-Bold.ttf */; };
-		C8E815EE1994793500F789A8 /* SourceSansPro-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E21994793500F789A8 /* SourceSansPro-BoldItalic.ttf */; };
-		C8E815EF1994793500F789A8 /* SourceSansPro-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E31994793500F789A8 /* SourceSansPro-ExtraLight.ttf */; };
-		C8E815F01994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E41994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf */; };
-		C8E815F11994793500F789A8 /* SourceSansPro-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E51994793500F789A8 /* SourceSansPro-Italic.ttf */; };
-		C8E815F21994793500F789A8 /* SourceSansPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E61994793500F789A8 /* SourceSansPro-Light.ttf */; };
-		C8E815F31994793500F789A8 /* SourceSansPro-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E71994793500F789A8 /* SourceSansPro-LightItalic.ttf */; };
-		C8E815F41994793500F789A8 /* SourceSansPro-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E81994793500F789A8 /* SourceSansPro-Regular.ttf */; };
-		C8E815F51994793500F789A8 /* SourceSansPro-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815E91994793500F789A8 /* SourceSansPro-Semibold.ttf */; };
-		C8E815F61994793500F789A8 /* SourceSansPro-SemiboldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C8E815EA1994793500F789A8 /* SourceSansPro-SemiboldItalic.ttf */; };
 		C8E816161994794800F789A8 /* back-indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8E815F71994794800F789A8 /* back-indicator@2x.png */; };
 		C8E816171994794800F789A8 /* button-dropdown@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8E815F81994794800F789A8 /* button-dropdown@2x.png */; };
 		C8E816181994794800F789A8 /* close-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8E815F91994794800F789A8 /* close-icon@2x.png */; };
@@ -239,8 +226,6 @@
 		C832F3BC1A4DEFD80035F6C7 /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		C832F3BE1A4DEFD80035F6C7 /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		C8415E4418BAB67A0049A938 /* Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Definitions.h; sourceTree = "<group>"; };
-		C84A913C1938064C009629D2 /* RCNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNavigationController.h; sourceTree = "<group>"; };
-		C84A913D1938064C009629D2 /* RCNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNavigationController.m; sourceTree = "<group>"; };
 		C84AEF98191EA2A300C7F017 /* RCReminderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCReminderViewController.h; sourceTree = "<group>"; };
 		C84AEF99191EA2A300C7F017 /* RCReminderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCReminderViewController.m; sourceTree = "<group>"; };
 		C84AEF9A191EA2A300C7F017 /* RCReminderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCReminderViewController.xib; sourceTree = "<group>"; };
@@ -349,18 +334,6 @@
 		C8E815D1198FF20C00F789A8 /* RCMergeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCMergeViewController.xib; sourceTree = "<group>"; };
 		C8E815D419905B9300F789A8 /* RCListSelectorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCListSelectorTableViewController.h; sourceTree = "<group>"; };
 		C8E815D519905B9300F789A8 /* RCListSelectorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCListSelectorTableViewController.m; sourceTree = "<group>"; };
-		C8E815DF1994793500F789A8 /* SourceSansPro-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Black.ttf"; path = "Reach/Resources/SourceSansPro-Black.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E01994793500F789A8 /* SourceSansPro-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-BlackItalic.ttf"; path = "Reach/Resources/SourceSansPro-BlackItalic.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E11994793500F789A8 /* SourceSansPro-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Bold.ttf"; path = "Reach/Resources/SourceSansPro-Bold.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E21994793500F789A8 /* SourceSansPro-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-BoldItalic.ttf"; path = "Reach/Resources/SourceSansPro-BoldItalic.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E31994793500F789A8 /* SourceSansPro-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-ExtraLight.ttf"; path = "Reach/Resources/SourceSansPro-ExtraLight.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E41994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-ExtraLightItalic.ttf"; path = "Reach/Resources/SourceSansPro-ExtraLightItalic.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E51994793500F789A8 /* SourceSansPro-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Italic.ttf"; path = "Reach/Resources/SourceSansPro-Italic.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E61994793500F789A8 /* SourceSansPro-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Light.ttf"; path = "Reach/Resources/SourceSansPro-Light.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E71994793500F789A8 /* SourceSansPro-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-LightItalic.ttf"; path = "Reach/Resources/SourceSansPro-LightItalic.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E81994793500F789A8 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Regular.ttf"; path = "Reach/Resources/SourceSansPro-Regular.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815E91994793500F789A8 /* SourceSansPro-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-Semibold.ttf"; path = "Reach/Resources/SourceSansPro-Semibold.ttf"; sourceTree = SOURCE_ROOT; };
-		C8E815EA1994793500F789A8 /* SourceSansPro-SemiboldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SourceSansPro-SemiboldItalic.ttf"; path = "Reach/Resources/SourceSansPro-SemiboldItalic.ttf"; sourceTree = SOURCE_ROOT; };
 		C8E815F71994794800F789A8 /* back-indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back-indicator@2x.png"; path = "Reach/Resources/back-indicator@2x.png"; sourceTree = SOURCE_ROOT; };
 		C8E815F81994794800F789A8 /* button-dropdown@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button-dropdown@2x.png"; path = "Reach/Resources/button-dropdown@2x.png"; sourceTree = SOURCE_ROOT; };
 		C8E815F91994794800F789A8 /* close-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close-icon@2x.png"; path = "Reach/Resources/close-icon@2x.png"; sourceTree = SOURCE_ROOT; };
@@ -511,18 +484,6 @@
 				C8E816131994794800F789A8 /* text-inactive.png */,
 				C8E816141994794800F789A8 /* text-inactive@2x.png */,
 				C8E816151994794800F789A8 /* user-blank@2x.png */,
-				C8E815DF1994793500F789A8 /* SourceSansPro-Black.ttf */,
-				C8E815E01994793500F789A8 /* SourceSansPro-BlackItalic.ttf */,
-				C8E815E11994793500F789A8 /* SourceSansPro-Bold.ttf */,
-				C8E815E21994793500F789A8 /* SourceSansPro-BoldItalic.ttf */,
-				C8E815E31994793500F789A8 /* SourceSansPro-ExtraLight.ttf */,
-				C8E815E41994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf */,
-				C8E815E51994793500F789A8 /* SourceSansPro-Italic.ttf */,
-				C8E815E61994793500F789A8 /* SourceSansPro-Light.ttf */,
-				C8E815E71994793500F789A8 /* SourceSansPro-LightItalic.ttf */,
-				C8E815E81994793500F789A8 /* SourceSansPro-Regular.ttf */,
-				C8E815E91994793500F789A8 /* SourceSansPro-Semibold.ttf */,
-				C8E815EA1994793500F789A8 /* SourceSansPro-SemiboldItalic.ttf */,
 				C81C65B81932F5CE008CEF15 /* sample.png */,
 			);
 			name = Resources;
@@ -891,8 +852,6 @@
 				C8E4FABF17131908006FEEE0 /* Contact.m */,
 				C81C65BD1933D726008CEF15 /* RCExternalRequestHandler.h */,
 				C81C65BE1933D726008CEF15 /* RCExternalRequestHandler.m */,
-				C84A913C1938064C009629D2 /* RCNavigationController.h */,
-				C84A913D1938064C009629D2 /* RCNavigationController.m */,
 				C8E8153D198B2C5C00F789A8 /* LinkedIn */,
 				C8BF0649197254BC00A6BA09 /* ImageEffects */,
 				C884CC4B1971FA3300C92C88 /* Tags */,
@@ -934,10 +893,10 @@
 		C8F5C3D9190308F700DB7C52 /* Contact Details */ = {
 			isa = PBXGroup;
 			children = (
-				C81C65BA19330759008CEF15 /* RCContactDetailTableViewCell.h */,
-				C81C65BB19330759008CEF15 /* RCContactDetailTableViewCell.m */,
 				C88B923919721B35006B78E6 /* RCContactDetailViewController.h */,
 				C88B923A19721B35006B78E6 /* RCContactDetailViewController.m */,
+				C81C65BA19330759008CEF15 /* RCContactDetailTableViewCell.h */,
+				C81C65BB19330759008CEF15 /* RCContactDetailTableViewCell.m */,
 				C88B923B19721B35006B78E6 /* RCContactDetailViewController.xib */,
 				C8E815C3198E9A6F00F789A8 /* RCSocialDetailViewController.h */,
 				C8E815C4198E9A6F00F789A8 /* RCSocialDetailViewController.m */,
@@ -1045,48 +1004,38 @@
 				C8E816231994794800F789A8 /* notes-active@2x.png in Resources */,
 				C8E8161A1994794800F789A8 /* edit-icon@2x.png in Resources */,
 				C8E4FA9517131898006FEEE0 /* InfoPlist.strings in Resources */,
-				C8E815EF1994793500F789A8 /* SourceSansPro-ExtraLight.ttf in Resources */,
 				C8E816311994794800F789A8 /* text-active@2x.png in Resources */,
 				C8E816161994794800F789A8 /* back-indicator@2x.png in Resources */,
 				C8E8161C1994794800F789A8 /* email-active@2x.png in Resources */,
 				C8843CD0194D3DD4008E6DC9 /* RCPhoneController.xib in Resources */,
 				C8E4FA9D17131898006FEEE0 /* Default.png in Resources */,
-				C8E815F61994793500F789A8 /* SourceSansPro-SemiboldItalic.ttf in Resources */,
 				C8E4FA9F17131898006FEEE0 /* Default@2x.png in Resources */,
 				C8E8162A1994794800F789A8 /* remind-small@2x.png in Resources */,
 				C82685141951EA8300C36452 /* tokenNormal.png in Resources */,
 				C8E816341994794800F789A8 /* user-blank@2x.png in Resources */,
-				C8E815ED1994793500F789A8 /* SourceSansPro-Bold.ttf in Resources */,
 				C8E4FAA117131898006FEEE0 /* Default-568h@2x.png in Resources */,
 				C8B979D31AF6AA9600B2C00D /* LaunchScreen.xib in Resources */,
 				C8E4FAD817131909006FEEE0 /* InfoPlist.strings in Resources */,
 				C8E816201994794800F789A8 /* icon-phone@2x.png in Resources */,
-				C8E815F41994793500F789A8 /* SourceSansPro-Regular.ttf in Resources */,
-				C8E815F11994793500F789A8 /* SourceSansPro-Italic.ttf in Resources */,
 				C8E816291994794800F789A8 /* remind-active@2x.png in Resources */,
 				C81C65CE19345CAA008CEF15 /* RCTutorialViewController.xib in Resources */,
 				C84AEFB5192C498500C7F017 /* Localizable.strings in Resources */,
 				C8E816261994794800F789A8 /* phone-home-inactive.png in Resources */,
 				C8E8162F1994794800F789A8 /* tag-background@2x.png in Resources */,
-				C8E815EC1994793500F789A8 /* SourceSansPro-BlackItalic.ttf in Resources */,
 				C8E8161B1994794800F789A8 /* edit-profile-icon@2x.png in Resources */,
 				C8E816171994794800F789A8 /* button-dropdown@2x.png in Resources */,
 				C8E816181994794800F789A8 /* close-icon@2x.png in Resources */,
-				C8E815F31994793500F789A8 /* SourceSansPro-LightItalic.ttf in Resources */,
 				C8E8161F1994794800F789A8 /* icon-linkedin@2x.png in Resources */,
 				C8E816211994794800F789A8 /* navigation-bar-linkedin@2x.png in Resources */,
-				C8E815EB1994793500F789A8 /* SourceSansPro-Black.ttf in Resources */,
 				C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */,
 				C81C65B91932F5CE008CEF15 /* sample.png in Resources */,
 				C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */,
-				C8E815EE1994793500F789A8 /* SourceSansPro-BoldItalic.ttf in Resources */,
 				C8E815D3198FF20D00F789A8 /* RCMergeViewController.xib in Resources */,
 				C8E8162C1994794800F789A8 /* search-icon@2x.png in Resources */,
 				C82685151951EA8300C36452 /* tokenNormal@2x.png in Resources */,
 				C84AEF9C191EA2A300C7F017 /* RCReminderViewController.xib in Resources */,
 				C8E815C7198E9A6F00F789A8 /* RCSocialDetailViewController.xib in Resources */,
 				C8299A1E17B55C5600F16189 /* highlighter.png in Resources */,
-				C8E815F21994793500F789A8 /* SourceSansPro-Light.ttf in Resources */,
 				C8E8155D198C755300F789A8 /* 01-refresh@2x.png in Resources */,
 				C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */,
 				C8E816271994794800F789A8 /* phone-home-inactive@2x.png in Resources */,
@@ -1099,13 +1048,11 @@
 				C8E816221994794800F789A8 /* navigation-bar@2x.png in Resources */,
 				C8E816321994794800F789A8 /* text-inactive.png in Resources */,
 				C84AEFA41921F21A00C7F017 /* guide-indicator-left@2x.png in Resources */,
-				C8E815F51994793500F789A8 /* SourceSansPro-Semibold.ttf in Resources */,
 				C84AEFA51921F21A00C7F017 /* guide-indicator-right@2x.png in Resources */,
 				C84AEFB2192945F400C7F017 /* highlighter-selected@2x.png in Resources */,
 				C8299A1F17B55C5600F16189 /* highlighter@2x.png in Resources */,
 				C8E816361997E81F00F789A8 /* linkedin-active@2x.png in Resources */,
 				C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */,
-				C8E815F01994793500F789A8 /* SourceSansPro-ExtraLightItalic.ttf in Resources */,
 				C8E816191994794800F789A8 /* close-profile-icon@2x.png in Resources */,
 				C8E816281994794800F789A8 /* privacy-warning@2x.png in Resources */,
 				C8E8162D1994794800F789A8 /* settings-logo@2x.png in Resources */,
@@ -1185,7 +1132,6 @@
 				C8E8165B1997F7B500F789A8 /* MKAnnotationView+WebCache.m in Sources */,
 				C8E815D2198FF20D00F789A8 /* RCMergeViewController.m in Sources */,
 				C81C65BC19330759008CEF15 /* RCContactDetailTableViewCell.m in Sources */,
-				C84A913E1938064C009629D2 /* RCNavigationController.m in Sources */,
 				C8E815CA198EA06400F789A8 /* NSString+EmailAddresses.m in Sources */,
 				C8E815C2198D385000F789A8 /* LinkedInContact.m in Sources */,
 				C874048817A0D765002F8146 /* MNMToast.m in Sources */,
@@ -1383,14 +1329,24 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reach/Reach-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"CG_CONTEXT_SHOW_BACKTRACE=1",
+				);
 				INFOPLIST_FILE = "Reach/Reach-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1406,6 +1362,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = NO;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1414,6 +1371,10 @@
 				GCC_PREFIX_HEADER = "Reach/Reach-Prefix.pch";
 				INFOPLIST_FILE = "Reach/Reach-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

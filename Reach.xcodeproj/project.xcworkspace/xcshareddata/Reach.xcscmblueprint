@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1D4A6B7142B8AB0EA077046570FE8FDE6825670F",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "9FFD21C6A65AE22198CFA6E939DC569037B4263C" : 0,
+    "1D4A6B7142B8AB0EA077046570FE8FDE6825670F" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A709DF9D-84E3-45B7-A8ED-F22D43B6101C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "9FFD21C6A65AE22198CFA6E939DC569037B4263C" : "Code\/Open%20Source\/UIImageView-Letters",
+    "1D4A6B7142B8AB0EA077046570FE8FDE6825670F" : "Reach"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Reach",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Reach.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bachonk\/Reach.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1D4A6B7142B8AB0EA077046570FE8FDE6825670F"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/bachonk\/UIImageView-Letters.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9FFD21C6A65AE22198CFA6E939DC569037B4263C"
+    }
+  ]
+}

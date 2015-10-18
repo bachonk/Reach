@@ -18,40 +18,36 @@
     
     // Track the last time the app was opened
     _dateSinceLastOpen = [NSDate date];
-
+        
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    //self.windowBackgroundView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    //self.windowBackgroundView.backgroundColor = COLOR_WINDOW_BACKGROUND;
-    //[self.window addSubview:self.windowBackgroundView];
-    
     // Red nav bar appearance
-    //[[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setBackgroundImage:[[UIImage imageNamed:@"navigation-bar.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kLightFontName size:18.0f], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil]];
-    [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setTintColor:[UIColor whiteColor]];
-    [[UINavigationBar appearanceWhenContainedIn:[RCNavigationController class], nil] setBarTintColor:[UIColor whiteColor]];
+    [[UINavigationBar appearance] setTintColor:COLOR_DEFAULT_RED];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
     
+    /*
     // Gray nav bar appearance
     [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setBackgroundImage:[[UIImage imageNamed:@"search-bar"] stretchableImageWithLeftCapWidth:1 topCapHeight:1] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kLightFontName size:18.0f], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil]];
+    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18.0f], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil]];
     [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setTintColor:COLOR_DEFAULT_RED];
     [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setBarTintColor:COLOR_DEFAULT_RED];
     
     // Bar button appearance
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont fontWithName:kBoldFontName size:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil]
      setTitleTextAttributes:@{
-                              NSFontAttributeName : [UIFont fontWithName:kBoldFontName size:17.0f],
+                              NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f],
                               NSForegroundColorAttributeName : COLOR_DEFAULT_RED
                               }
      forState:UIControlStateNormal];
     [[UIBarButtonItem appearanceWhenContainedIn:[RCNavigationController class], nil]
      setTitleTextAttributes:@{
-                              NSFontAttributeName : [UIFont fontWithName:kBoldFontName size:17.0f],
+                              NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f],
                               NSForegroundColorAttributeName : [UIColor whiteColor]
                               }
      forState:UIControlStateNormal];
+    */
     
     // Back button
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"back-indicator"]];
@@ -62,10 +58,9 @@
 
     self.viewController = [[RCSwipeViewController alloc] init];
     
-    self.navigationController = [[RCNavigationController alloc] initWithRootViewController:self.viewController];
-    self.navigationController.navigationBar.translucent = YES;
+    UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.viewController];
     
-    self.window.rootViewController = self.navigationController;
+    self.window.rootViewController = navControl;
     [self.window makeKeyAndVisible];
     
     return YES;

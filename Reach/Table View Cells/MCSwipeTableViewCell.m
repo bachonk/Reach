@@ -140,13 +140,13 @@ secondStateIconName:(NSString *)secondIconName
     
     _mainLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_iconImageView.frame) + 9, 2, CGRectGetWidth(self.frame) - CGRectGetMaxX(_iconImageView.frame) - 16, kCellHeightDefault - 4)];
     _mainLabel.textColor = [UIColor colorWithWhite:0.02f alpha:1.0f];
-    _mainLabel.font = [UIFont fontWithName:kFontName size:19.0f];
+    _mainLabel.font = [UIFont systemFontOfSize:19.0f];
     _mainLabel.backgroundColor = _defaultCellBackgroundColor;
     [self.contentView addSubview:_mainLabel];
     
     _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(-370, 8, 320, 38)];
     _phoneLabel.textColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
-    _phoneLabel.font = [UIFont fontWithName:kBoldFontName size:14.0f];
+    _phoneLabel.font = [UIFont boldSystemFontOfSize:14.0f];
     _phoneLabel.backgroundColor = [UIColor clearColor];
     _phoneLabel.textAlignment = NSTextAlignmentRight;
     [self.contentView addSubview:_phoneLabel];

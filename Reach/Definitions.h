@@ -23,18 +23,13 @@ static const CGFloat kCellHeightDefault = 52.0f;
 static const CGFloat kCellImageInset = 3.0f;
 
 // Design
-static NSString *kFontName = @"Helvetica-Light";
-static NSString *kBoldFontName = @"Helvetica";
-static NSString *kExtraBoldFontName = @"Helvetica-Medium";
-static NSString *kItalicFontName = @"Helvetica-Italic";
-static NSString *kLightFontName = @"Helvetica-Light";
-#define CELL_TEXT_FONT_DEFAULT [UIFont fontWithName:kExtraBoldFontName size:18.0f]
-#define CELL_TEXT_FONT_DISABLED [UIFont fontWithName:kItalicFontName size:18.0f]
+#define CELL_TEXT_FONT_DEFAULT [UIFont systemFontOfSize:18.0f]
+#define CELL_TEXT_FONT_DISABLED [UIFont italicSystemFontOfSize:18.0f]
 
 // Colors
 #define COLOR_WINDOW_BACKGROUND [UIColor colorWithWhite:0.84f alpha:1.0f]
 #define COLOR_NAVIGATION_BAR [UIColor colorWithRed:202.0/255.0 green:202.0/255.0 blue:218.0/255.0f alpha:1.0f]
-#define COLOR_TABLE_CELL [UIColor colorWithWhite:0.98f alpha:1.0f]
+#define COLOR_TABLE_CELL [UIColor colorWithWhite:0.96f alpha:1.0f]
 #define COLOR_DEFAULT_RED [UIColor colorWithRed:222.0/255.0 green:67.0/255.0 blue:40.0/255.0f alpha:1.0f]
 
 #define COLOR_TEXT_BLUE [UIColor colorWithRed:25.0/255.0 green:144.0/255.0 blue:255.0/255.0 alpha:1.0f]
