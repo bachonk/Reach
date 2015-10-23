@@ -273,7 +273,7 @@ secondStateIconName:(NSString *)secondIconName
     if (percentage >= 0 && percentage < kMCStop1)
         alpha = percentage / kMCStop1;
     else if (percentage < 0 && percentage > -kMCStop1)
-        alpha = fabsf(percentage / kMCStop1);
+        alpha = fabs(percentage / kMCStop1);
     else alpha = 1.0;
 
     return alpha;

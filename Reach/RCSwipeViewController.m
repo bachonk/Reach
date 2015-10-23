@@ -13,6 +13,7 @@
 #import "RCSocialDetailViewController.h"
 
 #import "LinkedInManager.h"
+#import "BBBadgeBarButtonItem.h"
 
 #import "UIImageView+WebCache.h"
 
@@ -442,8 +443,11 @@ static const CGFloat headerHeight = 34.0f;
     if (_currentState == RCSwipeViewControllerStateAddingContact) {
         self.title = NSLocalizedString(@"New Contact", nil);
         
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(hideNewContactViewAnimated:)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewContact)];
+        [self.navigationItem setLeftBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(hideNewContactViewAnimated:)] animated:YES];
+        [self.navigationItem setRightBarButtonItems:@[
+                                                    [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewContact)]
+                                                    ]
+                                           animated:YES];
         
         [self setNeedsStatusBarAppearanceUpdate];
     }
@@ -451,7 +455,37 @@ static const CGFloat headerHeight = 34.0f;
         self.title = NSLocalizedString(@"Contacts", nil);
         
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchAction)];
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)];
+
+        NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        if (notifications) {
+            UIButton *but = [UIButton buttonWithType:UIButtonTypeSystem];
+            but.frame = CGRectMake(0, 0, 38, 38);
+            but.tintColor = COLOR_DEFAULT_RED;
+            [but setImage:[UIImage imageNamed:@"reminder-icon"] forState:UIControlStateNormal];
+            
+            // Create and add our custom BBBadgeBarButtonItem
+            BBBadgeBarButtonItem *notifButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:but];
+            // Set a value for the badge
+            notifButton.badgeValue = [NSString stringWithFormat:@"%lu", (unsigned long)[notifications count]];
+            notifButton.badgeOriginX = 24.0f;
+            notifButton.badgeOriginY = -2.0f;
+            
+            UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)];
+            
+            UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
+            spacer.width = 18.0f;
+            
+            [self.navigationItem setRightBarButtonItems:@[
+                                                        addButton,
+                                                        spacer,
+                                                        notifButton
+                                                        ]
+                                               animated:YES];
+        }
+        else {
+            [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)] animated:YES];
+        }
+        
     }
     
     /***
@@ -1844,8 +1878,7 @@ static const CGFloat headerHeight = 34.0f;
      * Scrolling on search view
      */
     
-    else if ((scrollView == _searchTableView && self.currentState == RCSwipeViewControllerStateSearching) ||
-        scrollView == _addContactTableViewController.tableView) {
+    else if (scrollView == _searchTableView && self.currentState == RCSwipeViewControllerStateSearching) {
         
         // Get the distance the view has dragged
         // Make damn sure that shit is positive, yo.
@@ -1975,10 +2008,6 @@ static const CGFloat headerHeight = 34.0f;
             
         } else if (offset < 0 && offset < -SCROLL_DRAG_DISTANCE) {
             [self hideSearchViewAnimated:YES dismissDownward:YES];
-        } else {
-            [UIView animateWithDuration:scrollView.decelerationRate / 2 animations:^{
-                _searchTableView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:SEARCH_BACKGROUND_OPACITY];
-            }];
         }
         
     }

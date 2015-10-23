@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>BBBadgeBarButtonItem.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KINWebBrowser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,17 +52,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8A2769D57E31581F8149D8AE17AE0123</key>
+		<key>60DB584E86D13FB12DB60A5B24E4FE75</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8F14AA3448ED6418DA4391D0790BB378</key>
+		<key>8096635532ABCA92F683DB93822E676E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A19510010E63E131C4A2CCB4D9939677</key>
+		<key>98136E79302E396118A3CFF32F59E57F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,12 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E54454C10840236E6D5F0A1BFB92EA6B</key>
+		<key>C4AF448CCDB8139E5ADD7D1BDBBD63E8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E68134E6B16EE30EAA68BB893A311986</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EB7CB0D2BD4AF848E538A6156F6814C8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
