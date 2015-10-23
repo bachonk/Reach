@@ -26,36 +26,48 @@
     [[UINavigationBar appearance] setTintColor:COLOR_DEFAULT_RED];
     [[UINavigationBar appearance] setBarTintColor:[UIColor whiteColor]];
     
-    /*
-    // Gray nav bar appearance
-    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setBackgroundImage:[[UIImage imageNamed:@"search-bar"] stretchableImageWithLeftCapWidth:1 topCapHeight:1] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:18.0f], NSFontAttributeName, [UIColor blackColor], NSForegroundColorAttributeName, nil]];
-    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setTintColor:COLOR_DEFAULT_RED];
-    [[UINavigationBar appearanceWhenContainedIn:[UINavigationController class], nil] setBarTintColor:COLOR_DEFAULT_RED];
-    
-    // Bar button appearance
-    [[UIBarButtonItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:17.0f], NSFontAttributeName, nil] forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationController class], nil]
-     setTitleTextAttributes:@{
-                              NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f],
-                              NSForegroundColorAttributeName : COLOR_DEFAULT_RED
-                              }
-     forState:UIControlStateNormal];
-    [[UIBarButtonItem appearanceWhenContainedIn:[RCNavigationController class], nil]
-     setTitleTextAttributes:@{
-                              NSFontAttributeName : [UIFont boldSystemFontOfSize:17.0f],
-                              NSForegroundColorAttributeName : [UIColor whiteColor]
-                              }
-     forState:UIControlStateNormal];
-    */
-    
     // Back button
     [[UINavigationBar appearance] setBackIndicatorImage:[UIImage imageNamed:@"back-indicator"]];
     [[UINavigationBar appearance] setBackIndicatorTransitionMaskImage:[UIImage imageNamed:@"back-indicator"]];
     
     // Startup Crashlytics
     [Crashlytics startWithAPIKey:@"19a3cbb17a05a126e819c4e05c7c9e61a4f5fb8e"];
-
+    
+    // Register local notifications
+    UIMutableUserNotificationAction *action1;
+    action1 = [[UIMutableUserNotificationAction alloc] init];
+    [action1 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action1 setTitle:kLocalNotificationActionText];
+    [action1 setIdentifier:kLocalNotificationActionText];
+    [action1 setDestructive:NO];
+    [action1 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationAction *action2;
+    action2 = [[UIMutableUserNotificationAction alloc] init];
+    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setTitle:kLocalNotificationActionCall];
+    [action2 setIdentifier:kLocalNotificationActionCall];
+    [action2 setDestructive:NO];
+    [action2 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationCategory *actionCategory;
+    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
+    [actionCategory setIdentifier:kLocalNotificationActionCategory];
+    [actionCategory setActions:@[action1, action2]
+                    forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObject:actionCategory];
+    UIUserNotificationType types = (UIUserNotificationTypeAlert|
+                                    UIUserNotificationTypeSound|
+                                    UIUserNotificationTypeBadge);
+    
+    UIUserNotificationSettings *settings;
+    settings = [UIUserNotificationSettings settingsForTypes:types
+                                                 categories:categories];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    
+    // Setup view controllers
     self.viewController = [[RCSwipeViewController alloc] init];
     
     UINavigationController *navControl = [[UINavigationController alloc] initWithRootViewController:self.viewController];

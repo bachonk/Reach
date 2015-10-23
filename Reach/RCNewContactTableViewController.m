@@ -112,12 +112,11 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     _notesImage = [[UIImageView alloc] initWithFrame:CGRectMake(kCellPadding, kCellPadding, kCellAccessoryImageWidth, kCellAccessoryImageWidth)];
     _notesImage.image = [[UIImage imageNamed:@"notes-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
-    inputFrame.origin.y = 8.8;
-    inputFrame.origin.x = inputFrame.origin.x - 3;
-    _tagField = [[JSTokenField alloc] initWithFrame:inputFrame];
-    _tagField.textField.font = _emailField.font;
-    _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
-    _tagField.textField.tintColor = COLOR_TAG_BLUE;
+    _tagField = [[TLTagsControl alloc] initWithFrame:inputFrame];
+    _tagField.tagsBackgroundColor = COLOR_TAG_BLUE;
+    _tagField.tagsTextColor = [UIColor whiteColor];
+    _tagField.tagsDeleteButtonColor = [UIColor whiteColor];
+    _tagField.tagPlaceholder = NSLocalizedString(@"Tags", nil);
     _tagField.delegate = self;
     
     _tagImage = [[UIImageView alloc] initWithFrame:CGRectMake(kCellPadding, kCellPadding, kCellAccessoryImageWidth, kCellAccessoryImageWidth)];
@@ -140,13 +139,13 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     _notesField.text = nil;
     _userImage = nil;
     [_userImageButton setBackgroundImage:[[UIImage imageNamed:@"user-blank"] imageWithTintColor:COLOR_IMAGE_DEFAULT] forState:UIControlStateNormal];
-    [_tagField removeAllTokens];
+    [_tagField.tags removeAllObjects];
     
     [self.tableView reloadData];
 }
 
 - (BOOL)hasData {
-    return [_nameField.text length] || [_phoneField.text length] || [_emailField.text length] || [_tagField.tokens count] || _userImage;
+    return [_nameField.text length] || [_phoneField.text length] || [_emailField.text length] || [_tagField.tags count] || _userImage;
 }
 
 - (ABRecordRef)getContactRef {
@@ -213,13 +212,13 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     // Set notes & tags
     NSMutableString *notesString = [NSMutableString stringWithString:_notesField.text];
     
-    if ([_tagField.tokens count]) {
+    if ([_tagField.tags count]) {
         // Has tags
         
         [notesString appendString:kContactTagSeparator];
         
-        for (UIButton *token in _tagField.tokens) {
-            [notesString appendFormat:@"#%@ ", token.titleLabel.text];
+        for (NSString *tag in _tagField.tags) {
+            [notesString appendFormat:@"#%@ ", tag];
         }
         
     }
@@ -398,7 +397,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
         }
         case RCNewContactRowTags:
         {
-            [_tagField.textField becomeFirstResponder];
+            [_tagField becomeFirstResponder];
             break;
         }
         case RCNewContactRowNotes:
@@ -510,7 +509,13 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     return YES;
 }
 
-#pragma mark - JSTokenFieldDelegate
+#pragma mark - Token Field Delegate
+
+- (void)tagsControl:(TLTagsControl *)tagsControl tappedAtIndex:(NSInteger)index {
+    
+}
+
+/*
 
 - (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
     _tagImage.image = [[UIImage imageNamed:@"tag-active"] imageWithTintColor:COLOR_TAG_BLUE];
@@ -565,6 +570,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     
     return NO;
 }
+ */
 
 #pragma mark - Action Sheet Delegate
 

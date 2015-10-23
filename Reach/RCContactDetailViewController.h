@@ -11,7 +11,7 @@
 
 #import "UIImageView+Letters.h"
 #import "RCContactDetailTableViewCell.h"
-#import "JSTokenField.h"
+#import "TLTagsControl.h"
 #import "FXBlurView.h"
 #import "RCMergeViewController.h"
 
@@ -23,7 +23,7 @@
 
 @end
 
-@interface RCContactDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, JSTokenFieldDelegate, MCSwipeTableViewCellDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, RCReminderViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface RCContactDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, MCSwipeTableViewCellDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, RCReminderViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UITableView *theTableView;
 
@@ -32,7 +32,7 @@
 @property (nonatomic, strong) UIView *blurView;
 @property (nonatomic, strong) UIImageView *userImage;
 @property (nonatomic, strong) UILabel *userName;
-@property (nonatomic, strong) JSTokenField *tagField;
+@property (nonatomic, strong) TLTagsControl *tagField;
 @property (nonatomic, strong) UIView *footerView;
 
 @property (nonatomic, strong) UIButton *closeButton;

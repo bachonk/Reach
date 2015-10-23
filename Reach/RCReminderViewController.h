@@ -19,17 +19,14 @@
 
 @end
 
-@interface RCReminderViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIScrollViewDelegate>
+@interface RCReminderViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
 @property (nonatomic, assign) id<RCReminderViewControllerDelegate> delegate;
 
-@property (nonatomic, weak) IBOutlet UIScrollView *containerScrollView;
-
 @property (nonatomic, weak) IBOutlet UIView *headerLabelContainer;
-@property (nonatomic, weak) IBOutlet UIPickerView *reminderPicker;
-@property (nonatomic, strong) UIView *whiteSeparatorView;
 
 @property (nonatomic, weak) IBOutlet UIDatePicker *datePicker;
+@property (nonatomic, weak) IBOutlet UIPickerView *pickerView;
 
 @property (nonatomic, weak) IBOutlet UITextField *detailsTextField;
 @property (nonatomic, weak) IBOutlet UIButton *cancelButton;

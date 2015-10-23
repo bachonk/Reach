@@ -14,9 +14,6 @@
 #import "RCSocialDetailViewController.h"
 #import "LinkedInManager.h"
 
-CGFloat const kMGOffsetEffects = 40.0;
-CGFloat const kMGOffsetBlurEffect = 2.0;
-
 #define BACKGROUND_COLOR_TRANSLUCENT [UIColor colorWithWhite:0.05f alpha:0.4f]
 #define BACKGROUND_WHITE_TRANSLUCENT [UIColor colorWithWhite:0.88f alpha:0.2f]
 
@@ -106,10 +103,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         [self.view addSubview:_contactHeaderView];
         
         // Tag view
-        _tagField = [[JSTokenField alloc] initWithFrame:CGRectMake(37, 0 + 4, CGRectGetWidth(frame) - 44, 27)];
-        _tagField.textField.font = [UIFont systemFontOfSize:15.0f];
-        _tagField.textField.placeholder = NSLocalizedString(@"Add tag...", nil);
-        _tagField.textField.tintColor = COLOR_TAG_BLUE;
+        _tagField = [[TLTagsControl alloc] initWithFrame:CGRectMake(37, 0 + 4, CGRectGetWidth(frame) - 44, 27)];
+        //_tagField.textField.font = [UIFont systemFontOfSize:15.0f];
+        //_tagField.textField.placeholder = NSLocalizedString(@"Add tag...", nil);
+        //_tagField.textField.tintColor = COLOR_TAG_BLUE;
         _tagField.delegate = self;
         
         // Set up the main table view container
@@ -255,10 +252,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     // Temporarily disable delegate
     _tagField.delegate = nil;
     
+#warning CHeck this out
+    /*
     [_tagField removeAllTokens];
     for (NSString *tag in _contact.tags) {
         [_tagField addTokenWithTitle:tag representedObject:nil];
     }
+     */
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -1152,93 +1152,93 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 
 #pragma mark - Token Delegate
 
-- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj {
-    
-    [_contact saveTag:title];
-    
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController saveAddressBook];
-    
-}
-
-- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj {
-    
-    [_contact deleteTag:title];
-    
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController saveAddressBook];
-    
-}
-
-- (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
-    
-    UIEdgeInsets tableInsets = _theTableView.contentInset;
-    tableInsets.bottom = 260;
-    _theTableView.contentInset = tableInsets;
-    
-    [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionTags] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        for (UITableViewCell *cell in _theTableView.visibleCells) {
-            if ([_theTableView indexPathForCell:cell].section != RCContactSectionTags) {
-                cell.contentView.alpha = 0.2f;
-            }
-        }
-    }];
-
-}
-
-- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField {
-
-    UIEdgeInsets tableInsets = _theTableView.contentInset;
-    tableInsets.bottom = 0;
-    tableInsets.top = kHeaderHeight - 64;
-    _theTableView.contentInset = tableInsets;
-    
-    [UIView animateWithDuration:0.2 animations:^{
-        for (UITableViewCell *cell in _theTableView.visibleCells) {
-            cell.contentView.alpha = 1.0f;
-        }
-    }];
-
-}
-
-
-- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
-{
-	//[_toRecipients removeObjectAtIndex:index];
-	//NSLog(@"Deleted token %d\n%@", index, _toRecipients);
-    
-    if (![_tagField.tokens count]) {
-        _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
-    }
-    
-}
-
-- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
-    NSMutableString *recipient = [NSMutableString string];
-	
-	NSMutableCharacterSet *charSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
-	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-	
-    NSString *rawStr = [[tokenField textField] text];
-	for (int i = 0; i < [rawStr length]; i++)
-	{
-		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
-		{
-			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
-		}
-	}
-    
-    if ([rawStr length])
-	{
-		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
-	}
-    
-    tokenField.textField.text = nil;
-    
-    return NO;
-}
+//- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj {
+//    
+//    [_contact saveTag:title];
+//    
+//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [delegate.viewController saveAddressBook];
+//    
+//}
+//
+//- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj {
+//    
+//    [_contact deleteTag:title];
+//    
+//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+//    [delegate.viewController saveAddressBook];
+//    
+//}
+//
+//- (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
+//    
+//    UIEdgeInsets tableInsets = _theTableView.contentInset;
+//    tableInsets.bottom = 260;
+//    _theTableView.contentInset = tableInsets;
+//    
+//    [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionTags] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//    
+//    [UIView animateWithDuration:0.2 animations:^{
+//        for (UITableViewCell *cell in _theTableView.visibleCells) {
+//            if ([_theTableView indexPathForCell:cell].section != RCContactSectionTags) {
+//                cell.contentView.alpha = 0.2f;
+//            }
+//        }
+//    }];
+//
+//}
+//
+//- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField {
+//
+//    UIEdgeInsets tableInsets = _theTableView.contentInset;
+//    tableInsets.bottom = 0;
+//    tableInsets.top = kHeaderHeight - 64;
+//    _theTableView.contentInset = tableInsets;
+//    
+//    [UIView animateWithDuration:0.2 animations:^{
+//        for (UITableViewCell *cell in _theTableView.visibleCells) {
+//            cell.contentView.alpha = 1.0f;
+//        }
+//    }];
+//
+//}
+//
+//
+//- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
+//{
+//	//[_toRecipients removeObjectAtIndex:index];
+//	//NSLog(@"Deleted token %d\n%@", index, _toRecipients);
+//    
+//    if (![_tagField.tokens count]) {
+//        _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
+//    }
+//    
+//}
+//
+//- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+//    NSMutableString *recipient = [NSMutableString string];
+//	
+//	NSMutableCharacterSet *charSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+//	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+//	
+//    NSString *rawStr = [[tokenField textField] text];
+//	for (int i = 0; i < [rawStr length]; i++)
+//	{
+//		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
+//		{
+//			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
+//		}
+//	}
+//    
+//    if ([rawStr length])
+//	{
+//		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
+//	}
+//    
+//    tokenField.textField.text = nil;
+//    
+//    return NO;
+//}
 
 #pragma mark - Action Sheet Delegate
 

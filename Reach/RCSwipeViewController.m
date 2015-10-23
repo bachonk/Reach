@@ -12,6 +12,8 @@
 #import "RCSettingsTableViewController.h"
 #import "RCSocialDetailViewController.h"
 
+#import "RCRemindListTableViewController.h"
+
 #import "LinkedInManager.h"
 #import "BBBadgeBarButtonItem.h"
 
@@ -49,6 +51,13 @@ static const CGFloat headerHeight = 34.0f;
 
 @property (nonatomic, strong) RCContactDetailViewController *contactDetailViewController;
 - (void)showContactDetails:(Contact *)contact;
+
+/////////////////////
+//
+// Reminders
+/////////////////////
+
+- (void)showRemindersList;
 
 /////////////////////
 //
@@ -462,6 +471,7 @@ static const CGFloat headerHeight = 34.0f;
             but.frame = CGRectMake(0, 0, 38, 38);
             but.tintColor = COLOR_DEFAULT_RED;
             [but setImage:[UIImage imageNamed:@"reminder-icon"] forState:UIControlStateNormal];
+            [but addTarget:self action:@selector(showRemindersList) forControlEvents:UIControlEventTouchUpInside];
             
             // Create and add our custom BBBadgeBarButtonItem
             BBBadgeBarButtonItem *notifButton = [[BBBadgeBarButtonItem alloc] initWithCustomUIButton:but];
@@ -473,7 +483,7 @@ static const CGFloat headerHeight = 34.0f;
             UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)];
             
             UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
-            spacer.width = 18.0f;
+            spacer.width = 16.0f;
             
             [self.navigationItem setRightBarButtonItems:@[
                                                         addButton,
@@ -2121,6 +2131,15 @@ static const CGFloat headerHeight = 34.0f;
     [self presentViewController:nav animated:YES completion:^{
         
     }];
+    
+}
+
+- (void)showRemindersList {
+    
+    RCRemindListTableViewController *list = [[RCRemindListTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:list];
+    
+    [self presentViewController:navController animated:YES completion:nil];
     
 }
 

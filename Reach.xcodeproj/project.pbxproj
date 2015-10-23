@@ -20,26 +20,12 @@
 		C81C65CD19345CAA008CEF15 /* RCTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65CB19345CAA008CEF15 /* RCTutorialViewController.m */; };
 		C81C65CE19345CAA008CEF15 /* RCTutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */; };
 		C82684FB194FF04700C36452 /* RCNewContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */; };
-		C826850F1951EA8300C36452 /* JSBackspaceReportingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C82685061951EA8300C36452 /* JSBackspaceReportingTextField.m */; };
-		C82685101951EA8300C36452 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C82685081951EA8300C36452 /* JSTokenButton.m */; };
-		C82685111951EA8300C36452 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = C826850A1951EA8300C36452 /* JSTokenField.m */; };
-		C82685121951EA8300C36452 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850B1951EA8300C36452 /* tokenHighlighted.png */; };
-		C82685131951EA8300C36452 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850C1951EA8300C36452 /* tokenHighlighted@2x.png */; };
-		C82685141951EA8300C36452 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850D1951EA8300C36452 /* tokenNormal.png */; };
-		C82685151951EA8300C36452 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850E1951EA8300C36452 /* tokenNormal@2x.png */; };
 		C8299A1E17B55C5600F16189 /* highlighter.png in Resources */ = {isa = PBXBuildFile; fileRef = C8299A1C17B55C5600F16189 /* highlighter.png */; };
 		C8299A1F17B55C5600F16189 /* highlighter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8299A1D17B55C5600F16189 /* highlighter@2x.png */; };
 		C832F3B71A4DEFD80035F6C7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C832F3A21A4DEB110035F6C7 /* NotificationCenter.framework */; };
 		C832F3BD1A4DEFD80035F6C7 /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C832F3BC1A4DEFD80035F6C7 /* TodayViewController.m */; };
 		C832F3BF1A4DEFD80035F6C7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C832F3BE1A4DEFD80035F6C7 /* MainInterface.storyboard */; };
 		C832F3C21A4DEFD80035F6C7 /* ReachTodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C832F3B61A4DEFD80035F6C7 /* ReachTodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C832F3CA1A4DF62E0035F6C7 /* JSBackspaceReportingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C82685061951EA8300C36452 /* JSBackspaceReportingTextField.m */; };
-		C832F3CB1A4DF62E0035F6C7 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C82685081951EA8300C36452 /* JSTokenButton.m */; };
-		C832F3CC1A4DF62E0035F6C7 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = C826850A1951EA8300C36452 /* JSTokenField.m */; };
-		C832F3CD1A4DF6310035F6C7 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850B1951EA8300C36452 /* tokenHighlighted.png */; };
-		C832F3CE1A4DF6310035F6C7 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850C1951EA8300C36452 /* tokenHighlighted@2x.png */; };
-		C832F3CF1A4DF6310035F6C7 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850D1951EA8300C36452 /* tokenNormal.png */; };
-		C832F3D01A4DF6310035F6C7 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C826850E1951EA8300C36452 /* tokenNormal@2x.png */; };
 		C84AEF9B191EA2A300C7F017 /* RCReminderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C84AEF99191EA2A300C7F017 /* RCReminderViewController.m */; };
 		C84AEF9C191EA2A300C7F017 /* RCReminderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C84AEF9A191EA2A300C7F017 /* RCReminderViewController.xib */; };
 		C84AEFA41921F21A00C7F017 /* guide-indicator-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C84AEFA21921F21A00C7F017 /* guide-indicator-left@2x.png */; };
@@ -148,6 +134,7 @@
 		C8E816741998059100F789A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E816731998059100F789A8 /* Crashlytics.framework */; };
 		C8E816F3199EA89E00F789A8 /* RCMergeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */; };
 		C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */; };
+		C8F154381BD9C7EC003EA828 /* RCRemindListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
 		C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8F5C3C51902E85000DB7C52 /* Images.xcassets */; };
 		C8F5C3E019030A5200DB7C52 /* RCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */; };
 		DE7010462624C1E2BE874837 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5987C013E52DAC8FC833650A /* libPods.a */; };
@@ -201,16 +188,6 @@
 		C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCTutorialViewController.xib; sourceTree = "<group>"; };
 		C82684F9194FF04700C36452 /* RCNewContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNewContactTableViewController.h; sourceTree = "<group>"; };
 		C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNewContactTableViewController.m; sourceTree = "<group>"; };
-		C82685051951EA8300C36452 /* JSBackspaceReportingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBackspaceReportingTextField.h; sourceTree = "<group>"; };
-		C82685061951EA8300C36452 /* JSBackspaceReportingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBackspaceReportingTextField.m; sourceTree = "<group>"; };
-		C82685071951EA8300C36452 /* JSTokenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenButton.h; sourceTree = "<group>"; };
-		C82685081951EA8300C36452 /* JSTokenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenButton.m; sourceTree = "<group>"; };
-		C82685091951EA8300C36452 /* JSTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenField.h; sourceTree = "<group>"; };
-		C826850A1951EA8300C36452 /* JSTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenField.m; sourceTree = "<group>"; };
-		C826850B1951EA8300C36452 /* tokenHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenHighlighted.png; sourceTree = "<group>"; };
-		C826850C1951EA8300C36452 /* tokenHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenHighlighted@2x.png"; sourceTree = "<group>"; };
-		C826850D1951EA8300C36452 /* tokenNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenNormal.png; sourceTree = "<group>"; };
-		C826850E1951EA8300C36452 /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
 		C8299A1C17B55C5600F16189 /* highlighter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = highlighter.png; sourceTree = "<group>"; };
 		C8299A1D17B55C5600F16189 /* highlighter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "highlighter@2x.png"; sourceTree = "<group>"; };
 		C832F3A21A4DEB110035F6C7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -379,6 +356,8 @@
 		C8E816F0199EA89E00F789A8 /* RCMergeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCMergeTableViewCell.h; sourceTree = "<group>"; };
 		C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCMergeTableViewCell.m; sourceTree = "<group>"; };
 		C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCMergeTableViewCell.xib; sourceTree = "<group>"; };
+		C8F154361BD9C7EC003EA828 /* RCRemindListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRemindListTableViewController.h; sourceTree = "<group>"; };
+		C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRemindListTableViewController.m; sourceTree = "<group>"; };
 		C8F5C3C51902E85000DB7C52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8F5C3DE19030A5200DB7C52 /* RCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSettingsTableViewController.h; sourceTree = "<group>"; };
 		C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSettingsTableViewController.m; sourceTree = "<group>"; };
@@ -497,23 +476,6 @@
 			name = "New Contact";
 			sourceTree = "<group>";
 		};
-		C82685041951EA8300C36452 /* JSTokenField */ = {
-			isa = PBXGroup;
-			children = (
-				C82685051951EA8300C36452 /* JSBackspaceReportingTextField.h */,
-				C82685061951EA8300C36452 /* JSBackspaceReportingTextField.m */,
-				C82685071951EA8300C36452 /* JSTokenButton.h */,
-				C82685081951EA8300C36452 /* JSTokenButton.m */,
-				C82685091951EA8300C36452 /* JSTokenField.h */,
-				C826850A1951EA8300C36452 /* JSTokenField.m */,
-				C826850B1951EA8300C36452 /* tokenHighlighted.png */,
-				C826850C1951EA8300C36452 /* tokenHighlighted@2x.png */,
-				C826850D1951EA8300C36452 /* tokenNormal.png */,
-				C826850E1951EA8300C36452 /* tokenNormal@2x.png */,
-			);
-			path = JSTokenField;
-			sourceTree = "<group>";
-		};
 		C832F3B81A4DEFD80035F6C7 /* ReachTodayExtension */ = {
 			isa = PBXGroup;
 			children = (
@@ -578,6 +540,8 @@
 				C84AEF98191EA2A300C7F017 /* RCReminderViewController.h */,
 				C84AEF99191EA2A300C7F017 /* RCReminderViewController.m */,
 				C84AEF9A191EA2A300C7F017 /* RCReminderViewController.xib */,
+				C8F154361BD9C7EC003EA828 /* RCRemindListTableViewController.h */,
+				C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */,
 			);
 			name = Reminder;
 			sourceTree = "<group>";
@@ -802,7 +766,6 @@
 				C8BF0649197254BC00A6BA09 /* ImageEffects */,
 				C884CC4B1971FA3300C92C88 /* Tags */,
 				C81C65C019342E67008CEF15 /* Categories */,
-				C82685041951EA8300C36452 /* JSTokenField */,
 				C8E816391997F7B500F789A8 /* SDWebImage */,
 				C81C65A0193149A5008CEF15 /* FXBlurView */,
 				C874047F17A0D765002F8146 /* MNMToast */,
@@ -944,11 +907,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C832F3D01A4DF6310035F6C7 /* tokenNormal@2x.png in Resources */,
-				C832F3CF1A4DF6310035F6C7 /* tokenNormal.png in Resources */,
 				C832F3BF1A4DEFD80035F6C7 /* MainInterface.storyboard in Resources */,
-				C832F3CE1A4DF6310035F6C7 /* tokenHighlighted@2x.png in Resources */,
-				C832F3CD1A4DF6310035F6C7 /* tokenHighlighted.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -968,7 +927,6 @@
 				C8E4FA9D17131898006FEEE0 /* Default.png in Resources */,
 				C8E4FA9F17131898006FEEE0 /* Default@2x.png in Resources */,
 				C8E8162A1994794800F789A8 /* remind-small@2x.png in Resources */,
-				C82685141951EA8300C36452 /* tokenNormal.png in Resources */,
 				C8E816341994794800F789A8 /* user-blank@2x.png in Resources */,
 				C8E4FAA117131898006FEEE0 /* Default-568h@2x.png in Resources */,
 				C8B979D31AF6AA9600B2C00D /* LaunchScreen.xib in Resources */,
@@ -989,19 +947,16 @@
 				C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */,
 				C8E815D3198FF20D00F789A8 /* RCMergeViewController.xib in Resources */,
 				C8E8162C1994794800F789A8 /* search-icon@2x.png in Resources */,
-				C82685151951EA8300C36452 /* tokenNormal@2x.png in Resources */,
 				C84AEF9C191EA2A300C7F017 /* RCReminderViewController.xib in Resources */,
 				C8E815C7198E9A6F00F789A8 /* RCSocialDetailViewController.xib in Resources */,
 				C8299A1E17B55C5600F16189 /* highlighter.png in Resources */,
 				C8E8155D198C755300F789A8 /* 01-refresh@2x.png in Resources */,
 				C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */,
 				C8E816271994794800F789A8 /* phone-home-inactive@2x.png in Resources */,
-				C82685131951EA8300C36452 /* tokenHighlighted@2x.png in Resources */,
 				C8E816251994794800F789A8 /* phone-home-active@2x.png in Resources */,
 				C8E8162B1994794800F789A8 /* search-bar@2x.png in Resources */,
 				C8E816301994794800F789A8 /* text-active.png in Resources */,
 				C8E8162E1994794800F789A8 /* tag-active@2x.png in Resources */,
-				C82685121951EA8300C36452 /* tokenHighlighted.png in Resources */,
 				C8E816221994794800F789A8 /* navigation-bar@2x.png in Resources */,
 				C8E816321994794800F789A8 /* text-inactive.png in Resources */,
 				C84AEFA41921F21A00C7F017 /* guide-indicator-left@2x.png in Resources */,
@@ -1073,9 +1028,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C832F3CC1A4DF62E0035F6C7 /* JSTokenField.m in Sources */,
-				C832F3CB1A4DF62E0035F6C7 /* JSTokenButton.m in Sources */,
-				C832F3CA1A4DF62E0035F6C7 /* JSBackspaceReportingTextField.m in Sources */,
 				C832F3BD1A4DEFD80035F6C7 /* TodayViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1102,7 +1054,6 @@
 				C8E816621997F7B500F789A8 /* SDWebImageManager.m in Sources */,
 				C81740DD179B1C76007A313F /* MCSwipeTableViewCell.m in Sources */,
 				C8E816651997F7B500F789A8 /* UIImage+GIF.m in Sources */,
-				C82685101951EA8300C36452 /* JSTokenButton.m in Sources */,
 				C81C65C919342F3C008CEF15 /* UIImage+TintColor.m in Sources */,
 				C8E816641997F7B500F789A8 /* UIButton+WebCache.m in Sources */,
 				C8E816611997F7B500F789A8 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1129,15 +1080,14 @@
 				C874048917A0D765002F8146 /* MNMToastConstants.m in Sources */,
 				C8843CC5194BC713008E6DC9 /* UIView+FrameResizing.m in Sources */,
 				C874048A17A0D765002F8146 /* MNMToastValue.m in Sources */,
-				C82685111951EA8300C36452 /* JSTokenField.m in Sources */,
 				C8E8165C1997F7B500F789A8 /* NSData+ImageContentType.m in Sources */,
 				C8E816661997F7B500F789A8 /* UIImage+MultiFormat.m in Sources */,
 				C8E816681997F7B500F789A8 /* UIImageView+HighlightedWebCache.m in Sources */,
+				C8F154381BD9C7EC003EA828 /* RCRemindListTableViewController.m in Sources */,
 				C874048B17A0D765002F8146 /* MNMToastView.m in Sources */,
 				C8E8155A198C755300F789A8 /* LIALinkedInHttpClient.m in Sources */,
 				C8BF064F197254BC00A6BA09 /* UIImageView+LBBlurredImage.m in Sources */,
 				C8F5C3E019030A5200DB7C52 /* RCSettingsTableViewController.m in Sources */,
-				C826850F1951EA8300C36452 /* JSBackspaceReportingTextField.m in Sources */,
 				C8E8165E1997F7B500F789A8 /* SDWebImageCompat.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

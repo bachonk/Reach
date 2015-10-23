@@ -44,15 +44,6 @@ static const CGFloat kCellImageInset = 4.0f;
 #define SCROLL_DRAG_DISTANCE 80.0f
 
 // Reminders
-enum RCReminderTimePeriod
-{
-    RCReminderTimePeriod10Minutes = 0,
-	RCReminderTimePeriod1Hour,
-	RCReminderTimePeriodTomorrow,
-	RCReminderTimePeriod3Days,
-	RCReminderTimePeriodCustom
-};
-
 enum RCReminderType
 {
     RCReminderTypeCall = 0,
@@ -74,6 +65,10 @@ static NSString *kLocalNotificationAlertActionName = @"reachAlert";
 static NSString *kLocalNotificationUserInfoUserID = @"reachUserID";
 static NSString *kLocalNotificationUserInfoActionType = @"reachActionType";
 static NSString *kLocalNotificationUserInfoActionString = @"reachActionString";
+static NSString *kLocalNotificationActionText = @"Text";
+static NSString *kLocalNotificationActionCall = @"Call";
+static NSString *kLocalNotificationActionEmail = @"Email";
+static NSString *kLocalNotificationActionCategory = @"AlertCategory";
 
 // URL Scheme
 static NSString *kURLSchemeNewContact = @"new";

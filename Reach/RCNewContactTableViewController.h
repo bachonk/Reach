@@ -10,9 +10,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import <AddressBook/AddressBook.h>
 
-#import "JSTokenField.h"
+#import "TLTagsControl.h"
 
-@interface RCNewContactTableViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, JSTokenFieldDelegate>
+@interface RCNewContactTableViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TLTagsControlDelegate>
 
 - (void)clearData;
 - (BOOL)hasData;
@@ -28,7 +28,7 @@
 @property (nonatomic, strong) UITextField *emailField;
 @property (nonatomic, strong) UIImageView *emailImage;
 
-@property (nonatomic, strong) JSTokenField *tagField;
+@property (nonatomic, strong) TLTagsControl *tagField;
 @property (nonatomic, strong) UIImageView *tagImage;
 
 @property (nonatomic, strong) UITextField *notesField;

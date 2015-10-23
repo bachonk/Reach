@@ -1,0 +1,22 @@
+{
+  "name": "TLTagsControl",
+  "version": "1.0.0",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "ali312": "https://github.com/ali312"
+  },
+  "summary": "A nice and simple tags input control for iOS",
+  "homepage": "https://github.com/ali312/TLTagsControl",
+  "platforms": {
+    "ios": "6.1"
+  },
+  "source": {
+    "git": "https://github.com/ali312/TLTagsControl",
+    "branch": "master"
+  },
+  "source_files": "TLTagsContol/TLTagsControl.{h,m}",
+  "requires_arc": true
+}
