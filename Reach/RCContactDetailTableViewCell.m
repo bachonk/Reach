@@ -96,4 +96,17 @@
     
 }
 
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    return (action == @selector(copy:));
+}
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+-(void)copy:(id)sender {
+    NSString *phone = self.mainLabel.text;
+    UIPasteboard *pb = [UIPasteboard generalPasteboard];
+    [pb setString:phone];
+}
 @end

@@ -449,6 +449,15 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     }
 }
 
+- (void)didLongpressCell:(UIGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [recognizer.view becomeFirstResponder];
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        [menuController setTargetRect:recognizer.view.frame inView:recognizer.view.superview];
+        [menuController setMenuVisible:YES animated:YES];
+    }
+}
+
 #pragma mark - MCSwipeTableViewCellDelegate
 
 - (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell {
@@ -754,6 +763,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.delegate = self;
             cell.panGestureRecognizer.enabled = YES;
             
+            UIGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didLongpressCell:)];
+            [cell addGestureRecognizer:gestureRecognizer];
+            
             break;
         }
         case RCContactSectionEmail:
@@ -960,6 +972,17 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+-(BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    return (action == @selector(copy:));
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
+}
 
 #pragma mark - UIScrollViewDelegate
 
@@ -1266,6 +1289,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
                 picker.displayedPerson = person;
                 // Allow users to edit the person’s information
                 picker.allowsEditing = YES;
+                
+                [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+                [self.navigationController.navigationBar setTintColor:COLOR_DEFAULT_RED];
+                [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                                  NSForegroundColorAttributeName: [UIColor blackColor]
+                                                                                  }];
                 
                 _shouldUpdateOnAppear = YES;
                 
