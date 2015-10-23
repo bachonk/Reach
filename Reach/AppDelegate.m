@@ -132,8 +132,22 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     
-    [self.viewController applicationDidReceiveRemoteNotification:notification applicationState:application.applicationState];
+    [self.viewController applicationDidReceiveRemoteNotification:notification actionType:nil applicationState:application.applicationState];
     
+}
+
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
+    
+    if ([identifier isEqualToString:kLocalNotificationActionCall]) {
+        NSLog(@"You chose action 1.");
+    }
+    else if ([identifier isEqualToString:kLocalNotificationActionText]) {
+        NSLog(@"You chose action 2.");
+    }
+    
+    if (completionHandler) {
+        completionHandler();
+    }
 }
 
 @end

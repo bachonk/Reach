@@ -179,6 +179,8 @@ typedef enum {
 - (void)applicationDidBecomeActiveSinceDate:(NSDate *)lastOpen;
 
 // App received notification
-- (void)applicationDidReceiveRemoteNotification:(UILocalNotification *)notif applicationState:(UIApplicationState)state;
+- (void)applicationDidReceiveRemoteNotification:(UILocalNotification *)notif
+                                     actionType:(NSString *)action
+                               applicationState:(UIApplicationState)state;
 
 @end

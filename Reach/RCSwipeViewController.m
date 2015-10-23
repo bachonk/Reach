@@ -282,7 +282,9 @@ static const CGFloat headerHeight = 34.0f;
 
 #pragma mark - Local Notification
 
-- (void)applicationDidReceiveRemoteNotification:(UILocalNotification *)notif applicationState:(UIApplicationState)state {
+- (void)applicationDidReceiveRemoteNotification:(UILocalNotification *)notif
+                                     actionType:(NSString *)action
+                               applicationState:(UIApplicationState)state {
     
     NSDictionary *deets = notif.userInfo;
     NSString *contactId = [deets objectForKey:kLocalNotificationUserInfoUserID];
@@ -305,6 +307,11 @@ static const CGFloat headerHeight = 34.0f;
     }
     
     if (contact) {
+        
+        if ([action length]) {
+            NSLog(@"ACTION: %@", action);
+        }
+        
         NSString *toastText = [NSString stringWithFormat:@"%@: %@ %@%@", NSLocalizedString(@"Reminder", nil), actionString, contact.fullName, [reminderMessage length] ? [NSString stringWithFormat:@" - %@", reminderMessage] : @""];
                                
         if (state == UIApplicationStateActive) {
@@ -466,7 +473,7 @@ static const CGFloat headerHeight = 34.0f;
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchAction)];
 
         NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
-        if (notifications) {
+        if ([notifications count]) {
             UIButton *but = [UIButton buttonWithType:UIButtonTypeSystem];
             but.frame = CGRectMake(0, 0, 38, 38);
             but.tintColor = COLOR_DEFAULT_RED;
