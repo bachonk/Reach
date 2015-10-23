@@ -972,7 +972,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     // Get the distance the view has dragged
     CGFloat yOffset = scrollView.contentOffset.y + scrollView.contentInset.top;
     
-    _largeUserImage.frame = CGRectMake(0, 0, CGRectGetWidth(_theTableView.frame), -yOffset + 64 + _theTableView.contentInset.top);
+    _largeUserImage.frame = CGRectMake(-10, -10, CGRectGetWidth(_theTableView.frame) + 20, -yOffset + 78 + _theTableView.contentInset.top);
     
     CGFloat offset = yOffset / CGRectGetHeight(_theTableView.frame);
 
