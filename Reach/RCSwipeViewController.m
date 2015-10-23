@@ -21,7 +21,7 @@
 #define TOP_BAR_HEIGHT 44
 
 // Search view definitions
-#define SEARCH_BACKGROUND_OPACITY 0.45f
+#define SEARCH_BACKGROUND_OPACITY 0.7f
 #define SEARCH_FRAME_PADDING 0.0f
 
 // Tags for action sheet
@@ -143,7 +143,7 @@ static const CGFloat headerHeight = 34.0f;
     _searchTableView.separatorColor = COLOR_NAVIGATION_BAR;
     _searchTableView.rowHeight = 54.0f;
     _searchTableView.delegate = self;
-    _searchTableView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:SEARCH_BACKGROUND_OPACITY];
+    _searchTableView.backgroundColor = [UIColor clearColor];
     _searchTableView.dataSource = self;
     _searchTableView.autoresizingMask = UIViewAutoresizingFlexibleWidth |
     UIViewAutoresizingFlexibleHeight;
@@ -175,45 +175,12 @@ static const CGFloat headerHeight = 34.0f;
      */
     
     _addContactTableViewController = [[RCNewContactTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    _addContactTableViewController.tableView.frame = _searchTableView.frame;
-    _addContactTableViewController.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(searchHeaderView.frame), 0, CGRectGetMaxY(searchHeaderView.frame), 0);
-    _addContactTableViewController.tableView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:SEARCH_BACKGROUND_OPACITY];
+    _addContactTableViewController.tableView.frame = self.view.frame;
+    _addContactTableViewController.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(searchHeaderView.frame) - 10, 0, CGRectGetMaxY(searchHeaderView.frame), 0);
+    _addContactTableViewController.tableView.backgroundColor = [UIColor clearColor];
     _addContactTableViewController.tableView.alpha = 0.0f;
     
     [self.view addSubview:_addContactTableViewController.tableView];
-    
-    contactHeaderView = [[UIView alloc] initWithFrame:searchHeaderView.frame];
-    contactHeaderView.backgroundColor = COLOR_NAVIGATION_BAR;
-    contactHeaderView.alpha = 0.0f;
-    [self.view addSubview:contactHeaderView];
-
-    UIImageView *newContactHeaderBgImage = [[UIImageView alloc] initWithFrame:contactHeaderView.bounds];
-    newContactHeaderBgImage.image = [[UIImage imageNamed:@"search-bar.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
-    [contactHeaderView addSubview:newContactHeaderBgImage];
-    
-    CGRect newContactTextFrame = CGRectMake(44, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), CGRectGetWidth(contactHeaderView.frame) - 88, 40);
-    UILabel *newContactTitleLabel = [[UILabel alloc] initWithFrame:newContactTextFrame];
-    newContactTitleLabel.backgroundColor = [UIColor clearColor];
-    newContactTitleLabel.textAlignment = NSTextAlignmentCenter;
-    newContactTitleLabel.font = [UIFont systemFontOfSize:18];
-    newContactTitleLabel.numberOfLines = 0;
-    newContactTitleLabel.textColor = [UIColor blackColor];
-    newContactTitleLabel.text = NSLocalizedString(@"New Contact", nil);
-    [contactHeaderView addSubview:newContactTitleLabel];
-    
-    UIButton *contactLeftCloseButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    contactLeftCloseButton.frame = CGRectMake(5, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), 40, 40);
-    [contactLeftCloseButton setBackgroundImage:[UIImage imageNamed:@"close-icon.png"] forState:UIControlStateNormal];
-    [contactLeftCloseButton addTarget:self action:@selector(hideNewContactViewAnimated:) forControlEvents:UIControlEventTouchUpInside];
-    [contactHeaderView addSubview:contactLeftCloseButton];
-    
-    UIButton *contactHeaderRightButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    contactHeaderRightButton.frame = CGRectMake(CGRectGetWidth(contactHeaderView.bounds) - 60, statusBarHeight + ((TOP_BAR_HEIGHT - 40) / 2), 55, 40);
-    [contactHeaderRightButton setTitle:@"Save" forState:UIControlStateNormal];
-    [contactHeaderRightButton setTitleColor:COLOR_DEFAULT_RED forState:UIControlStateNormal];
-    [contactHeaderRightButton.titleLabel setFont:[UIFont boldSystemFontOfSize:17.0f]];
-    [contactHeaderRightButton addTarget:self action:@selector(saveNewContact) forControlEvents:UIControlEventTouchUpInside];
-    [contactHeaderView addSubview:contactHeaderRightButton];
     
     /*
      * Add this back in for swiping nav bar
@@ -225,7 +192,7 @@ static const CGFloat headerHeight = 34.0f;
     
     /**
      *
-     *          Set initial state
+     *      Set initial state
      *
      */
     [self configureView];
@@ -470,6 +437,23 @@ static const CGFloat headerHeight = 34.0f;
 - (void)configureView {
     [theTableView reloadData];
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    
+    if (_currentState == RCSwipeViewControllerStateAddingContact) {
+        self.title = NSLocalizedString(@"New Contact", nil);
+        
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(hideNewContactViewAnimated:)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleDone target:self action:@selector(saveNewContact)];
+        
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    else {
+        self.title = NSLocalizedString(@"Contacts", nil);
+        
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchAction)];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)];
+    }
+    
     /***
     UIButton *titleButton = [UIButton buttonWithType:UIButtonTypeSystem];
     titleButton.frame = CGRectMake(0, 0, 140, 44);
@@ -503,21 +487,23 @@ static const CGFloat headerHeight = 34.0f;
 
 - (void)swapInHeaderView:(UIView *)view contentView:(UIView *)contentView animated:(BOOL)animated {
     
-    [UIView animateWithDuration:animated ? 0.43 : 0 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    [UIView animateWithDuration:animated ? 0.38 : 0 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         
         // Header
         
-        [view setFrameOriginY:0];
-        view.alpha = 1.0f;
-        
-        [self.navigationController.navigationBar setFrameOriginY:- CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]) - CGRectGetHeight(self.navigationController.navigationBar.frame)];
+        if (view) {
+            [view setFrameOriginY:0];
+            view.alpha = 1.0f;
+            
+            [self.navigationController.navigationBar setFrameOriginY:- CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]) - CGRectGetHeight(self.navigationController.navigationBar.frame)];
+        }
         
         // Content
         
         contentView.alpha = 1.0f;
         contentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - SEARCH_FRAME_PADDING);
         
-        theTableView.transform = CGAffineTransformMakeScale(0.74, 0.74);
+        theTableView.transform = CGAffineTransformMakeScale(0.78, 0.78);
         theTableView.alpha = 0.06f;
         
         self.view.backgroundColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
@@ -525,7 +511,9 @@ static const CGFloat headerHeight = 34.0f;
     } completion:^(BOOL completed) {
         
         // Set navigation bar as hidden so it doesn't reappear on app open
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
+        if (view) {
+            [self.navigationController setNavigationBarHidden:YES animated:NO];
+        }
         
     }];
     
@@ -538,18 +526,20 @@ static const CGFloat headerHeight = 34.0f;
     [self.navigationController setNavigationBarHidden:NO animated:NO];
     self.navigationController.navigationBar.frame = navBarFrame;
     
-    [UIView animateWithDuration:animated ? 0.43 : 0 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:animated ? 0.49 : 0 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
         
         // Header
         
-        view.alpha = 0.0f;
-        [view setFrameOriginY:-CGRectGetHeight(view.frame)];
-        
-        [self.navigationController.navigationBar setFrameOriginY:CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])];
+        if (view) {
+            view.alpha = 0.0f;
+            [view setFrameOriginY:-CGRectGetHeight(view.frame)];
+            
+            [self.navigationController.navigationBar setFrameOriginY:CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])];
+        }
         
         // Content
         
-        theTableView.transform = CGAffineTransformMakeScale(0.8, 0.8);
+        theTableView.transform = CGAffineTransformMakeScale(0.78, 0.78);
         
         contentView.alpha = 0.0f;
         
@@ -844,11 +834,11 @@ static const CGFloat headerHeight = 34.0f;
     
     self.currentState = RCSwipeViewControllerStateAddingContact;
     
-    [self setNeedsStatusBarAppearanceUpdate];
+    [self configureView];
     
     // Show the contact
     
-    [self swapInHeaderView:contactHeaderView contentView:_addContactTableViewController.tableView animated:YES];
+    [self swapInHeaderView:nil contentView:_addContactTableViewController.tableView animated:YES];
     
     [_addContactTableViewController.nameField becomeFirstResponder];
 
@@ -857,6 +847,8 @@ static const CGFloat headerHeight = 34.0f;
 - (void)hideNewContactViewAnimated:(BOOL)animated {
     
     if ([_addContactTableViewController hasData]) {
+        [self.view endEditing:YES];
+        
         UIActionSheet *ac = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Don't Save" otherButtonTitles: nil];
         ac.destructiveButtonIndex = 0;
         ac.tag = kTagActionSheetCancelContact;
@@ -868,11 +860,11 @@ static const CGFloat headerHeight = 34.0f;
     
     self.currentState = RCSwipeViewControllerStateNormal;
 
-    [self setNeedsStatusBarAppearanceUpdate];
+    [self configureView];
     
     // Hide the contact view
     
-    [self swapOutHeaderView:contactHeaderView contentView:_addContactTableViewController.tableView animated:YES downward:YES completion:nil];
+    [self swapOutHeaderView:nil contentView:_addContactTableViewController.tableView animated:YES downward:YES completion:nil];
     
 }
 
@@ -1727,7 +1719,7 @@ static const CGFloat headerHeight = 34.0f;
             if (addressBook.temporaryImagePlaceholder) {
                 cell.iconImageView.image = addressBook.temporaryImagePlaceholder;
             } else {
-                [cell.iconImageView setImageWithString:addressBook.fullName];
+                [cell.iconImageView setImageWithString:addressBook.fullName color:[UIColor colorWithWhite:0.78f alpha:1.0f] circular:YES];
                 addressBook.temporaryImagePlaceholder = cell.iconImageView.image;
             }
             
@@ -1878,12 +1870,10 @@ static const CGFloat headerHeight = 34.0f;
                 scrollDistance = scrollDistance * -1;
             }
             
-            CGRect headerFrame = scrollView == _searchTableView ? searchHeaderView.frame : contactHeaderView.frame;
-            headerFrame.origin.y = scrollDistance / 1.75;
             if (scrollView == _searchTableView) {
+                CGRect headerFrame = searchHeaderView.frame;
+                headerFrame.origin.y = scrollDistance / 1.75;
                 searchHeaderView.frame = headerFrame;
-            } else {
-                contactHeaderView.frame = headerFrame;
             }
             
         } else if (scrollDistance > 1) {
@@ -1926,8 +1916,6 @@ static const CGFloat headerHeight = 34.0f;
         
         if (scrollView == _searchTableView) {
             searchHeaderView.alpha = opacity / SEARCH_BACKGROUND_OPACITY;
-        } else {
-            contactHeaderView.alpha = opacity / SEARCH_BACKGROUND_OPACITY;
         }
         
     }

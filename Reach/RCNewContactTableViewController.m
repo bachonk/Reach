@@ -23,9 +23,9 @@ typedef enum {
     RCNewContactRowNotes
 } RCNewContactRow;
 
-static const CGFloat kCellPadding = 11.0f;
+static const CGFloat kCellPadding = 14.0f;
 static const CGFloat kCellUserImageWidth = 52.0f;
-static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding;
+static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 @interface RCNewContactTableViewController () {
     NSMutableString *phoneNumberFormatted;
@@ -75,7 +75,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     CGRect inputFrame = CGRectMake(kCellPadding + kCellAccessoryImageWidth + kCellPadding, kCellPadding, CGRectGetWidth(self.tableView.frame) - (kCellPadding * 3) - kCellAccessoryImageWidth, kCellAccessoryImageWidth);
     
     _phoneField = [[UITextField alloc] initWithFrame:inputFrame];
-    _phoneField.font = [UIFont systemFontOfSize:16.0f];
+    _phoneField.font = [UIFont systemFontOfSize:18.0f];
     _phoneField.placeholder = NSLocalizedString(@"Phone", @"");
     _phoneField.borderStyle = UITextBorderStyleNone;
     _phoneField.backgroundColor = [UIColor clearColor];
@@ -87,7 +87,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     _phoneImage.image = [[UIImage imageNamed:@"phone-home-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
     _emailField = [[UITextField alloc] initWithFrame:inputFrame];
-    _emailField.font = [UIFont systemFontOfSize:16.0f];
+    _emailField.font = [UIFont systemFontOfSize:18.0f];
     _emailField.placeholder = NSLocalizedString(@"Email", @"");
     _emailField.borderStyle = UITextBorderStyleNone;
     _emailField.backgroundColor = [UIColor clearColor];
@@ -101,7 +101,7 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     _emailImage.image = [[UIImage imageNamed:@"email-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
     _notesField = [[UITextField alloc] initWithFrame:inputFrame];
-    _notesField.font = [UIFont systemFontOfSize:16.0f];
+    _notesField.font = [UIFont systemFontOfSize:18.0f];
     _notesField.backgroundColor = [UIColor clearColor];
     _notesField.placeholder = NSLocalizedString(@"Notes", @"");
     _notesField.borderStyle = UITextBorderStyleNone;
@@ -229,6 +229,8 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
 }
 
 - (void)uploadUserPhoto:(id)sender {
+    [self.view endEditing:YES];
+    
     UIActionSheet *ac = [[UIActionSheet alloc] initWithTitle:@"Set contact photo" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo", @"Choose from Existing", nil];
     [ac showInView:self.view];
 }
@@ -267,10 +269,10 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
 {
     
     if (indexPath.row == 0) {
-        return 70.0f;
+        return 78.0f;
     }
     
-    return 44.0f;
+    return 54.0f;
     
 }
 
@@ -375,6 +377,39 @@ static const CGFloat kCellAccessoryImageWidth = 44 - kCellPadding - kCellPadding
     
 }
 
+#pragma mark Delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.row) {
+        case RCNewContactRowName:
+        {
+            [_nameField becomeFirstResponder];
+            break;
+        }
+        case RCNewContactRowPhone:
+        {
+            [_phoneField becomeFirstResponder];
+            break;
+        }
+        case RCNewContactRowEmail:
+        {
+            [_emailField becomeFirstResponder];
+            break;
+        }
+        case RCNewContactRowTags:
+        {
+            [_tagField.textField becomeFirstResponder];
+            break;
+        }
+        case RCNewContactRowNotes:
+        {
+            [_notesField becomeFirstResponder];
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 #pragma mark - Text Field Delegate
 

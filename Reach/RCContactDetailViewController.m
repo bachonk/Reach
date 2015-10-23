@@ -1045,14 +1045,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    
-    if (decelerate) {
-        [self.view endEditing:YES];
-    }
-    
-}
-
 #pragma mark - Keyboard listening
 
 - (void)keyboardWillShow:(NSNotification *)notification {

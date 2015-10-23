@@ -1,0 +1,1 @@
+KINWEBBROWSER_OTHER_LDFLAGS = -weak_framework "WebKit"

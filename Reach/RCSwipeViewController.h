@@ -54,10 +54,6 @@ typedef enum {
     UITextField *       searchTextField;
     NSInteger           searchFirstIndex;
     
-    // New contact view
-    
-    UIView *            contactHeaderView;
-    
     // Other classes
     
     CCSlideSearchView *searchView;
