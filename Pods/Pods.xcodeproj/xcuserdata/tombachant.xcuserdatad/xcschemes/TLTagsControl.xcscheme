@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F9A50F3A73F0162448FF2DF"
+               BlueprintIdentifier = "F62B3C679B05A6941D2408B2"
                BuildableName = "libTLTagsControl.a"
                BlueprintName = "TLTagsControl"
                ReferencedContainer = "container:Pods.xcodeproj">

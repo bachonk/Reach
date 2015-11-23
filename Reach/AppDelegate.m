@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "RCSwipeViewController.h"
 #import "Definitions.h"
+#import "RCExternalRequestHandler.h"
 #import <Crashlytics/Crashlytics.h>
 
 @implementation AppDelegate
@@ -21,6 +22,13 @@
         
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    // Set up the location manager
+    self.locationManager = [[CLLocationManager alloc] init];
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
+    self.lastLocationDescription = @"";
     
     // Red nav bar appearance
     [[UINavigationBar appearance] setTintColor:COLOR_DEFAULT_RED];
@@ -97,6 +105,8 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    [_locationManager stopUpdatingLocation];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -121,11 +131,14 @@
     
     [self.viewController applicationDidBecomeActiveSinceDate:_dateSinceLastOpen];
     
+    [_locationManager startUpdatingLocation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    
+    [_locationManager stopUpdatingLocation];
 }
 
 #pragma mark - Local notifications
@@ -138,15 +151,76 @@
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
     
+    NSString *phone = userInfo[kLocalNotificationUserInfoUserPhone];
+    
     if ([identifier isEqualToString:kLocalNotificationActionCall]) {
-        NSLog(@"You chose action 1.");
+        
+        [RCExternalRequestHandler text:[phone unformattedPhoneString] delegate:nil presentationHandler:nil completionHandler:^(BOOL success) {
+            completionHandler();
+        }];
+        
     }
     else if ([identifier isEqualToString:kLocalNotificationActionText]) {
-        NSLog(@"You chose action 2.");
+        
+        [RCExternalRequestHandler text:[phone unformattedPhoneString] delegate:nil presentationHandler:nil completionHandler:^(BOOL success) {
+            completionHandler();
+        }];
+        
+    }
+    else {
+        
+        completionHandler();
+        
     }
     
-    if (completionHandler) {
-        completionHandler();
+}
+
+#pragma mark - Location Delegate
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    if ([locations count]) {
+        CLLocation *location = [locations lastObject];
+        CLGeocoder *reverseGeocoder = [[CLGeocoder alloc] init];
+        if (reverseGeocoder) {
+            [reverseGeocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                
+                // Update, assuming they haven't entered text already
+                if ([placemarks count]) {
+                    //Using blocks, get zip code
+                    CLPlacemark *placemark = [placemarks objectAtIndex:0];
+                    NSString *locationString;
+                    if (placemark.addressDictionary[(NSString*)kABPersonAddressStreetKey]) {
+                        locationString = placemark.addressDictionary[(NSString*)kABPersonAddressStreetKey];
+                    } else if (placemark.addressDictionary[@"Name"]) {
+                        locationString = placemark.addressDictionary[@"Name"];
+                    }
+                    
+                    NSString *cityString = [placemark.addressDictionary objectForKey:(NSString*)kABPersonAddressCityKey] ? [placemark.addressDictionary objectForKey:(NSString*)kABPersonAddressCityKey] : @"";
+                    NSString *stateString = [placemark.addressDictionary objectForKey:(NSString*)kABPersonAddressStateKey] ? [placemark.addressDictionary objectForKey:(NSString*)kABPersonAddressStateKey] : @"";
+                    
+                    if ([cityString isEqualToString:@"New York"] && placemark.addressDictionary[@"SubLocality"]) {
+                        cityString = [NSString stringWithFormat:@"%@, %@", placemark.addressDictionary[@"SubLocality"], cityString];
+                    }
+                    
+                    _lastLocationDescription = [NSString stringWithFormat:@"%@ %@, %@", locationString, cityString, stateString];
+                    
+                    [_locationManager stopUpdatingLocation];
+                }
+                else {
+                    _lastLocationDescription = @"";
+                }
+                
+            }];
+        }
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorized) {
+        [_locationManager startUpdatingLocation];
+    }
+    else {
+        [_locationManager stopUpdatingLocation];
     }
 }
 

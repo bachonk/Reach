@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
 #import <AddressBook/AddressBook.h>
+#import <MapKit/MapKit.h>
 
 #import "TLTagsControl.h"
 
 @interface RCNewContactTableViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TLTagsControlDelegate>
 
+- (void)prepareForNewContact;
 - (void)clearData;
 - (BOOL)hasData;
 
@@ -24,6 +26,7 @@
 
 @property (nonatomic, strong) UITextField *phoneField;
 @property (nonatomic, strong) UIImageView *phoneImage;
+@property (nonatomic, strong) UIButton *phoneCallButton;
 
 @property (nonatomic, strong) UITextField *emailField;
 @property (nonatomic, strong) UIImageView *emailImage;
@@ -33,6 +36,10 @@
 
 @property (nonatomic, strong) UITextField *notesField;
 @property (nonatomic, strong) UIImageView *notesImage;
+
+@property (nonatomic, strong) UITextField *locationField;
+@property (nonatomic, strong) UIImageView *locationImage;
+@property (nonatomic, strong) MKMapView *locationMap;
 
 @property (nonatomic, strong) UIImage *userImage;
 

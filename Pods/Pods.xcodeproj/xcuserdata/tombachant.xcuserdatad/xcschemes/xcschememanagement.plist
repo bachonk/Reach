@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FormatterKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>KINWebBrowser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -57,7 +62,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1041B9E969EF4953FF48CA223E37D5BB</key>
+		<key>0B17A8E4CBEC9F8349661609435170CB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>16FD86E127BF975DE864AAC85436CBFC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -67,17 +77,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4BCBAF3B89E0B7DBB37217A4E702DA2D</key>
+		<key>91780CEA8ABF216F31BA5506B16C027A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>76D2117E13BEDD19B3BD35AA88E058AE</key>
+		<key>92FFBFCCC0A9EAD58495A24D2875107A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7D1A454F8CFE621EB1E4071290D0424A</key>
+		<key>A59DCE9CB3F3D4D45CE461D17047E59F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,7 +97,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D0EF6F86964A17A9F9E74988CC6567A2</key>
+		<key>AEA7E85A6420AA16DD36D763D66C8314</key>
 		<dict>
 			<key>primary</key>
 			<true/>

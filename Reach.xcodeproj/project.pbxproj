@@ -45,6 +45,7 @@
 		C88B923C19721B35006B78E6 /* RCContactDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C88B923A19721B35006B78E6 /* RCContactDetailViewController.m */; };
 		C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C88B923B19721B35006B78E6 /* RCContactDetailViewController.xib */; };
 		C8992AFC18DF6D7000BB43DC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8992AFB18DF6D7000BB43DC /* QuartzCore.framework */; };
+		C8A5E8EE1BEE8F010013EE5F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A5E8ED1BEE8F010013EE5F /* CoreLocation.framework */; };
 		C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */; };
 		C8B979D31AF6AA9600B2C00D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8B979D21AF6AA9600B2C00D /* LaunchScreen.xib */; };
 		C8BF064E197254BC00A6BA09 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = C8BF064B197254BC00A6BA09 /* UIImage+ImageEffects.m */; };
@@ -134,9 +135,11 @@
 		C8E816741998059100F789A8 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8E816731998059100F789A8 /* Crashlytics.framework */; };
 		C8E816F3199EA89E00F789A8 /* RCMergeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C8E816F1199EA89E00F789A8 /* RCMergeTableViewCell.m */; };
 		C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */; };
-		C8F154381BD9C7EC003EA828 /* RCRemindListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C8F154381BD9C7EC003EA828 /* RCRemindListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */; };
+		C8F3C3831C02B58F0050A2D7 /* RCContactManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F3C3821C02B58F0050A2D7 /* RCContactManager.m */; };
 		C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C8F5C3C51902E85000DB7C52 /* Images.xcassets */; };
 		C8F5C3E019030A5200DB7C52 /* RCSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */; };
+		C8FFABFF1BF931D000B82770 /* location-active@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8FFABFE1BF931D000B82770 /* location-active@2x.png */; };
 		DE7010462624C1E2BE874837 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5987C013E52DAC8FC833650A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -230,6 +233,7 @@
 		C88B923A19721B35006B78E6 /* RCContactDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContactDetailViewController.m; sourceTree = "<group>"; };
 		C88B923B19721B35006B78E6 /* RCContactDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCContactDetailViewController.xib; sourceTree = "<group>"; };
 		C8992AFB18DF6D7000BB43DC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C8A5E8ED1BEE8F010013EE5F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "reminder-icon@2x.png"; path = "Reach/Resources/reminder-icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		C8B979D21AF6AA9600B2C00D /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LaunchScreen.xib; path = Reach/Resources/LaunchScreen.xib; sourceTree = SOURCE_ROOT; };
 		C8BF064A197254BC00A6BA09 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -358,9 +362,12 @@
 		C8E816F2199EA89E00F789A8 /* RCMergeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCMergeTableViewCell.xib; sourceTree = "<group>"; };
 		C8F154361BD9C7EC003EA828 /* RCRemindListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCRemindListTableViewController.h; sourceTree = "<group>"; };
 		C8F154371BD9C7EC003EA828 /* RCRemindListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCRemindListTableViewController.m; sourceTree = "<group>"; };
+		C8F3C3811C02B58F0050A2D7 /* RCContactManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContactManager.h; sourceTree = "<group>"; };
+		C8F3C3821C02B58F0050A2D7 /* RCContactManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContactManager.m; sourceTree = "<group>"; };
 		C8F5C3C51902E85000DB7C52 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C8F5C3DE19030A5200DB7C52 /* RCSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCSettingsTableViewController.h; sourceTree = "<group>"; };
 		C8F5C3DF19030A5200DB7C52 /* RCSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCSettingsTableViewController.m; sourceTree = "<group>"; };
+		C8FFABFE1BF931D000B82770 /* location-active@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "location-active@2x.png"; path = "Reach/Resources/location-active@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -376,8 +383,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C8E8166E1997F9F400F789A8 /* ImageIO.framework in Frameworks */,
 				C8E8166C1997F9A600F789A8 /* MapKit.framework in Frameworks */,
+				C8A5E8EE1BEE8F010013EE5F /* CoreLocation.framework in Frameworks */,
+				C8E8166E1997F9F400F789A8 /* ImageIO.framework in Frameworks */,
 				C8E815BC198C7D6100F789A8 /* MobileCoreServices.framework in Frameworks */,
 				C8E815B8198C7CC700F789A8 /* SystemConfiguration.framework in Frameworks */,
 				C8E815B6198C7CC200F789A8 /* Security.framework in Frameworks */,
@@ -402,6 +410,7 @@
 		C8174101179B5DDE007A313F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				C8FFABFE1BF931D000B82770 /* location-active@2x.png */,
 				C8B979D21AF6AA9600B2C00D /* LaunchScreen.xib */,
 				C8B979D01AF6A76300B2C00D /* reminder-icon@2x.png */,
 				C8E816371997F47700F789A8 /* image-clip-circular@2x.png */,
@@ -589,6 +598,7 @@
 		C8E4FA8917131898006FEEE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C8A5E8ED1BEE8F010013EE5F /* CoreLocation.framework */,
 				C8E816731998059100F789A8 /* Crashlytics.framework */,
 				C8E8166D1997F9F400F789A8 /* ImageIO.framework */,
 				C8E8166B1997F9A600F789A8 /* MapKit.framework */,
@@ -760,6 +770,8 @@
 				C8415E4418BAB67A0049A938 /* Definitions.h */,
 				C8E4FABE17131908006FEEE0 /* Contact.h */,
 				C8E4FABF17131908006FEEE0 /* Contact.m */,
+				C8F3C3811C02B58F0050A2D7 /* RCContactManager.h */,
+				C8F3C3821C02B58F0050A2D7 /* RCContactManager.m */,
 				C81C65BD1933D726008CEF15 /* RCExternalRequestHandler.h */,
 				C81C65BE1933D726008CEF15 /* RCExternalRequestHandler.m */,
 				C8E8153D198B2C5C00F789A8 /* LinkedIn */,
@@ -920,6 +932,7 @@
 				C8E816231994794800F789A8 /* notes-active@2x.png in Resources */,
 				C8E8161A1994794800F789A8 /* edit-icon@2x.png in Resources */,
 				C8E4FA9517131898006FEEE0 /* InfoPlist.strings in Resources */,
+				C8FFABFF1BF931D000B82770 /* location-active@2x.png in Resources */,
 				C8E816311994794800F789A8 /* text-active@2x.png in Resources */,
 				C8E816161994794800F789A8 /* back-indicator@2x.png in Resources */,
 				C8E8161C1994794800F789A8 /* email-active@2x.png in Resources */,
@@ -1073,6 +1086,7 @@
 				C874048817A0D765002F8146 /* MNMToast.m in Sources */,
 				C8E81558198C755300F789A8 /* LIALinkedInApplication.m in Sources */,
 				C8E8165F1997F7B500F789A8 /* SDWebImageDecoder.m in Sources */,
+				C8F3C3831C02B58F0050A2D7 /* RCContactManager.m in Sources */,
 				C8E816691997F7B500F789A8 /* UIImageView+WebCache.m in Sources */,
 				C81C65BF1933D726008CEF15 /* RCExternalRequestHandler.m in Sources */,
 				C8E81559198C755300F789A8 /* LIALinkedInAuthorizationViewController.m in Sources */,

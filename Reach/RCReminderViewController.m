@@ -228,7 +228,11 @@
                              alertType, kLocalNotificationUserInfoActionString,
                              [NSNumber numberWithInteger:rowForType], kLocalNotificationUserInfoActionType,
                              _detailsTextField.text, kLocalNotificationAlertActionName,
-                             _contact.contactId, kLocalNotificationUserInfoUserID, nil];
+                             _contact.contactId, kLocalNotificationUserInfoUserID,
+                             _contact.phoneArray[0], kLocalNotificationUserInfoUserPhone,
+                             _contact.fullName, kLocalNotificationUserInfoUserName,
+                             [NSNumber numberWithDouble:[_datePicker.date timeIntervalSince1970]], kLocalNotificationUserInfoDate,
+                             nil];
     
     notification.applicationIconBadgeNumber = 1;
     

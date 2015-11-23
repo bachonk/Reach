@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
+#import <MapKit/MapKit.h>
 #import "Definitions.h"
 
 @interface Contact : NSObject
@@ -30,6 +31,8 @@
 @property (nonatomic, strong) NSString *highlightedTag;
 @property (nonatomic, strong) NSString *contactId;
 @property (nonatomic, strong) NSString *linkedInId;
+@property (nonatomic, strong) NSString *meetingAddress;
+@property (nonatomic) CLLocationCoordinate2D meetingCoordinate;
 //@property (nonatomic, strong) NSString *facebookId;
 //@property (nonatomic, strong) NSString *twitterId;
 

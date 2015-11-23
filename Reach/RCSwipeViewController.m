@@ -9,6 +9,8 @@
 #import "RCSwipeViewController.h"
 #import "AppDelegate.h"
 
+#import "RCContactManager.h"
+
 #import "RCSettingsTableViewController.h"
 #import "RCSocialDetailViewController.h"
 
@@ -93,7 +95,6 @@ static const CGFloat headerHeight = 34.0f;
     
     self.view.backgroundColor = COLOR_TABLE_CELL;
 
-    _contactList = [[NSMutableArray alloc] init];
     _filteredContactListFirstName = [[NSMutableArray alloc] init];
     _filteredContactListLastName = [[NSMutableArray alloc] init];
     _filteredContactListTags = [[NSMutableArray alloc] init];
@@ -162,7 +163,6 @@ static const CGFloat headerHeight = 34.0f;
     
     [self.view addSubview:_searchTableView];
     
-    
     /**
      *
      *      Slide search view
@@ -212,8 +212,10 @@ static const CGFloat headerHeight = 34.0f;
     self.currentSwipeState = RCSwipeViewControllerSwipeStateNone;
     
     // Pull the contact list
-    _addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
-    [self getContactListAuthentication];
+    [[RCContactManager shared] getContactListAuthorizationWithCompletion:^(ABAuthorizationStatus status) {
+        // Could do something here
+        [theTableView reloadData];
+    }];
     
 }
 
@@ -436,15 +438,18 @@ static const CGFloat headerHeight = 34.0f;
             }];
         }
         
-        if (![self isAccessRevoked]) {
-            [self getContacts]; // lazy refresh
+        if (![RCContactManager shared].accessRevoked) {
+            [[RCContactManager shared] fetchContacts]; // lazy refresh
+            [theTableView reloadData];
         }
         
     }
     
     // Retry for contact access if it's been restricted
-    if ([self isAccessRevoked]) {
-        [self getContactListAuthentication];
+    if ([RCContactManager shared].accessRevoked) {
+        [[RCContactManager shared] getContactListAuthorizationWithCompletion:^(ABAuthorizationStatus status) {
+            [theTableView reloadData];
+        }];
     }
     
 }
@@ -863,19 +868,11 @@ static const CGFloat headerHeight = 34.0f;
     Contact *contact = [Contact contactFromAddressBook:newEntry];
     
     // Add to address book
-    CFErrorRef error;
-    ABAddressBookAddRecord(_addressBook, newEntry, &error);
+    [[RCContactManager shared] fetchContacts];
     
-    // Save it
-    ABAddressBookSave(_addressBook, nil);
-    CFRelease(newEntry);
-    
-    // Lazy way to refresh table
-    [self getContacts];
-
+    // Show contact details
     [_addContactTableViewController clearData];
     [self hideNewContactViewAnimated:YES];
-    
     [self showContactDetails:contact];
 }
 
@@ -891,8 +888,8 @@ static const CGFloat headerHeight = 34.0f;
     
     [self swapInHeaderView:nil contentView:_addContactTableViewController.tableView animated:YES];
     
-    [_addContactTableViewController.nameField becomeFirstResponder];
-
+    [_addContactTableViewController prepareForNewContact];
+    
 }
 
 - (void)hideNewContactViewAnimated:(BOOL)animated {
@@ -1111,136 +1108,7 @@ static const CGFloat headerHeight = 34.0f;
     if (_listType == RCContactTypeLinkenIn) {
         return [LinkedInManager shared].contacts;
     }
-    return _contactList;
-}
-
-- (void)getContactListAuthentication {
-    
-    switch (ABAddressBookGetAuthorizationStatus())
-    {
-        case  kABAuthorizationStatusAuthorized:
-        {
-            self.accessRevoked = NO;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self getContacts];
-            });
-            
-            break;
-        }
-        case  kABAuthorizationStatusNotDetermined:
-        {
-            RCSwipeViewController * __weak weakSelf = self;
-            
-            ABAddressBookRequestAccessWithCompletion(self.addressBook, ^(bool granted, CFErrorRef error)
-                                                     {
-                                                         if (granted)
-                                                         {
-                                                             weakSelf.accessRevoked = NO;
-
-                                                             dispatch_async(dispatch_get_main_queue(), ^{
-                                                                 [weakSelf getContacts];
-                                                             });
-                                                             
-                                                         }
-                                                         else
-                                                         {
-                                                             weakSelf.accessRevoked = YES;
-                                                             
-                                                             [theTableView reloadData];
-
-                                                         }
-                                                         
-                                                     });
-            break;
-        }
-        // Display a message if the user has denied or restricted access to Contacts
-        case  kABAuthorizationStatusDenied:
-        {
-            self.accessRevoked = YES;
-            [theTableView reloadData];
-            
-            break;
-        }
-        case  kABAuthorizationStatusRestricted:
-        {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Privacy Warning", nil)
-                                                            message:NSLocalizedString(@"Permission was not granted for Contacts.", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            
-            self.accessRevoked = YES;
-            [theTableView reloadData];
-            
-            break;
-        }
-        default:
-            break;
-    }
-    
-}
-
-- (void)getContacts {
-    
-    // Create addressbook data model
-    
-    CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(self.addressBook);
-    CFIndex nPeople = ABAddressBookGetPersonCount(self.addressBook);
-    
-    NSMutableArray *addressBookTemp = [NSMutableArray new];
-    
-    for (NSInteger i = 0; i < nPeople; i++)
-    {
-        ABRecordRef person = CFArrayGetValueAtIndex(allPeople, i);
-        
-        Contact *contact = [Contact contactFromAddressBook:person];
-        
-        [addressBookTemp addObject:contact];
-    }
-    
-    // Sort data
-    UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
-    for (Contact *addressBook in addressBookTemp) {
-        NSInteger sect = [theCollation sectionForObject:addressBook
-                                collationStringSelector:@selector(fullName)];
-        addressBook.sectionNumber = sect;
-    }
-    
-    NSInteger highSection = [[theCollation sectionTitles] count];
-    NSMutableArray *sectionArrays = [NSMutableArray arrayWithCapacity:highSection];
-    for (int i=0; i<=highSection; i++) {
-        NSMutableArray *sectionArray = [NSMutableArray arrayWithCapacity:1];
-        [sectionArrays addObject:sectionArray];
-    }
-    
-    for (Contact *addressBook in addressBookTemp) {
-        [(NSMutableArray *)[sectionArrays objectAtIndex:addressBook.sectionNumber] addObject:addressBook];
-    }
-    
-    [_contactList removeAllObjects];
-    for (NSMutableArray *sectionArray in sectionArrays) {
-        NSArray *sortedSection = [theCollation sortedArrayFromArray:sectionArray collationStringSelector:@selector(fullName)];
-        [_contactList addObject:sortedSection];
-    }
-    
-    [theTableView reloadData];
-}
-
-- (void)saveAddressBook {
-    CFErrorRef error;
-    ABAddressBookSave(_addressBook, &error);
-}
-
-- (void)deleteContact:(Contact *)contact {
-    CFErrorRef error;
-    ABAddressBookRemoveRecord(_addressBook, contact.originAddressBookRef, &error);
-    
-    [self saveAddressBook];
-    
-    // Lazy refresh
-    [self getContacts];
+    return [RCContactManager shared].contacts;
 }
 
 #pragma mark - Text Field Delegate
@@ -1538,14 +1406,14 @@ static const CGFloat headerHeight = 34.0f;
         return 2 + [_filteredContactListTags count];
     }
     
-    return [self isAccessRevoked] ? 1 : [[self contacts] count];
+    return [RCContactManager shared].accessRevoked ? 1 : [[self contacts] count];
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     
-    if ([self isAccessRevoked] && tableView == theTableView) return 0;
+    if ([RCContactManager shared].accessRevoked && tableView == theTableView) return 0;
     
 	if (tableView == _searchTableView) {
         if (section == 0) {
@@ -1578,7 +1446,7 @@ static const CGFloat headerHeight = 34.0f;
         return nil;
     }
     
-    if ([self isAccessRevoked] && tableView == theTableView) {
+    if ([RCContactManager shared].accessRevoked && tableView == theTableView) {
         
         UIView *v = [[UIView alloc] initWithFrame:theTableView.frame];
         
@@ -1668,7 +1536,7 @@ static const CGFloat headerHeight = 34.0f;
         return headerHeight;
     }
     
-    if ([self isAccessRevoked]) {
+    if ([RCContactManager shared].accessRevoked) {
         return theTableView.frame.size.height;
     }
     
@@ -2009,9 +1877,6 @@ static const CGFloat headerHeight = 34.0f;
             
             CGFloat thresholdToRelease = [_searchTableView rectForFooterInSection:1 + [_filteredContactListTags count]].origin.y - [scrollView bounds].size.height + _searchTableView.contentInset.top + _searchTableView.contentInset.bottom;
             CGFloat thresholdToLoad = thresholdToRelease + SCROLL_DRAG_DISTANCE;
-            
-            NSLog(@"release : %f   load : %f", thresholdToRelease, thresholdToLoad);
-            NSLog(@"real offset: %f   %f", scrollView.contentOffset.y, [_searchTableView rectForFooterInSection:1].origin.y);
             
             if (thresholdToRelease < 0) {
                 // Use determined distance

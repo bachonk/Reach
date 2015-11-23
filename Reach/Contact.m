@@ -99,12 +99,12 @@
     if ([contactEmails count])
         contact.email = contactEmails[0];
     
-    // Get notes & tags
+    // Get notes, tags, and location
     
-    contact.notes = (__bridge NSString*)ABRecordCopyValue(person, kABPersonNoteProperty);
+    NSString *notes = (__bridge NSString*)ABRecordCopyValue(person, kABPersonNoteProperty);
     
-    if (contact.notes && [contact.notes length]) {
-        NSArray *notesAndTags = [contact.notes componentsSeparatedByString:kContactTagSeparator];
+    if (notes && [notes length]) {
+        NSArray *notesAndTags = [notes componentsSeparatedByString:kContactTagSeparator];
         contact.notes = [notesAndTags count] ? notesAndTags[0] : @"";
         
         contact.tags = [NSMutableArray array];
@@ -114,6 +114,22 @@
                 [contact.tags addObject:[tag stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
             }
         }
+        
+        NSArray *addressComponent = [notes componentsSeparatedByString:kContactMetadataSeparator];
+        if ([addressComponent count] == 2) {
+            NSString *locationString = [addressComponent lastObject];
+            NSData *locationData = [locationString dataUsingEncoding:NSUTF8StringEncoding];
+            
+            NSError *err;
+            NSDictionary *metadata = [NSJSONSerialization JSONObjectWithData:locationData options:0 error:&err];
+            
+            NSDictionary *location = metadata[kContactLocationKey];
+            contact.meetingAddress = location[kContactLocationAddressKey];
+            
+            NSArray *latLons = metadata[kContactLocationCoordinateKey];
+            contact.meetingCoordinate = CLLocationCoordinate2DMake([latLons[0] doubleValue], [latLons[1] doubleValue]);
+        }
+
     } else {
         contact.notes = @"";
         contact.tags = [NSMutableArray array];
@@ -183,10 +199,10 @@
     // Set notes & tags
     NSMutableString *notesString = [NSMutableString stringWithString:self.notes];
     
+    [notesString appendString:kContactTagSeparator];
+    
     if ([self.tags count]) {
         // Has tags
-        
-        [notesString appendString:kContactTagSeparator];
         
         for (NSString *tag in self.tags) {
             if ([tag length]) {
@@ -195,6 +211,29 @@
         }
         
     }
+    
+    if ([self.meetingAddress length]) {
+        // Stores meeting location
+        
+        [notesString appendString:kContactMetadataSeparator];
+        
+        NSDictionary *loc = @{
+                              kContactLocationKey: @{
+                                      kContactLocationAddressKey: self.meetingAddress,
+                                      kContactLocationCoordinateKey: @[ @(self.meetingCoordinate.latitude), @(self.meetingCoordinate.longitude) ]
+                                      }
+                              };
+        
+        NSError *err;
+        NSData *locationDataRep = [NSJSONSerialization dataWithJSONObject:loc options:0 error:&err];
+        
+        if (!err) {
+            NSString *locationStringRep = [[NSString alloc] initWithData:locationDataRep encoding:NSUTF8StringEncoding];
+            [notesString appendString:@"\n"];
+            [notesString appendString:locationStringRep];
+        }
+    }
+    
     ABRecordSetValue(self.originAddressBookRef, kABPersonNoteProperty, (__bridge CFTypeRef)(notesString) , nil);
     
 }

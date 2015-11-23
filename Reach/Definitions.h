@@ -29,7 +29,7 @@ static const CGFloat kCellImageInset = 4.0f;
 // Colors
 #define COLOR_WINDOW_BACKGROUND [UIColor colorWithWhite:0.84f alpha:1.0f]
 #define COLOR_NAVIGATION_BAR [UIColor colorWithRed:212.0/255.0 green:212.0/255.0 blue:230.0/255.0f alpha:1.0f]
-#define COLOR_TABLE_CELL [UIColor colorWithWhite:0.975f alpha:1.0f]
+#define COLOR_TABLE_CELL [UIColor colorWithWhite:0.978f alpha:1.0f]
 #define COLOR_DEFAULT_RED [UIColor colorWithRed:222.0/255.0 green:67.0/255.0 blue:40.0/255.0f alpha:1.0f]
 
 #define COLOR_TEXT_BLUE [UIColor colorWithRed:25.0/255.0 green:144.0/255.0 blue:255.0/255.0 alpha:1.0f]
@@ -57,12 +57,21 @@ typedef NS_ENUM(NSInteger, RCContactType)
     RCContactTypeLinkenIn
 };
 
-// Tag separator
+// Separators
 static NSString *kContactTagSeparator = @"\n•••\n";
+static NSString *kContactMetadataSeparator = @"\n---\n";
+
+// Location keys
+static NSString *kContactLocationKey = @"location";
+static NSString *kContactLocationAddressKey = @"address";
+static NSString *kContactLocationCoordinateKey = @"coordinate";
 
 // Notifications
 static NSString *kLocalNotificationAlertActionName = @"reachAlert";
 static NSString *kLocalNotificationUserInfoUserID = @"reachUserID";
+static NSString *kLocalNotificationUserInfoDate = @"reachDate";
+static NSString *kLocalNotificationUserInfoUserName = @"reachUserName";
+static NSString *kLocalNotificationUserInfoUserPhone = @"reachUserPhone";
 static NSString *kLocalNotificationUserInfoActionType = @"reachActionType";
 static NSString *kLocalNotificationUserInfoActionString = @"reachActionString";
 static NSString *kLocalNotificationActionText = @"Text";

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1423D7D6AD9EC1E93DD0B988"
+               BlueprintIdentifier = "58A326BB37C06FCA90E6C6D2"
                BuildableName = "libBBBadgeBarButtonItem.a"
                BlueprintName = "BBBadgeBarButtonItem"
                ReferencedContainer = "container:Pods.xcodeproj">

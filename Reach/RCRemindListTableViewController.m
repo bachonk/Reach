@@ -7,8 +7,9 @@
 //
 
 #import "RCRemindListTableViewController.h"
+#import "TTTTimeIntervalFormatter.h"
 
-static const CGFloat kButtonWidth = 54.0f;
+static const CGFloat kButtonWidth = 50.0f;
 static const CGFloat kButtonPadding = 9.0f;
 
 #define TAG_BUTTON_OFFSET 10
@@ -17,7 +18,11 @@ static const CGFloat kButtonPadding = 9.0f;
 
 - (void)hide;
 
+- (void)didTapCallButton:(id)sender;
+- (void)didTapTextButton:(id)sender;
+
 @property (nonatomic, strong) NSArray *notifications;
+@property (nonatomic, strong) TTTTimeIntervalFormatter *formatter;
 
 @end
 
@@ -34,6 +39,9 @@ static const CGFloat kButtonPadding = 9.0f;
     self.tableView.backgroundColor = COLOR_TABLE_CELL;
     
     _notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    
+    _formatter = [[TTTTimeIntervalFormatter alloc] init];
+    _formatter.usesIdiomaticDeicticExpressions = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,6 +53,40 @@ static const CGFloat kButtonPadding = 9.0f;
 
 - (void)hide {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didTapCallButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    
+    NSInteger tag = button.tag;
+    
+    if (tag >= TAG_BUTTON_OFFSET) {
+        // Call
+        NSInteger index = tag - TAG_BUTTON_OFFSET;
+        
+//        NSDictionary *phone = _contact.phoneArray[index];
+//        NSString *label = [phone allKeys][0];
+//        NSString *value = [phone objectForKey:label];
+//        [self call:value];
+        
+    }
+}
+
+- (void)didTapTextButton:(id)sender {
+    UIButton *button = (UIButton *)sender;
+    
+    NSInteger tag = button.tag;
+    
+    if (tag >= TAG_BUTTON_OFFSET) {
+        // Text
+        NSInteger index = tag - TAG_BUTTON_OFFSET;
+        
+//        NSDictionary *phone = _contact.phoneArray[index];
+//        NSString *label = [phone allKeys][0];
+//        NSString *value = [phone objectForKey:label];
+//        [self call:value];
+        
+    }
 }
 
 #pragma mark - Table view data source
@@ -96,9 +138,6 @@ static const CGFloat kButtonPadding = 9.0f;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    cell.secondaryLabel.text = @"Call";
-    cell.mainLabel.text = @"John Smith";
-    
     cell.secondaryLabel.frame = CGRectMake(13, 12, CGRectGetWidth(cell.mainLabel.frame), 18);
     
     cell.mainLabel.frame = CGRectMake(13, CGRectGetMaxY(cell.secondaryLabel.frame) + 1, CGRectGetWidth(self.tableView.frame) - 34, 27);
@@ -109,9 +148,10 @@ static const CGFloat kButtonPadding = 9.0f;
     cell.buttonRight.alpha = 1.0f;
     [cell.buttonRight setImage:[UIImage imageNamed:@"text-active"] forState:UIControlStateNormal];
     [cell.buttonRight setTintColor:COLOR_TEXT_BLUE];
+    cell.buttonRight.layer.borderWidth = 0.0f;
     cell.buttonRight.tag = indexPath.row + TAG_BUTTON_OFFSET;
     
-    cell.buttonLeft.frame = CGRectMake(CGRectGetWidth(self.tableView.frame) - (kButtonWidth * 2) - (kButtonPadding * 2), CGRectGetMinY(cell.buttonRight.frame), kButtonWidth, kButtonWidth);
+    cell.buttonLeft.frame = CGRectMake(CGRectGetWidth(self.tableView.frame) - (kButtonWidth * 2) - kButtonPadding, CGRectGetMinY(cell.buttonRight.frame), kButtonWidth, kButtonWidth);
     cell.buttonLeft.alpha = 1.0f;
     [cell.buttonLeft setImage:[UIImage imageNamed:@"phone-home-active"] forState:UIControlStateNormal];
     [cell.buttonLeft setTintColor:COLOR_CALL_GREEN];
@@ -139,6 +179,16 @@ static const CGFloat kButtonPadding = 9.0f;
     cell.secondaryLabel.textColor = COLOR_DEFAULT_RED;
     cell.colorIndicatorView.backgroundColor = [UIColor clearColor];
     
+    // Configure for notification
+    NSNotification *notif = _notifications[indexPath.row];
+    NSDictionary *info = notif.userInfo;
+    
+    if ([info[kLocalNotificationUserInfoDate] respondsToSelector:@selector(doubleValue)]) {
+        NSTimeInterval interval = (NSTimeInterval)[info[kLocalNotificationUserInfoDate] doubleValue];
+        interval -= [[NSDate date] timeIntervalSince1970];
+        cell.mainLabel.text = [NSString stringWithFormat:@"%@ %@", info[kLocalNotificationUserInfoActionString], info[kLocalNotificationUserInfoUserName]];
+        cell.secondaryLabel.text =  [_formatter stringForTimeInterval:interval];
+    }
     return cell;
 }
 

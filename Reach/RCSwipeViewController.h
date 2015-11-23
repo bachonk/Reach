@@ -75,13 +75,12 @@ typedef enum {
 // Contact arrays
 /////////////////////
 
-@property (nonatomic, strong) NSMutableArray *    contactList;
+- (NSMutableArray *)contacts;
+
 @property (nonatomic, strong) NSMutableArray *    filteredContactListFirstName;
 @property (nonatomic, strong) NSMutableArray *    filteredContactListLastName;
 @property (nonatomic, strong) NSMutableArray *    filteredContactListTags;
 @property (nonatomic, strong) NSMutableArray *    filteredContactListTagNames;
-
-- (NSMutableArray *)contacts;
 
 @property (nonatomic, assign) RCContactType listType;
 
@@ -97,17 +96,6 @@ typedef enum {
 @property (nonatomic, assign) RCSwipeViewControllerState currentState;
 
 - (RCSwipeViewControllerState)swipeStateFromOffsetPercentage:(CGFloat)percentage;
-
-/////////////////////
-//
-// Address book
-/////////////////////
-
-// Keep the address book
-@property (nonatomic, assign) ABAddressBookRef addressBook;
-
-// Track if access has been granted for contact access
-@property (nonatomic, getter = isAccessRevoked) BOOL accessRevoked;
 
 /////////////////////
 //
@@ -129,12 +117,6 @@ typedef enum {
 
 // Layouts
 - (void)configureView;
-
-// Actions for contacts
-- (void)getContactListAuthentication;
-- (void)getContacts;
-- (void)saveAddressBook;
-- (void)deleteContact:(Contact *)contact;
 
 // Gesture handling
 - (void)panGestureTriggered:(id)sender;

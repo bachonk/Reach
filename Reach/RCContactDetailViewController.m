@@ -10,6 +10,7 @@
 
 #import "Definitions.h"
 #import "AppDelegate.h"
+#import "RCContactManager.h"
 #import "UIImageView+LBBlurredImage.h"
 #import "RCSocialDetailViewController.h"
 #import "LinkedInManager.h"
@@ -30,6 +31,7 @@ typedef enum {
     RCContactSectionTags,
     RCContactSectionLinkedIn,
     RCContactSectionNotes,
+    RCContactSectionMeetingLocation,
     RCContactSectionMeta
 } RCContactSection;
 
@@ -153,14 +155,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     if (_shouldUpdateOnAppear) {
         // Update in the event of an edit
-        AppDelegate *deleg = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        ABAddressBookRef addressBook = deleg.viewController.addressBook;
-        
-        ABRecordRef record = ABAddressBookGetPersonWithRecordID(addressBook, ABRecordGetRecordID(_contact.originAddressBookRef));
-        _contact = [Contact contactFromAddressBook:record];
+        [[RCContactManager shared] contactFromAddressBookRef:_contact.originAddressBookRef];
         [self configureViewForContact:_contact];
         
-        [deleg.viewController getContacts];
+        [[RCContactManager shared] fetchContacts];
         
         _shouldUpdateOnAppear = NO;
     }
@@ -578,6 +576,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
  *      Notes
  *
  * Section 5:
+ *      Meeting location
+ *
+ * Section 6:
  *      Meta
  *
  */
@@ -585,7 +586,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 6;
+    return 7;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -610,6 +611,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             break;
         case RCContactSectionNotes:
             return 1;
+            
+        case RCContactSectionMeetingLocation:
+            return [_contact.meetingAddress length] ? 1 : 0;
             
             break;
         case RCContactSectionMeta:
@@ -666,6 +670,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellID = @"CellID";
+    static NSString *LabelCellID = @"LabelCellID";
     static NSString *TagCellID = @"TagCellID";
     
     if (indexPath.section == RCContactSectionTags) {
@@ -683,6 +688,27 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+        
+        return cell;
+    }
+    
+    if (indexPath.section == RCContactSectionMeetingLocation) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LabelCellID];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:LabelCellID];
+            
+            cell.textLabel.font = [UIFont boldSystemFontOfSize:13.0f];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:15.0f];
+            
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        cell.textLabel.text = @"Meeting location";
+        cell.detailTextLabel.text = _contact.meetingAddress;
         
         return cell;
     }
@@ -959,6 +985,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             break;
         }
+        case RCContactSectionMeetingLocation:
+        {
+            NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"maps://?daddr=%f,%f", _contact.meetingCoordinate.latitude, _contact.meetingCoordinate.longitude]];
+            [[UIApplication sharedApplication] openURL:url];
+            
+            break;
+        }
         case RCContactSectionNotes:
         {
             RCContactDetailTableViewCell *cell = (RCContactDetailTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
@@ -1149,8 +1182,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     }];
     
     [_contact saveNotes:textView.text];
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController saveAddressBook];
+    
+    [[RCContactManager shared] saveAddressBook];
     
 }
 
@@ -1362,8 +1395,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     if (alertView.tag == TAG_ALERT_DELETE) {
         
         if (buttonIndex) {
-            AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-            [delegate.viewController deleteContact:_contact];
+            [[RCContactManager shared] deleteContact:_contact];
             
             [self.navigationController popViewControllerAnimated:YES];
         }
@@ -1412,8 +1444,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [_contact savePhoto:image];
     
     // Save contact list
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController saveAddressBook];
+    [[RCContactManager shared] saveAddressBook];
     
     [self configureViewForContact:_contact];
     
