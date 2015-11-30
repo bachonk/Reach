@@ -37,9 +37,9 @@ static RCContactManager *shared = nil;
 #pragma mark - Getters
 
 - (Contact *)contactFromId:(NSString *)contactId {
-//    ABRecordRef record = ABAddressBookGetPersonWithRecordID(self.addressBook, ABRecordGetRecordID(_contact.originAddressBookRef));
-//    _contact = [Contact contactFromAddressBook:record];
-//    return contact;
+    ABRecordID recordId = (int32_t)[contactId intValue];
+    ABRecordRef record = ABAddressBookGetPersonWithRecordID(self.addressBook, recordId);
+    return [Contact contactFromAddressBook:record];
 }
 
 - (Contact *)contactFromAddressBookRef:(ABAddressBookRef)abRef {

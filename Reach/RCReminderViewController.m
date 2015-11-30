@@ -62,14 +62,14 @@
     [self.view addGestureRecognizer:tapGesture];
     
     _pickerView.frame = CGRectMake(0, CGRectGetMidY(screenFrame) - 110, 76, 216);
-    _pickerView.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
+    _pickerView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:149.0f/255.0f blue:125/255.0f alpha:1.0f];
     [self.view addSubview:_pickerView];
     
     _datePicker.frame = CGRectMake(CGRectGetMaxX(_pickerView.frame), CGRectGetMinY(_pickerView.frame), CGRectGetWidth(screenFrame) - CGRectGetWidth(_pickerView.frame), CGRectGetHeight(_pickerView.frame));
     _datePicker.minimumDate = [NSDate date];
     [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [_datePicker setDate:[NSDate dateWithTimeInterval:60 * 10 sinceDate:[NSDate date]] animated:YES];
-    _datePicker.backgroundColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
+    _datePicker.backgroundColor = _pickerView.backgroundColor;
 
     [self.view addSubview:_datePicker];
     

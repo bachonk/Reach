@@ -167,9 +167,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)prepareForNewContact {
     [self clearData];
-    
-    [_nameField becomeFirstResponder];
-    
+        
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     _locationField.text = delegate.lastLocationDescription;
     _coordinate = delegate.locationManager.location.coordinate;
@@ -177,6 +175,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     MKCoordinateSpan span = MKCoordinateSpanMake(0.0065, 0.0065);
     MKCoordinateRegion region = MKCoordinateRegionMake(delegate.locationManager.location.coordinate, span);
     [_locationMap setRegion:region];
+    
 }
 
 - (void)clearData {
@@ -517,6 +516,9 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
+    if (textField == _nameField) {
+        NSLog(@"sup");
+    }
     if (textField == _phoneField) {
         _phoneImage.image = [[UIImage imageNamed:@"phone-home-active"] imageWithTintColor:COLOR_CALL_GREEN];
     }

@@ -7,7 +7,9 @@
 //
 
 #import "RCRemindListTableViewController.h"
+#import "RCContactManager.h"
 #import "TTTTimeIntervalFormatter.h"
+#import "RCExternalRequestHandler.h"
 
 static const CGFloat kButtonWidth = 50.0f;
 static const CGFloat kButtonPadding = 9.0f;
@@ -63,11 +65,17 @@ static const CGFloat kButtonPadding = 9.0f;
     if (tag >= TAG_BUTTON_OFFSET) {
         // Call
         NSInteger index = tag - TAG_BUTTON_OFFSET;
+        NSNotification *notif = _notifications[index];
+        NSString *contactId = notif.userInfo[kLocalNotificationUserInfoUserID];
         
-//        NSDictionary *phone = _contact.phoneArray[index];
-//        NSString *label = [phone allKeys][0];
-//        NSString *value = [phone objectForKey:label];
-//        [self call:value];
+        Contact *contact = [[RCContactManager shared] contactFromId:contactId];
+        NSDictionary *phone = contact.phoneArray[index];
+        NSString *label = [phone allKeys][0];
+        NSString *value = [phone objectForKey:label];
+        
+        [RCExternalRequestHandler call:value completionHandler:^(BOOL success) {
+            // do nothing
+        }];
         
     }
 }
@@ -80,11 +88,19 @@ static const CGFloat kButtonPadding = 9.0f;
     if (tag >= TAG_BUTTON_OFFSET) {
         // Text
         NSInteger index = tag - TAG_BUTTON_OFFSET;
+        NSNotification *notif = _notifications[index];
+        NSString *contactId = notif.userInfo[kLocalNotificationUserInfoUserID];
         
-//        NSDictionary *phone = _contact.phoneArray[index];
-//        NSString *label = [phone allKeys][0];
-//        NSString *value = [phone objectForKey:label];
-//        [self call:value];
+        Contact *contact = [[RCContactManager shared] contactFromId:contactId];
+        NSDictionary *phone = contact.phoneArray[index];
+        NSString *label = [phone allKeys][0];
+        NSString *value = [phone objectForKey:label];
+        
+        [RCExternalRequestHandler text:value delegate:nil presentationHandler:^(BOOL shown) {
+            
+        } completionHandler:^(BOOL completed) {
+            
+        }];
         
     }
 }
@@ -121,11 +137,11 @@ static const CGFloat kButtonPadding = 9.0f;
         cell.buttonRight.layer.cornerRadius = kButtonWidth / 2;
         cell.buttonRight.clipsToBounds = YES;
         cell.buttonRight.layer.borderWidth = 1.0f;
-        [cell.buttonRight addTarget:self action:@selector(rightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.buttonRight addTarget:self action:@selector(didTapTextButton:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.buttonLeft.layer.cornerRadius = kButtonWidth / 2;
         cell.buttonLeft.clipsToBounds = YES;
-        [cell.buttonLeft addTarget:self action:@selector(leftButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.buttonLeft addTarget:self action:@selector(didTapCallButton:) forControlEvents:UIControlEventTouchUpInside];
         
         cell.mainLabel.frame = CGRectMake(12, 18, 200, 27);
         cell.mainLabel.backgroundColor = [UIColor clearColor];
@@ -172,8 +188,7 @@ static const CGFloat kButtonPadding = 9.0f;
     [cell setFourthColor:nil];
     [cell setFourthColor:nil];
     
-    cell.delegate = self;
-    cell.panGestureRecognizer.enabled = YES;
+    cell.panGestureRecognizer.enabled = NO;
     
     cell.mainLabel.textColor = [UIColor blackColor];
     cell.secondaryLabel.textColor = COLOR_DEFAULT_RED;
@@ -204,12 +219,17 @@ static const CGFloat kButtonPadding = 9.0f;
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+        UILocalNotification *notif = _notifications[indexPath.row];
+        [[UIApplication sharedApplication] cancelLocalNotification:notif];
+        
+        _notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+    }
 }
 
 /*

@@ -36,7 +36,7 @@ typedef enum {
 } RCContactSection;
 
 static const CGFloat kUserImageHeight = 106.0f;
-static const CGFloat kHeaderHeight = kUserImageHeight + 154.0f;
+static const CGFloat kHeaderHeight = kUserImageHeight + 144.0f;
 
 static const CGFloat kButtonWidth = 54.0f;
 static const CGFloat kButtonPadding = 9.0f;

@@ -247,7 +247,7 @@ static const CGFloat headerHeight = 34.0f;
         
     } else {
         
-        [self setNeedsStatusBarAppearanceUpdate];
+        [self configureView];
         
     }
 }
@@ -470,7 +470,6 @@ static const CGFloat headerHeight = 34.0f;
                                                     ]
                                            animated:YES];
         
-        [self setNeedsStatusBarAppearanceUpdate];
     }
     else {
         self.title = NSLocalizedString(@"Contacts", nil);
@@ -889,7 +888,7 @@ static const CGFloat headerHeight = 34.0f;
     [self swapInHeaderView:nil contentView:_addContactTableViewController.tableView animated:YES];
     
     [_addContactTableViewController prepareForNewContact];
-    
+        
 }
 
 - (void)hideNewContactViewAnimated:(BOOL)animated {

@@ -37,7 +37,6 @@
 
 + (void)text:(NSString *)number delegate:(id<MFMessageComposeViewControllerDelegate>)delegate presentationHandler:(void (^)(BOOL))presBlock completionHandler:(void (^)(BOOL))compBlock
 {
-    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@", number]]];
     
     /*
