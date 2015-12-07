@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C80CAB2E1C14AA56001A4DBD /* JSBackspaceReportingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C80CAB251C14AA56001A4DBD /* JSBackspaceReportingTextField.m */; };
+		C80CAB2F1C14AA56001A4DBD /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C80CAB271C14AA56001A4DBD /* JSTokenButton.m */; };
+		C80CAB301C14AA56001A4DBD /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = C80CAB291C14AA56001A4DBD /* JSTokenField.m */; };
+		C80CAB311C14AA56001A4DBD /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = C80CAB2A1C14AA56001A4DBD /* tokenHighlighted.png */; };
+		C80CAB321C14AA56001A4DBD /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C80CAB2B1C14AA56001A4DBD /* tokenHighlighted@2x.png */; };
+		C80CAB331C14AA56001A4DBD /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = C80CAB2C1C14AA56001A4DBD /* tokenNormal.png */; };
+		C80CAB341C14AA56001A4DBD /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C80CAB2D1C14AA56001A4DBD /* tokenNormal@2x.png */; };
 		C81740DD179B1C76007A313F /* MCSwipeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C81740DC179B1C76007A313F /* MCSwipeTableViewCell.m */; };
 		C81740FB179B2BE0007A313F /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81740FA179B2BDF007A313F /* MessageUI.framework */; };
 		C81C65A3193149A5008CEF15 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65A2193149A5008CEF15 /* FXBlurView.m */; };
@@ -171,6 +178,16 @@
 		512A33984EE1320B8AA06D0A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5987C013E52DAC8FC833650A /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		63FDBE768A7D4951BC968DC0 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C80CAB241C14AA56001A4DBD /* JSBackspaceReportingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSBackspaceReportingTextField.h; sourceTree = "<group>"; };
+		C80CAB251C14AA56001A4DBD /* JSBackspaceReportingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSBackspaceReportingTextField.m; sourceTree = "<group>"; };
+		C80CAB261C14AA56001A4DBD /* JSTokenButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenButton.h; sourceTree = "<group>"; };
+		C80CAB271C14AA56001A4DBD /* JSTokenButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenButton.m; sourceTree = "<group>"; };
+		C80CAB281C14AA56001A4DBD /* JSTokenField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSTokenField.h; sourceTree = "<group>"; };
+		C80CAB291C14AA56001A4DBD /* JSTokenField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSTokenField.m; sourceTree = "<group>"; };
+		C80CAB2A1C14AA56001A4DBD /* tokenHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenHighlighted.png; sourceTree = "<group>"; };
+		C80CAB2B1C14AA56001A4DBD /* tokenHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenHighlighted@2x.png"; sourceTree = "<group>"; };
+		C80CAB2C1C14AA56001A4DBD /* tokenNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tokenNormal.png; sourceTree = "<group>"; };
+		C80CAB2D1C14AA56001A4DBD /* tokenNormal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tokenNormal@2x.png"; sourceTree = "<group>"; };
 		C81740DB179B1C76007A313F /* MCSwipeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSwipeTableViewCell.h; sourceTree = "<group>"; };
 		C81740DC179B1C76007A313F /* MCSwipeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSwipeTableViewCell.m; sourceTree = "<group>"; };
 		C81740FA179B2BDF007A313F /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -407,6 +424,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C80CAB231C14AA56001A4DBD /* JSTokenField */ = {
+			isa = PBXGroup;
+			children = (
+				C80CAB241C14AA56001A4DBD /* JSBackspaceReportingTextField.h */,
+				C80CAB251C14AA56001A4DBD /* JSBackspaceReportingTextField.m */,
+				C80CAB261C14AA56001A4DBD /* JSTokenButton.h */,
+				C80CAB271C14AA56001A4DBD /* JSTokenButton.m */,
+				C80CAB281C14AA56001A4DBD /* JSTokenField.h */,
+				C80CAB291C14AA56001A4DBD /* JSTokenField.m */,
+				C80CAB2A1C14AA56001A4DBD /* tokenHighlighted.png */,
+				C80CAB2B1C14AA56001A4DBD /* tokenHighlighted@2x.png */,
+				C80CAB2C1C14AA56001A4DBD /* tokenNormal.png */,
+				C80CAB2D1C14AA56001A4DBD /* tokenNormal@2x.png */,
+			);
+			path = JSTokenField;
+			sourceTree = "<group>";
+		};
 		C8174101179B5DDE007A313F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,6 +810,7 @@
 				C81C65BE1933D726008CEF15 /* RCExternalRequestHandler.m */,
 				C8E8153D198B2C5C00F789A8 /* LinkedIn */,
 				C8BF0649197254BC00A6BA09 /* ImageEffects */,
+				C80CAB231C14AA56001A4DBD /* JSTokenField */,
 				C884CC4B1971FA3300C92C88 /* Tags */,
 				C81C65C019342E67008CEF15 /* Categories */,
 				C8E816391997F7B500F789A8 /* SDWebImage */,
@@ -892,6 +927,11 @@
 					};
 					C8E4FA8517131898006FEEE0 = {
 						DevelopmentTeam = BRX3VWK6LR;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -949,12 +989,14 @@
 				C81C65CE19345CAA008CEF15 /* RCTutorialViewController.xib in Resources */,
 				C84AEFB5192C498500C7F017 /* Localizable.strings in Resources */,
 				C8E816261994794800F789A8 /* phone-home-inactive.png in Resources */,
+				C80CAB321C14AA56001A4DBD /* tokenHighlighted@2x.png in Resources */,
 				C8E8162F1994794800F789A8 /* tag-background@2x.png in Resources */,
 				C8E8161B1994794800F789A8 /* edit-profile-icon@2x.png in Resources */,
 				C8E816171994794800F789A8 /* button-dropdown@2x.png in Resources */,
 				C8E816181994794800F789A8 /* close-icon@2x.png in Resources */,
 				C8E8161F1994794800F789A8 /* icon-linkedin@2x.png in Resources */,
 				C8E816211994794800F789A8 /* navigation-bar-linkedin@2x.png in Resources */,
+				C80CAB331C14AA56001A4DBD /* tokenNormal.png in Resources */,
 				C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */,
 				C81C65B91932F5CE008CEF15 /* sample.png in Resources */,
 				C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */,
@@ -966,11 +1008,13 @@
 				C8E8155D198C755300F789A8 /* 01-refresh@2x.png in Resources */,
 				C8F5C3C61902E85000DB7C52 /* Images.xcassets in Resources */,
 				C8E816271994794800F789A8 /* phone-home-inactive@2x.png in Resources */,
+				C80CAB311C14AA56001A4DBD /* tokenHighlighted.png in Resources */,
 				C8E816251994794800F789A8 /* phone-home-active@2x.png in Resources */,
 				C8E8162B1994794800F789A8 /* search-bar@2x.png in Resources */,
 				C8E816301994794800F789A8 /* text-active.png in Resources */,
 				C8E8162E1994794800F789A8 /* tag-active@2x.png in Resources */,
 				C8E816221994794800F789A8 /* navigation-bar@2x.png in Resources */,
+				C80CAB341C14AA56001A4DBD /* tokenNormal@2x.png in Resources */,
 				C8E816321994794800F789A8 /* text-inactive.png in Resources */,
 				C84AEFA41921F21A00C7F017 /* guide-indicator-left@2x.png in Resources */,
 				C84AEFA51921F21A00C7F017 /* guide-indicator-right@2x.png in Resources */,
@@ -1065,6 +1109,8 @@
 				C81C65CD19345CAA008CEF15 /* RCTutorialViewController.m in Sources */,
 				C8E816601997F7B500F789A8 /* SDWebImageDownloader.m in Sources */,
 				C8E816621997F7B500F789A8 /* SDWebImageManager.m in Sources */,
+				C80CAB301C14AA56001A4DBD /* JSTokenField.m in Sources */,
+				C80CAB2E1C14AA56001A4DBD /* JSBackspaceReportingTextField.m in Sources */,
 				C81740DD179B1C76007A313F /* MCSwipeTableViewCell.m in Sources */,
 				C8E816651997F7B500F789A8 /* UIImage+GIF.m in Sources */,
 				C81C65C919342F3C008CEF15 /* UIImage+TintColor.m in Sources */,
@@ -1084,6 +1130,7 @@
 				C8E815CA198EA06400F789A8 /* NSString+EmailAddresses.m in Sources */,
 				C8E815C2198D385000F789A8 /* LinkedInContact.m in Sources */,
 				C874048817A0D765002F8146 /* MNMToast.m in Sources */,
+				C80CAB2F1C14AA56001A4DBD /* JSTokenButton.m in Sources */,
 				C8E81558198C755300F789A8 /* LIALinkedInApplication.m in Sources */,
 				C8E8165F1997F7B500F789A8 /* SDWebImageDecoder.m in Sources */,
 				C8F3C3831C02B58F0050A2D7 /* RCContactManager.m in Sources */,

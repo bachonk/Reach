@@ -73,9 +73,7 @@ static const CGFloat kButtonPadding = 9.0f;
         NSString *label = [phone allKeys][0];
         NSString *value = [phone objectForKey:label];
         
-        [RCExternalRequestHandler call:value completionHandler:^(BOOL success) {
-            // do nothing
-        }];
+        [RCExternalRequestHandler call:value completionHandler:nil];
         
     }
 }
@@ -151,6 +149,8 @@ static const CGFloat kButtonPadding = 9.0f;
         cell.mainLabel.adjustsFontSizeToFitWidth = YES;
         cell.mainLabel.minimumScaleFactor = 14.0f/21.0f;
         
+        cell.secondaryLabel.font = [UIFont systemFontOfSize:13.0f];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
@@ -173,9 +173,7 @@ static const CGFloat kButtonPadding = 9.0f;
     [cell.buttonLeft setTintColor:COLOR_CALL_GREEN];
     cell.buttonLeft.tag = indexPath.row + TAG_BUTTON_OFFSET;
     cell.buttonLeft.userInteractionEnabled = YES;
-    
-    cell.notesTextView.hidden = YES;
-    
+        
     [cell setFirstColor:COLOR_TEXT_BLUE];
     [cell setFirstIconName:@"text-active"];
     

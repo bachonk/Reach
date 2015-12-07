@@ -16,8 +16,6 @@
 @property (nonatomic, strong) UIButton *buttonLeft;
 @property (nonatomic, strong) UIButton *buttonRight;
 
-@property (nonatomic, strong) UITextView *notesTextView;
-
 - (void)didHighlightCellForPhone:(NSNumber *)isForPhone;
 - (void)didUnhighlightCellForPhone:(NSNumber *)isForPhone;
 

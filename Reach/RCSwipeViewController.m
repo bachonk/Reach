@@ -27,7 +27,6 @@
 
 // Search view definitions
 #define SEARCH_BACKGROUND_OPACITY 0.7f
-#define SEARCH_FRAME_PADDING 0.0f
 
 // Tags for action sheet
 static const NSInteger kTagActionSheetMergeOptions = 10;
@@ -185,8 +184,8 @@ static const CGFloat headerHeight = 34.0f;
      */
     
     _addContactTableViewController = [[RCNewContactTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    _addContactTableViewController.tableView.frame = self.view.frame;
-    _addContactTableViewController.tableView.contentInset = UIEdgeInsetsMake(CGRectGetHeight(searchHeaderView.frame) - 10, 0, CGRectGetMaxY(searchHeaderView.frame), 0);
+    _addContactTableViewController.tableView.frame = theTableView.frame;
+    _addContactTableViewController.tableView.contentInset = UIEdgeInsetsMake(0, 0, 216, 0);
     _addContactTableViewController.tableView.backgroundColor = [UIColor clearColor];
     _addContactTableViewController.tableView.alpha = 0.0f;
     
@@ -245,11 +244,10 @@ static const CGFloat headerHeight = 34.0f;
         
         [self showNewContactView];
         
-    } else {
-        
-        [self configureView];
-        
     }
+    
+    [self configureView];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -309,10 +307,6 @@ static const CGFloat headerHeight = 34.0f;
     }
     
     if (contact) {
-        
-        if ([action length]) {
-            NSLog(@"ACTION: %@", action);
-        }
         
         NSString *toastText = [NSString stringWithFormat:@"%@: %@ %@%@", NSLocalizedString(@"Reminder", nil), actionString, contact.fullName, [reminderMessage length] ? [NSString stringWithFormat:@" - %@", reminderMessage] : @""];
                                
@@ -470,6 +464,8 @@ static const CGFloat headerHeight = 34.0f;
                                                     ]
                                            animated:YES];
         
+        searchView.hidden = YES;
+        
     }
     else {
         self.title = NSLocalizedString(@"Contacts", nil);
@@ -506,6 +502,8 @@ static const CGFloat headerHeight = 34.0f;
         else {
             [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showNewContactView)] animated:YES];
         }
+        
+        searchView.hidden = NO;
         
     }
     
@@ -555,8 +553,9 @@ static const CGFloat headerHeight = 34.0f;
         
         // Content
         
+        CGFloat yVal = view ? 0 : 64.0f;
         contentView.alpha = 1.0f;
-        contentView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - SEARCH_FRAME_PADDING);
+        contentView.frame = CGRectMake(0, yVal, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame) - yVal);
         
         theTableView.transform = CGAffineTransformMakeScale(0.78, 0.78);
         theTableView.alpha = 0.06f;
@@ -706,7 +705,7 @@ static const CGFloat headerHeight = 34.0f;
 }
 
 - (void)slideSearch:(CCSlideSearchView *)searchView didFinishSearchWithTerm:(NSString *)term {
-    NSLog(@"Did finish with term %@", term);
+    // NSLog(@"Did finish with term %@", term);
 }
 
 #pragma mark - Search View
@@ -867,7 +866,7 @@ static const CGFloat headerHeight = 34.0f;
     Contact *contact = [Contact contactFromAddressBook:newEntry];
     
     // Add to address book
-    [[RCContactManager shared] fetchContacts];
+    [[RCContactManager shared] saveContact:newEntry];
     
     // Show contact details
     [_addContactTableViewController clearData];
@@ -888,7 +887,7 @@ static const CGFloat headerHeight = 34.0f;
     [self swapInHeaderView:nil contentView:_addContactTableViewController.tableView animated:YES];
     
     [_addContactTableViewController prepareForNewContact];
-        
+    
 }
 
 - (void)hideNewContactViewAnimated:(BOOL)animated {
@@ -1207,18 +1206,6 @@ static const CGFloat headerHeight = 34.0f;
             
             break;
         }
-        case MCSwipeTableViewCellState3: // Email
-        {
-            
-            if ([addressBook.email length]) {
-                mainString = addressBook.email;
-            } else {
-                mainString = NSLocalizedString(@"No email found", nil);
-            }
-            accessoryImage = @"email.png";
-            
-            break;
-        }
         case MCSwipeTableViewCellState2: // Call
         {
             
@@ -1232,7 +1219,7 @@ static const CGFloat headerHeight = 34.0f;
             
             break;
         }
-        case MCSwipeTableViewCellState4: // Reminder
+        case MCSwipeTableViewCellState4: case MCSwipeTableViewCellState3: // Reminder
         {
             
             mainString = NSLocalizedString(@"Set reminder", nil);
@@ -1285,7 +1272,6 @@ static const CGFloat headerHeight = 34.0f;
     }
     
     BOOL hasMobilePhone =   [contact.mobile length] ? YES : NO;
-    BOOL hasEmail =         [contact.email length]  ? YES : NO;
     BOOL hasHomePhone =     [contact.home length]   ? YES : NO;
     
     if (state == MCSwipeTableViewCellState1) {
@@ -1302,21 +1288,8 @@ static const CGFloat headerHeight = 34.0f;
             
         }
         
-    } else if (state == MCSwipeTableViewCellState3) {
-        // EMAIL
-        
-        if (hasEmail) {
-            
-            [self email:contact.email];
-            
-        } else {
-            // No email
-            
-            [MNMToast showWithText:NSLocalizedString(@"No email address", nil) autoHidding:YES priority:MNMToastPriorityNormal completionHandler:nil tapHandler:nil];
-
-        }
-        
-    } else if (state == MCSwipeTableViewCellState2) {
+    }
+    else if (state == MCSwipeTableViewCellState2) {
         // HOME
         
         if (hasHomePhone) {
@@ -1334,7 +1307,7 @@ static const CGFloat headerHeight = 34.0f;
             
         }
         
-    } else if (state == MCSwipeTableViewCellState4) {
+    } else if (state == MCSwipeTableViewCellState4 || state == MCSwipeTableViewCellState3) {
         // REMINDER
         
         [self remind:contact];
@@ -1428,22 +1401,10 @@ static const CGFloat headerHeight = 34.0f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (tableView == _addContactTableViewController.tableView) {
-        if (indexPath.row == 0) {
-            return 70.0f;
-        }
-        return 44.0f;
-    }
-    
     return kCellHeightDefault;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    
-    if (tableView == _addContactTableViewController.tableView) {
-        return nil;
-    }
     
     if ([RCContactManager shared].accessRevoked && tableView == theTableView) {
         
@@ -1522,10 +1483,6 @@ static const CGFloat headerHeight = 34.0f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    
-    if (tableView == _addContactTableViewController.tableView) {
-        return 0.0f;
-    }
     
     if (tableView == _searchTableView) {
         if (section == 0 && [_filteredContactListFirstName count] == 0) return 0;
@@ -1647,7 +1604,6 @@ static const CGFloat headerHeight = 34.0f;
     
     // We need to provide the icon names and the desired colors
     BOOL hasMobilePhone =   [addressBook.mobile length] ? YES : NO;
-    BOOL hasEmail =         [addressBook.email length] ? YES : NO;
     BOOL hasHomePhone =     [addressBook.home length] ? YES : NO;
     
     NSString *fourthImage = nil;
@@ -1665,8 +1621,8 @@ static const CGFloat headerHeight = 34.0f;
                      firstColor:[COLOR_TEXT_BLUE colorWithAlphaComponent:hasMobilePhone ? 1.0f : 0.2f]
             secondStateIconName:hasMobilePhone || hasHomePhone ? @"phone-home-active.png" : @"phone-home-inactive.png"
                     secondColor:[COLOR_CALL_GREEN colorWithAlphaComponent:hasMobilePhone || hasHomePhone ? 1.0f : 0.2f]
-                  thirdIconName:hasEmail ? @"email-active.png" : @"email-inactive.png"
-                     thirdColor:[COLOR_EMAIL_RED colorWithAlphaComponent:hasEmail ? 1.0f : 0.2f]
+                  thirdIconName:@"remind-active.png"
+                     thirdColor:COLOR_REMIND_YELLOW
                  fourthIconName:@"remind-active.png"
                     fourthColor:COLOR_REMIND_YELLOW];
     
@@ -1694,10 +1650,6 @@ static const CGFloat headerHeight = 34.0f;
 {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    
-    if (tableView == _addContactTableViewController.tableView) {
-        return;
-    }
     
     [self.view endEditing:YES];
     

@@ -71,12 +71,15 @@ static RCContactManager *shared = nil;
     ABAddressBookRemoveRecord(_addressBook, contact.originAddressBookRef, &error);
     
     [self saveAddressBook];
+    
+    [shared fetchContacts];
 }
 
 #pragma mark - Instance methods
 
 - (void)fetchContacts {
     // Create addressbook data model
+    self.addressBook = ABAddressBookCreateWithOptions(NULL, NULL);
     
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(self.addressBook);
     CFIndex nPeople = ABAddressBookGetPersonCount(self.addressBook);

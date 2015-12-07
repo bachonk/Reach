@@ -97,6 +97,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     _phoneCallButton.titleLabel.font = [UIFont systemFontOfSize:15.0f];
     [_phoneCallButton setTitle:NSLocalizedString(@"Call", @"") forState:UIControlStateNormal];
     _phoneCallButton.alpha = 0.0f;
+    [_phoneCallButton addTarget:self action:@selector(call) forControlEvents:UIControlEventTouchUpInside];
     
     _emailField = [[UITextField alloc] initWithFrame:inputFrame];
     _emailField.font = [UIFont systemFontOfSize:18.0f];
@@ -144,12 +145,14 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     mapRect.size.height = 160.0f;
     mapRect.origin.y = 42.0f;
     _locationMap = [[MKMapView alloc] initWithFrame:mapRect];
+    _locationMap.userInteractionEnabled = NO;
     
-    _tagField = [[TLTagsControl alloc] initWithFrame:inputFrame];
-    _tagField.tagsBackgroundColor = COLOR_TAG_BLUE;
-    _tagField.tagsTextColor = [UIColor whiteColor];
-    _tagField.tagsDeleteButtonColor = [UIColor whiteColor];
-    _tagField.tagPlaceholder = NSLocalizedString(@"Tags", nil);
+    inputFrame.origin.y = 14.0f;
+    inputFrame.origin.x = inputFrame.origin.x - 3;
+    _tagField = [[JSTokenField alloc] initWithFrame:inputFrame];
+    _tagField.textField.font = _emailField.font;
+    _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
+    _tagField.textField.tintColor = COLOR_TAG_BLUE;
     _tagField.delegate = self;
     
     _tagImage = [[UIImageView alloc] initWithFrame:CGRectMake(kCellPadding, kCellPadding, kCellAccessoryImageWidth, kCellAccessoryImageWidth)];
@@ -176,6 +179,8 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     MKCoordinateRegion region = MKCoordinateRegionMake(delegate.locationManager.location.coordinate, span);
     [_locationMap setRegion:region];
     
+    // For some reason, the name field isn't immediately available
+    [_nameField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
 }
 
 - (void)clearData {
@@ -185,13 +190,13 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     _notesField.text = nil;
     _userImage = nil;
     [_userImageButton setBackgroundImage:[[UIImage imageNamed:@"user-blank"] imageWithTintColor:COLOR_IMAGE_DEFAULT] forState:UIControlStateNormal];
-    [_tagField.tags removeAllObjects];
+    [_tagField removeAllTokens];
     
     [self.tableView reloadData];
 }
 
 - (BOOL)hasData {
-    return [_nameField.text length] || [_phoneField.text length] || [_emailField.text length] || [_tagField.tags count] || _userImage;
+    return [_nameField.text length] || [_phoneField.text length] || [_emailField.text length] || [_tagField.tokens count] || _userImage;
 }
 
 - (ABRecordRef)getContactRef {
@@ -256,39 +261,40 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     }
     
     // Set notes & tags
-    NSMutableString *notesString = [NSMutableString stringWithString:_notesField.text];
+    NSMutableString *notesString = [NSMutableString stringWithString:_notesField.text ?: @""];
     
-    [notesString appendString:kContactTagSeparator];
+    [notesString appendString:kContactMetadataSeparator];
     
-    if ([_tagField.tags count]) {
-        // Has tags
-        
-        for (NSString *tag in _tagField.tags) {
-            [notesString appendFormat:@"#%@ ", tag];
+    NSMutableArray *tags = [NSMutableArray new];
+    for (UIButton *tag in _tagField.tokens) {
+        if ([tag.titleLabel.text length]) {
+            [tags addObject:[[tag.titleLabel.text lowercaseString] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         }
-        
     }
     
+    NSDictionary *meetingDict;
     if ([_locationField.text length]) {
         // Stores meeting location
         
-        [notesString appendString:kContactMetadataSeparator];
+        meetingDict = @{
+                        kContactLocationAddressKey: _locationField.text,
+                        kContactLocationCoordinateKey: @[ @(_coordinate.latitude), @(_coordinate.longitude) ]
+                        };
         
-        NSDictionary *loc = @{
-                              kContactLocationKey: @{
-                                      kContactLocationAddressKey: _locationField.text,
-                                      kContactLocationCoordinateKey: @[ @(_coordinate.latitude), @(_coordinate.longitude) ]
-                                      }
-                              };
-        
-        NSError *err;
-        NSData *locationDataRep = [NSJSONSerialization dataWithJSONObject:loc options:0 error:&err];
-        
-        if (!err) {
-            NSString *locationStringRep = [[NSString alloc] initWithData:locationDataRep encoding:NSUTF8StringEncoding];
-            [notesString appendString:@"\n"];
-            [notesString appendString:locationStringRep];
-        }
+    }
+    
+    NSDictionary *metadata = @{
+                               kContactTagsKey: tags,
+                               kContactLocationKey: meetingDict ?: @{}
+                               };
+    
+    NSError *err;
+    NSData *metadataDataRep = [NSJSONSerialization dataWithJSONObject:metadata options:0 error:&err];
+    
+    if (!err) {
+        NSString *metadataStringRep = [[NSString alloc] initWithData:metadataDataRep encoding:NSUTF8StringEncoding];
+        [notesString appendString:@"\n"];
+        [notesString appendString:metadataStringRep];
     }
     
     ABRecordSetValue(person, kABPersonNoteProperty, (__bridge CFTypeRef)(notesString) , nil);
@@ -297,7 +303,10 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 }
 
 - (void)call {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", _phoneField.textColor]]];
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", _phoneField.text]]];
+    //[[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:5082085888"]]];
+    
+    [RCExternalRequestHandler call:_phoneField.text completionHandler:nil];
 }
 
 - (void)uploadUserPhoto:(id)sender {
@@ -319,14 +328,6 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 {
     // Return the number of rows in the section.
     return [[UIScreen mainScreen] bounds].size.height > 520 ? 6 : 5;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[UIView alloc] init];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [[UIScreen mainScreen] bounds].size.height > 520 ? ([[UIScreen mainScreen] bounds].size.height - 216 - 66 - (44 * 4) - 70) / 4 : 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
@@ -459,6 +460,14 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
                 [cell.contentView addSubview:_locationField];
                 [cell.contentView addSubview:_locationMap];
                 
+                // Add circle indicator surrounding location
+                UIView *indicatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+                indicatorView.layer.cornerRadius = CGRectGetHeight(indicatorView.frame) / 2;
+                indicatorView.layer.borderColor = [[COLOR_DEFAULT_RED colorWithAlphaComponent:0.4f] CGColor];
+                indicatorView.layer.borderWidth = 21.0f;
+                indicatorView.center = _locationMap.center;
+                [cell.contentView addSubview:indicatorView];
+                
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 
             }
@@ -516,9 +525,6 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     
-    if (textField == _nameField) {
-        NSLog(@"sup");
-    }
     if (textField == _phoneField) {
         _phoneImage.image = [[UIImage imageNamed:@"phone-home-active"] imageWithTintColor:COLOR_CALL_GREEN];
     }
@@ -530,8 +536,9 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     }
     else if (textField == _locationField) {
         _locationImage.image = [[UIImage imageNamed:@"location-active"] imageWithTintColor:COLOR_DEFAULT_RED];
+        [_locationField selectAll:nil];
     }
-    
+        
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
@@ -634,12 +641,6 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 #pragma mark - Token Field Delegate
 
-- (void)tagsControl:(TLTagsControl *)tagsControl tappedAtIndex:(NSInteger)index {
-    
-}
-
-/*
-
 - (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
     _tagImage.image = [[UIImage imageNamed:@"tag-active"] imageWithTintColor:COLOR_TAG_BLUE];
 }
@@ -650,23 +651,14 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj
 {
-	//NSDictionary *recipient = [NSDictionary dictionaryWithObject:obj forKey:title];
-	//[_toRecipients addObject:recipient];
-	//NSLog(@"Added token for < %@ : %@ >\n%@", title, obj, _toRecipients);
-    
     _tagField.textField.placeholder = nil;
-    
 }
 
 - (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
 {
-	//[_toRecipients removeObjectAtIndex:index];
-	//NSLog(@"Deleted token %d\n%@", index, _toRecipients);
-    
     if (![_tagField.tokens count]) {
         _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
     }
-    
 }
 
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
@@ -693,7 +685,6 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     
     return NO;
 }
- */
 
 #pragma mark - Action Sheet Delegate
 

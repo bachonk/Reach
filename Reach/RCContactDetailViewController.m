@@ -105,10 +105,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         [self.view addSubview:_contactHeaderView];
         
         // Tag view
-        _tagField = [[TLTagsControl alloc] initWithFrame:CGRectMake(37, 0 + 4, CGRectGetWidth(frame) - 44, 27)];
-        //_tagField.textField.font = [UIFont systemFontOfSize:15.0f];
-        //_tagField.textField.placeholder = NSLocalizedString(@"Add tag...", nil);
-        //_tagField.textField.tintColor = COLOR_TAG_BLUE;
+        _tagField = [[JSTokenField alloc] initWithFrame:CGRectMake(37, 0 + 4, CGRectGetWidth(frame) - 44, 27)];
+        _tagField.textField.font = [UIFont systemFontOfSize:16.0f];
+        _tagField.textField.placeholder = NSLocalizedString(@"Add tag...", nil);
+        _tagField.textField.tintColor = COLOR_TAG_BLUE;
+        _tagField.textField.textColor = [UIColor whiteColor];
         _tagField.delegate = self;
         
         // Set up the main table view container
@@ -140,6 +141,16 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     _dateFormatter = [[NSDateFormatter alloc] init];
     [_dateFormatter setDateStyle:NSDateFormatterLongStyle];
     
+    // Extra notes text view
+    _notesTextView = [[UITextView alloc] initWithFrame:CGRectMake(11, 30, 200, 48)];
+    _notesTextView.delegate = self;
+    _notesTextView.returnKeyType = UIReturnKeyDone;
+    _notesTextView.font = [UIFont systemFontOfSize:15.0f];
+    _notesTextView.textColor = [UIColor whiteColor];
+    _notesTextView.backgroundColor = [UIColor clearColor];
+    _notesTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+    _notesTextView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    
     // Add semi-transparency below the table
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, _theTableView.contentSize.height, CGRectGetWidth(_theTableView.frame), 400.0f)];
@@ -155,10 +166,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     if (_shouldUpdateOnAppear) {
         // Update in the event of an edit
-        [[RCContactManager shared] contactFromAddressBookRef:_contact.originAddressBookRef];
-        [self configureViewForContact:_contact];
         
         [[RCContactManager shared] fetchContacts];
+        
+        _contact = [[RCContactManager shared] contactFromId:_contact.contactId];
+        
+        [self configureViewForContact:_contact];
         
         _shouldUpdateOnAppear = NO;
     }
@@ -250,13 +263,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     // Temporarily disable delegate
     _tagField.delegate = nil;
     
-#warning CHeck this out
-    /*
     [_tagField removeAllTokens];
     for (NSString *tag in _contact.tags) {
         [_tagField addTokenWithTitle:tag representedObject:nil];
     }
-     */
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -670,6 +680,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellID = @"CellID";
+    static NSString *NotesCellID = @"NotesCellID";
     static NSString *LabelCellID = @"LabelCellID";
     static NSString *TagCellID = @"TagCellID";
     
@@ -713,6 +724,55 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         return cell;
     }
     
+    if (indexPath.section == RCContactSectionNotes) {
+        RCContactDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NotesCellID];
+        if (cell == nil) {
+            cell = [[RCContactDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NotesCellID];
+            
+            cell.defaultCellBackgroundColor = [UIColor clearColor];
+            
+            cell.buttonRight.layer.cornerRadius = kButtonWidth / 2;
+            cell.buttonRight.clipsToBounds = YES;
+            cell.buttonRight.layer.borderColor = [BACKGROUND_WHITE_TRANSLUCENT CGColor];
+            cell.buttonRight.layer.borderWidth = 1.0f;
+            [cell.buttonRight addTarget:self action:@selector(rightButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.buttonLeft.layer.cornerRadius = kButtonWidth / 2;
+            cell.buttonLeft.clipsToBounds = YES;
+            [cell.buttonLeft addTarget:self action:@selector(leftButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.mainLabel.frame = CGRectMake(14, 18, 200, 27);
+            cell.mainLabel.backgroundColor = [UIColor clearColor];
+            cell.mainLabel.font = [UIFont systemFontOfSize:20.0f];
+            cell.mainLabel.textColor = [UIColor grayColor];
+            cell.mainLabel.textAlignment = NSTextAlignmentLeft;
+            cell.mainLabel.adjustsFontSizeToFitWidth = YES;
+            cell.mainLabel.minimumScaleFactor = 14.0f/21.0f;
+            
+            [cell.contentView addSubview:_notesTextView];
+            
+            cell.secondaryLabel.frame = CGRectMake(14, 12, CGRectGetWidth(cell.mainLabel.frame), 18);
+            cell.secondaryLabel.text = @"Notes";
+            cell.secondaryLabel.textColor = [UIColor whiteColor];
+            
+            cell.buttonLeft.alpha = 0.0f;
+            cell.buttonRight.alpha = 0.0f;
+            
+            cell.mainLabel.frame = CGRectMake(14, CGRectGetMaxY(cell.secondaryLabel.frame), CGRectGetWidth(_theTableView.frame) - kButtonWidth - (kButtonPadding * 3), 33);
+            cell.mainLabel.text = NSLocalizedString(@"Add notes for this contact", nil);
+            cell.mainLabel.font = _notesTextView.font;
+            
+            cell.delegate = nil;
+            cell.panGestureRecognizer.enabled = NO;
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        cell.mainLabel.alpha = [_notesTextView.text length] ? 0.0f : 0.4f;
+        
+        return cell;
+    }
+    
     RCContactDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     if (cell == nil) {
         cell = [[RCContactDetailTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellID];
@@ -729,17 +789,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         cell.buttonLeft.clipsToBounds = YES;
         [cell.buttonLeft addTarget:self action:@selector(leftButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         
-        cell.mainLabel.frame = CGRectMake(12, 18, 200, 27);
+        cell.mainLabel.frame = CGRectMake(14, 18, 200, 27);
         cell.mainLabel.backgroundColor = [UIColor clearColor];
         cell.mainLabel.font = [UIFont systemFontOfSize:20.0f];
         cell.mainLabel.textColor = [UIColor blackColor];
         cell.mainLabel.textAlignment = NSTextAlignmentLeft;
         cell.mainLabel.adjustsFontSizeToFitWidth = YES;
         cell.mainLabel.minimumScaleFactor = 14.0f/21.0f;
-        
-        cell.notesTextView.delegate = self;
-        cell.notesTextView.textColor = [UIColor whiteColor];
-        cell.notesTextView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -754,7 +810,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.secondaryLabel.frame = CGRectMake(13, 12, CGRectGetWidth(cell.mainLabel.frame), 18);
             cell.secondaryLabel.text = label;
             
-            cell.mainLabel.frame = CGRectMake(13, CGRectGetMaxY(cell.secondaryLabel.frame) + 1, CGRectGetWidth(_theTableView.frame) - 34, 27);
+            cell.mainLabel.frame = CGRectMake(14, CGRectGetMaxY(cell.secondaryLabel.frame) + 1, CGRectGetWidth(_theTableView.frame) - 34, 27);
             cell.mainLabel.text = value;
             cell.mainLabel.font = [UIFont systemFontOfSize:20.0f];
             cell.mainLabel.alpha = 1.0f;
@@ -771,9 +827,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             [cell.buttonLeft setTintColor:COLOR_CALL_GREEN];
             cell.buttonLeft.tag = indexPath.row + TAG_BUTTON_OFFSET;
             cell.buttonLeft.userInteractionEnabled = YES;
-            
-            cell.notesTextView.hidden = YES;
-            
+                        
             [cell setFirstColor:COLOR_TEXT_BLUE];
             [cell setFirstIconName:@"text-active"];
             
@@ -814,8 +868,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.buttonLeft.tag = -indexPath.row - TAG_BUTTON_OFFSET;
             cell.buttonLeft.userInteractionEnabled = YES;
             
-            cell.notesTextView.hidden = YES;
-            
             [cell setFirstColor:COLOR_EMAIL_RED];
             [cell setFirstIconName:@"email-active"];
             
@@ -850,8 +902,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             [cell.buttonLeft setTintColor:COLOR_LINKEDIN_BLUE];
             cell.buttonLeft.userInteractionEnabled = NO;
             
-            cell.notesTextView.hidden = YES;
-            
             [cell setFirstColor:nil];
             [cell setFirstIconName:nil];
             
@@ -876,29 +926,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             break;
         }
-        case RCContactSectionNotes:
-        {
-            
-            cell.secondaryLabel.frame = CGRectMake(13, 12, CGRectGetWidth(cell.mainLabel.frame), 18);
-            cell.secondaryLabel.text = @"Notes";
-            
-            cell.buttonLeft.alpha = 0.0f;
-            cell.buttonRight.alpha = 0.0f;
-            
-            cell.notesTextView.hidden = NO;
-            cell.notesTextView.frame = CGRectMake(7, CGRectGetMaxY(cell.secondaryLabel.frame), CGRectGetWidth(_theTableView.frame) - 14, kNotesTextViewHeight - CGRectGetMaxY(cell.secondaryLabel.frame));
-            cell.notesTextView.text = _contact.notes;
-            
-            cell.mainLabel.frame = CGRectMake(14, CGRectGetMaxY(cell.secondaryLabel.frame), CGRectGetWidth(_theTableView.frame) - kButtonWidth - (kButtonPadding * 3), 33);
-            cell.mainLabel.text = NSLocalizedString(@"Add notes for this contact", nil);
-            cell.mainLabel.alpha = [cell.notesTextView.text length] ? 0.0f : 0.4f;
-            cell.mainLabel.font = cell.notesTextView.font;
-            
-            cell.delegate = nil;
-            cell.panGestureRecognizer.enabled = NO;
-            
-            break;
-        }
         case RCContactSectionMeta:
         {
             
@@ -907,13 +934,11 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.buttonLeft.alpha = 0.0f;
             cell.buttonRight.alpha = 0.0f;
             
-            cell.notesTextView.hidden = YES;
-            
             cell.mainLabel.frame = CGRectMake(14, 0, CGRectGetWidth(_theTableView.frame) - 28, kCellHeight);
             if ([_contact.modifiedAt timeIntervalSinceDate:_contact.createdAt] > 60*60*24) {
-                cell.mainLabel.text = [NSString stringWithFormat:@"Created: %@\nModified: %@", [_dateFormatter stringFromDate:_contact.createdAt], [_dateFormatter stringFromDate:_contact.modifiedAt]];
+                cell.mainLabel.text = [NSString stringWithFormat:@"Added: %@\n\nUpdated: %@", [_dateFormatter stringFromDate:_contact.createdAt], [_dateFormatter stringFromDate:_contact.modifiedAt]];
             } else {
-                cell.mainLabel.text = [NSString stringWithFormat:@"Created: %@", [_dateFormatter stringFromDate:_contact.createdAt]];
+                cell.mainLabel.text = [NSString stringWithFormat:@"Added: %@", [_dateFormatter stringFromDate:_contact.createdAt]];
             }
             cell.mainLabel.numberOfLines = 0;
             cell.mainLabel.font = [UIFont boldSystemFontOfSize:12.0f];
@@ -985,6 +1010,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             
             break;
         }
+        case RCContactSectionTags:
+        {
+            [_tagField.textField becomeFirstResponder];
+            
+            break;
+        }
         case RCContactSectionMeetingLocation:
         {
             NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"maps://?daddr=%f,%f", _contact.meetingCoordinate.latitude, _contact.meetingCoordinate.longitude]];
@@ -994,8 +1025,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         }
         case RCContactSectionNotes:
         {
-            RCContactDetailTableViewCell *cell = (RCContactDetailTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-            [cell.notesTextView becomeFirstResponder];
+            [_notesTextView becomeFirstResponder];
             
             break;
         }
@@ -1020,6 +1050,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (scrollView.isTracking) {
+        [self.view endEditing:YES];
+    }
     
     if (scrollView != _theTableView) {
         return;
@@ -1124,6 +1158,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     insets.bottom = keyboardBounds.size.height;
     _theTableView.contentInset = insets;
     
+    NSLog(@"Doing this");
+    
 	// commit animations
 	[UIView commitAnimations];
 }
@@ -1153,7 +1189,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 260;
-    tableInsets.top = 0;
     _theTableView.contentInset = tableInsets;
     
     [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionNotes] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
@@ -1172,7 +1207,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     UIEdgeInsets tableInsets = _theTableView.contentInset;
     tableInsets.bottom = 0;
-    tableInsets.top = kHeaderHeight - 64;
     _theTableView.contentInset = tableInsets;
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -1208,93 +1242,91 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 
 #pragma mark - Token Delegate
 
-//- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj {
-//    
-//    [_contact saveTag:title];
-//    
-//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [delegate.viewController saveAddressBook];
-//    
-//}
-//
-//- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj {
-//    
-//    [_contact deleteTag:title];
-//    
-//    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-//    [delegate.viewController saveAddressBook];
-//    
-//}
-//
-//- (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
-//    
-//    UIEdgeInsets tableInsets = _theTableView.contentInset;
-//    tableInsets.bottom = 260;
-//    _theTableView.contentInset = tableInsets;
-//    
-//    [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionTags] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-//    
-//    [UIView animateWithDuration:0.2 animations:^{
-//        for (UITableViewCell *cell in _theTableView.visibleCells) {
-//            if ([_theTableView indexPathForCell:cell].section != RCContactSectionTags) {
-//                cell.contentView.alpha = 0.2f;
-//            }
-//        }
-//    }];
-//
-//}
-//
-//- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField {
-//
-//    UIEdgeInsets tableInsets = _theTableView.contentInset;
-//    tableInsets.bottom = 0;
-//    tableInsets.top = kHeaderHeight - 64;
-//    _theTableView.contentInset = tableInsets;
-//    
-//    [UIView animateWithDuration:0.2 animations:^{
-//        for (UITableViewCell *cell in _theTableView.visibleCells) {
-//            cell.contentView.alpha = 1.0f;
-//        }
-//    }];
-//
-//}
-//
-//
-//- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
-//{
-//	//[_toRecipients removeObjectAtIndex:index];
-//	//NSLog(@"Deleted token %d\n%@", index, _toRecipients);
-//    
-//    if (![_tagField.tokens count]) {
-//        _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
-//    }
-//    
-//}
-//
-//- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
-//    NSMutableString *recipient = [NSMutableString string];
-//	
-//	NSMutableCharacterSet *charSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
-//	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-//	
-//    NSString *rawStr = [[tokenField textField] text];
-//	for (int i = 0; i < [rawStr length]; i++)
-//	{
-//		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
-//		{
-//			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
-//		}
-//	}
-//    
-//    if ([rawStr length])
-//	{
-//		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
-//	}
-//    
-//    tokenField.textField.text = nil;
-//    
-//    return NO;
-//}
+- (void)tokenField:(JSTokenField *)tokenField didAddToken:(NSString *)title representedObject:(id)obj {
+    
+    [_contact saveTag:title];
+    
+    [[RCContactManager shared] saveAddressBook];
+    
+}
+
+- (void)tokenField:(JSTokenField *)tokenField didRemoveToken:(NSString *)title representedObject:(id)obj {
+    
+    [_contact deleteTag:title];
+    
+    [[RCContactManager shared] saveAddressBook];
+    
+}
+
+- (void)tokenFieldDidBeginEditing:(JSTokenField *)tokenField {
+    
+    UIEdgeInsets tableInsets = _theTableView.contentInset;
+    tableInsets.bottom = 260;
+    _theTableView.contentInset = tableInsets;
+    
+    [_theTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:RCContactSectionTags] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        for (UITableViewCell *cell in _theTableView.visibleCells) {
+            if ([_theTableView indexPathForCell:cell].section != RCContactSectionTags) {
+                cell.contentView.alpha = 0.2f;
+            }
+        }
+    }];
+
+}
+
+- (void)tokenFieldDidEndEditing:(JSTokenField *)tokenField {
+
+    UIEdgeInsets tableInsets = _theTableView.contentInset;
+    tableInsets.bottom = 0;
+    tableInsets.top = kHeaderHeight - 64;
+    _theTableView.contentInset = tableInsets;
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        for (UITableViewCell *cell in _theTableView.visibleCells) {
+            cell.contentView.alpha = 1.0f;
+        }
+    }];
+
+}
+
+
+- (void)tokenField:(JSTokenField *)tokenField didRemoveTokenAtIndex:(NSUInteger)index
+{
+	//[_toRecipients removeObjectAtIndex:index];
+	//NSLog(@"Deleted token %d\n%@", index, _toRecipients);
+    
+    if (![_tagField.tokens count]) {
+        _tagField.textField.placeholder = NSLocalizedString(@"Tags", nil);
+    }
+    
+}
+
+- (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
+    NSMutableString *recipient = [NSMutableString string];
+	
+	NSMutableCharacterSet *charSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+	[charSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
+	
+    NSString *rawStr = [[tokenField textField] text];
+	for (int i = 0; i < [rawStr length]; i++)
+	{
+		if (![charSet characterIsMember:[rawStr characterAtIndex:i]])
+		{
+			[recipient appendFormat:@"%@",[NSString stringWithFormat:@"%c", [rawStr characterAtIndex:i]]];
+		}
+	}
+    
+    if ([rawStr length])
+	{
+		[tokenField addTokenWithTitle:rawStr representedObject:recipient];
+	}
+    
+    tokenField.textField.text = nil;
+    
+    return NO;
+}
 
 #pragma mark - Action Sheet Delegate
 

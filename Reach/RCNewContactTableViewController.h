@@ -11,9 +11,9 @@
 #import <AddressBook/AddressBook.h>
 #import <MapKit/MapKit.h>
 
-#import "TLTagsControl.h"
+#import "JSTokenField.h"
 
-@interface RCNewContactTableViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TLTagsControlDelegate>
+@interface RCNewContactTableViewController : UITableViewController <UITextFieldDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, JSTokenFieldDelegate>
 
 - (void)prepareForNewContact;
 - (void)clearData;
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) UITextField *emailField;
 @property (nonatomic, strong) UIImageView *emailImage;
 
-@property (nonatomic, strong) TLTagsControl *tagField;
+@property (nonatomic, strong) JSTokenField *tagField;
 @property (nonatomic, strong) UIImageView *tagImage;
 
 @property (nonatomic, strong) UITextField *notesField;

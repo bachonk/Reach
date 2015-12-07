@@ -61,17 +61,17 @@
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tapGesture];
     
-    _pickerView.frame = CGRectMake(0, CGRectGetMidY(screenFrame) - 110, 76, 216);
+    _pickerView.frame = CGRectMake(-10, CGRectGetMidY(screenFrame) - 110, 38, 216);
     _pickerView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:149.0f/255.0f blue:125/255.0f alpha:1.0f];
-    [self.view addSubview:_pickerView];
     
-    _datePicker.frame = CGRectMake(CGRectGetMaxX(_pickerView.frame), CGRectGetMinY(_pickerView.frame), CGRectGetWidth(screenFrame) - CGRectGetWidth(_pickerView.frame), CGRectGetHeight(_pickerView.frame));
+    _datePicker.frame = CGRectMake(CGRectGetMaxX(_pickerView.frame), CGRectGetMinY(_pickerView.frame), CGRectGetWidth(screenFrame) - CGRectGetMaxX(_pickerView.frame), CGRectGetHeight(_pickerView.frame));
     _datePicker.minimumDate = [NSDate date];
     [_datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [_datePicker setDate:[NSDate dateWithTimeInterval:60 * 10 sinceDate:[NSDate date]] animated:YES];
     _datePicker.backgroundColor = _pickerView.backgroundColor;
 
     [self.view addSubview:_datePicker];
+    [self.view addSubview:_pickerView];
     
     UIImageView *bgImage = [[UIImageView alloc] initWithFrame:screenFrame];
     bgImage.image = [UIImage imageNamed:@"navigation-bar"];
@@ -218,18 +218,29 @@
     
     //
     // Alert button actions
+    // Re-enable when the custom notification buttons work
     //
-    notification.category = kLocalNotificationActionCategory;
+    // notification.category = kLocalNotificationActionCategory;
     
     //
     // Notification details
     //
+    NSString *phone = @"";
+    if (_contact.mobile) {
+        phone = _contact.mobile;
+    }
+    else if ([_contact.phoneArray count]) {
+        NSDictionary *phoneDict = _contact.phoneArray[0];
+        NSString *label = [phoneDict allKeys][0];
+        phone = [phoneDict objectForKey:label];
+    }
+    
     notification.userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                              alertType, kLocalNotificationUserInfoActionString,
                              [NSNumber numberWithInteger:rowForType], kLocalNotificationUserInfoActionType,
                              _detailsTextField.text, kLocalNotificationAlertActionName,
                              _contact.contactId, kLocalNotificationUserInfoUserID,
-                             _contact.phoneArray[0], kLocalNotificationUserInfoUserPhone,
+                             phone, kLocalNotificationUserInfoUserPhone,
                              _contact.fullName, kLocalNotificationUserInfoUserName,
                              [NSNumber numberWithDouble:[_datePicker.date timeIntervalSince1970]], kLocalNotificationUserInfoDate,
                              nil];

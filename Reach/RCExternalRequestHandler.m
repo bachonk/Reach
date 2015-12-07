@@ -16,6 +16,8 @@
 
 + (void)call:(NSString *)number completionHandler:(void (^)(BOOL))compBlock
 {
+    number = [number unformattedPhoneString];
+        
     NSURL *urlToOpen = [NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", number]];
     
     if ([[UIApplication sharedApplication] canOpenURL:urlToOpen]) {
@@ -37,6 +39,8 @@
 
 + (void)text:(NSString *)number delegate:(id<MFMessageComposeViewControllerDelegate>)delegate presentationHandler:(void (^)(BOOL))presBlock completionHandler:(void (^)(BOOL))compBlock
 {
+    number = [number unformattedPhoneString];
+    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"sms://%@", number]]];
     
     /*

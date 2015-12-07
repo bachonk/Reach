@@ -46,8 +46,8 @@ static const CGFloat kCellImageInset = 4.0f;
 // Reminders
 enum RCReminderType
 {
-    RCReminderTypeCall = 0,
-    RCReminderTypeText,
+    RCReminderTypeText = 0,
+    RCReminderTypeCall,
     RCReminderTypeEmail
 };
 
@@ -58,11 +58,13 @@ typedef NS_ENUM(NSInteger, RCContactType)
 };
 
 // Separators
-static NSString *kContactTagSeparator = @"\n•••\n";
-static NSString *kContactMetadataSeparator = @"\n---\n";
+static NSString *kContactMetadataSeparator = @"\n•••\n";
+
+// Tag keys
+static NSString *kContactTagsKey = @"tags";
 
 // Location keys
-static NSString *kContactLocationKey = @"location";
+static NSString *kContactLocationKey = @"meeting_location";
 static NSString *kContactLocationAddressKey = @"address";
 static NSString *kContactLocationCoordinateKey = @"coordinate";
 

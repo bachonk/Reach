@@ -30,14 +30,6 @@
         _buttonRight = [UIButton buttonWithType:UIButtonTypeSystem];
         [self.contentView addSubview:_buttonRight];
         
-        _notesTextView = [[UITextView alloc] initWithFrame:CGRectMake(12, 18, 200, 27)];
-        _notesTextView.editable = YES;
-        _notesTextView.returnKeyType = UIReturnKeyDone;
-        _notesTextView.font = [UIFont systemFontOfSize:15.0f];
-        _notesTextView.backgroundColor = [UIColor clearColor];
-        _notesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.contentView addSubview:_notesTextView];
-        
     }
     return self;
 }

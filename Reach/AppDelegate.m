@@ -149,9 +149,9 @@
     
 }
 
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void (^)())completionHandler {
-    
-    NSString *phone = userInfo[kLocalNotificationUserInfoUserPhone];
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)())completionHandler {
+
+    NSString *phone = notification.userInfo[kLocalNotificationUserInfoUserPhone];
     
     if ([identifier isEqualToString:kLocalNotificationActionCall]) {
         
@@ -162,10 +162,13 @@
     }
     else if ([identifier isEqualToString:kLocalNotificationActionText]) {
         
-        [RCExternalRequestHandler text:[phone unformattedPhoneString] delegate:nil presentationHandler:nil completionHandler:^(BOOL success) {
-            completionHandler();
-        }];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"reach://"]];
         
+        [RCExternalRequestHandler text:[phone unformattedPhoneString] delegate:nil presentationHandler:^(BOOL presented) {
+            completionHandler();
+        } completionHandler:nil];
+        
+        completionHandler();
     }
     else {
         
