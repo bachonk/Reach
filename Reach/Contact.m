@@ -120,7 +120,7 @@
             NSDictionary *location = metadata[kContactLocationKey];
             contact.meetingAddress = location[kContactLocationAddressKey];
             
-            NSArray *latLons = metadata[kContactLocationCoordinateKey];
+            NSArray *latLons = location[kContactLocationCoordinateKey];
             contact.meetingCoordinate = CLLocationCoordinate2DMake([latLons[0] doubleValue], [latLons[1] doubleValue]);
         }
 
@@ -212,7 +212,7 @@
         
         meetingDict = @{
                         kContactLocationAddressKey: self.meetingAddress,
-                        kContactLocationCoordinateKey: @[ @(self.meetingCoordinate.latitude), @(self.meetingCoordinate.longitude) ]
+                        kContactLocationCoordinateKey: @[ [NSNumber numberWithDouble:self.meetingCoordinate.latitude], [NSNumber numberWithDouble:self.meetingCoordinate.longitude] ]
                         };
         
         

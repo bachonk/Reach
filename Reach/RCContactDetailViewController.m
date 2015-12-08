@@ -142,7 +142,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [_dateFormatter setDateStyle:NSDateFormatterLongStyle];
     
     // Extra notes text view
-    _notesTextView = [[UITextView alloc] initWithFrame:CGRectMake(11, 30, 200, 48)];
+    _notesTextView = [[UITextView alloc] initWithFrame:CGRectMake(11, 30, CGRectGetWidth(self.view.frame) - 22, 48)];
     _notesTextView.delegate = self;
     _notesTextView.returnKeyType = UIReturnKeyDone;
     _notesTextView.font = [UIFont systemFontOfSize:15.0f];
@@ -703,7 +703,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         return cell;
     }
     
-    if (indexPath.section == RCContactSectionMeetingLocation) {
+    if (indexPath.section == RCContactSectionMeetingLocation ||
+        indexPath.section == RCContactSectionMeta) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LabelCellID];
         
         if (cell == nil) {
@@ -718,8 +719,15 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         
-        cell.textLabel.text = @"Meeting location";
-        cell.detailTextLabel.text = _contact.meetingAddress;
+        if (indexPath.section == RCContactSectionMeta) {
+            cell.textLabel.text = @"Date added";
+            cell.detailTextLabel.text = [_dateFormatter stringFromDate:_contact.createdAt];
+        }
+        else {
+            cell.textLabel.text = @"Meeting location";
+            cell.detailTextLabel.text = _contact.meetingAddress;
+            
+        }
         
         return cell;
     }
@@ -923,28 +931,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         {
             
             cell.delegate = nil;
-            
-            break;
-        }
-        case RCContactSectionMeta:
-        {
-            
-            cell.secondaryLabel.text = nil;
-            
-            cell.buttonLeft.alpha = 0.0f;
-            cell.buttonRight.alpha = 0.0f;
-            
-            cell.mainLabel.frame = CGRectMake(14, 0, CGRectGetWidth(_theTableView.frame) - 28, kCellHeight);
-            if ([_contact.modifiedAt timeIntervalSinceDate:_contact.createdAt] > 60*60*24) {
-                cell.mainLabel.text = [NSString stringWithFormat:@"Added: %@\n\nUpdated: %@", [_dateFormatter stringFromDate:_contact.createdAt], [_dateFormatter stringFromDate:_contact.modifiedAt]];
-            } else {
-                cell.mainLabel.text = [NSString stringWithFormat:@"Added: %@", [_dateFormatter stringFromDate:_contact.createdAt]];
-            }
-            cell.mainLabel.numberOfLines = 0;
-            cell.mainLabel.font = [UIFont boldSystemFontOfSize:12.0f];
-            
-            cell.delegate = nil;
-            cell.panGestureRecognizer.enabled = NO;
             
             break;
         }

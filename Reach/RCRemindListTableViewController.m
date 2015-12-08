@@ -66,14 +66,9 @@ static const CGFloat kButtonPadding = 9.0f;
         // Call
         NSInteger index = tag - TAG_BUTTON_OFFSET;
         NSNotification *notif = _notifications[index];
-        NSString *contactId = notif.userInfo[kLocalNotificationUserInfoUserID];
+        NSString *phone = notif.userInfo[kLocalNotificationUserInfoUserPhone];
         
-        Contact *contact = [[RCContactManager shared] contactFromId:contactId];
-        NSDictionary *phone = contact.phoneArray[index];
-        NSString *label = [phone allKeys][0];
-        NSString *value = [phone objectForKey:label];
-        
-        [RCExternalRequestHandler call:value completionHandler:nil];
+        [RCExternalRequestHandler call:phone completionHandler:nil];
         
     }
 }
@@ -87,14 +82,9 @@ static const CGFloat kButtonPadding = 9.0f;
         // Text
         NSInteger index = tag - TAG_BUTTON_OFFSET;
         NSNotification *notif = _notifications[index];
-        NSString *contactId = notif.userInfo[kLocalNotificationUserInfoUserID];
+        NSString *phone = notif.userInfo[kLocalNotificationUserInfoUserPhone];
         
-        Contact *contact = [[RCContactManager shared] contactFromId:contactId];
-        NSDictionary *phone = contact.phoneArray[index];
-        NSString *label = [phone allKeys][0];
-        NSString *value = [phone objectForKey:label];
-        
-        [RCExternalRequestHandler text:value delegate:nil presentationHandler:^(BOOL shown) {
+        [RCExternalRequestHandler text:phone delegate:nil presentationHandler:^(BOOL shown) {
             
         } completionHandler:^(BOOL completed) {
             

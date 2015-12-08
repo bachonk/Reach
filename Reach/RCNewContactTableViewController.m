@@ -170,7 +170,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)prepareForNewContact {
     [self clearData];
-        
+    
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     _locationField.text = delegate.lastLocationDescription;
     _coordinate = delegate.locationManager.location.coordinate;
@@ -278,7 +278,7 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
         
         meetingDict = @{
                         kContactLocationAddressKey: _locationField.text,
-                        kContactLocationCoordinateKey: @[ @(_coordinate.latitude), @(_coordinate.longitude) ]
+                        kContactLocationCoordinateKey: @[ [NSNumber numberWithDouble:_coordinate.latitude], [NSNumber numberWithDouble:_coordinate.longitude] ]
                         };
         
     }
