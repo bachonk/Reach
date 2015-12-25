@@ -769,13 +769,24 @@ static const CGFloat headerHeight = 34.0f;
         }
         
     }
+    // If no search term provided, then sort by recents (sort of hacky)
+    else {
+        
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"createdAt"
+                                                                       ascending:NO];
+        NSArray *sortDescriptors = @[sortDescriptor];
+        
+        NSMutableArray *contacts = [NSMutableArray new];
+        for (NSArray *arr in [RCContactManager shared].contacts) {
+            [contacts addObjectsFromArray:arr];
+        }
+        NSArray *sortedArray = [contacts sortedArrayUsingDescriptors:sortDescriptors];
+        
+        [_filteredContactListFirstName addObjectsFromArray:sortedArray];
+        
+    }
     
     // Reload table
-    // Animate if different count
-    //[_searchTableView reloadSections:[NSIndexSet indexSetWithIndex:0]
-                   //withRowAnimation:previousSearchResultCount == [_filteredContactList count] ? UITableViewRowAnimationNone : UITableViewRowAnimationAutomatic];
-                   //withRowAnimation:UITableViewRowAnimationNone];
-    
     [_searchTableView reloadData];
     if ([_filteredContactListFirstName count]) {
         [_searchTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
@@ -820,6 +831,8 @@ static const CGFloat headerHeight = 34.0f;
     
     // Do the main animation for moving header and table
     [self swapInHeaderView:searchHeaderView contentView:_searchTableView animated:animated];
+    
+    [self searchForTerm:@""];
     
 }
 
@@ -1457,7 +1470,13 @@ static const CGFloat headerHeight = 34.0f;
     
     if (tableView == _searchTableView) {
         
-        titleLabel.text = section == 0 ? NSLocalizedString(@"First name", nil) : NSLocalizedString(@"Last name", nil);
+        if (![searchTextField.text length]) {
+            // Hacky way of showing recent contacts
+            titleLabel.text = NSLocalizedString(@"Recently added", nil);
+        }
+        else {
+            titleLabel.text = section == 0 ? NSLocalizedString(@"First name", nil) : NSLocalizedString(@"Last name", nil);
+        }
         
         titleLabelFrame.size.width = [titleLabel.text boundingRectWithSize:CGSizeMake(CGRectGetWidth(_searchTableView.frame), CGFLOAT_MAX)
                                                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
