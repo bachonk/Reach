@@ -27,8 +27,10 @@
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     self.locationManager.delegate = self;
-    [self.locationManager requestWhenInUseAuthorization];
     self.lastLocationDescription = @"";
+    if ([CLLocationManager locationServicesEnabled]) {
+        [self.locationManager startUpdatingLocation];
+    }
     
     // Red nav bar appearance
     [[UINavigationBar appearance] setTintColor:COLOR_DEFAULT_RED];
@@ -42,38 +44,9 @@
     [Crashlytics startWithAPIKey:@"19a3cbb17a05a126e819c4e05c7c9e61a4f5fb8e"];
     
     // Register local notifications
-    UIMutableUserNotificationAction *action1;
-    action1 = [[UIMutableUserNotificationAction alloc] init];
-    [action1 setActivationMode:UIUserNotificationActivationModeBackground];
-    [action1 setTitle:kLocalNotificationActionText];
-    [action1 setIdentifier:kLocalNotificationActionText];
-    [action1 setDestructive:NO];
-    [action1 setAuthenticationRequired:NO];
-    
-    UIMutableUserNotificationAction *action2;
-    action2 = [[UIMutableUserNotificationAction alloc] init];
-    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
-    [action2 setTitle:kLocalNotificationActionCall];
-    [action2 setIdentifier:kLocalNotificationActionCall];
-    [action2 setDestructive:NO];
-    [action2 setAuthenticationRequired:NO];
-    
-    UIMutableUserNotificationCategory *actionCategory;
-    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
-    [actionCategory setIdentifier:kLocalNotificationActionCategory];
-    [actionCategory setActions:@[action1, action2]
-                    forContext:UIUserNotificationActionContextDefault];
-    
-    NSSet *categories = [NSSet setWithObject:actionCategory];
-    UIUserNotificationType types = (UIUserNotificationTypeAlert|
-                                    UIUserNotificationTypeSound|
-                                    UIUserNotificationTypeBadge);
-    
-    UIUserNotificationSettings *settings;
-    settings = [UIUserNotificationSettings settingsForTypes:types
-                                                 categories:categories];
-    
-    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+    if ([application isRegisteredForRemoteNotifications]) {
+        [self registerPushNotifications];
+    }
     
     // Setup view controllers
     self.viewController = [[RCSwipeViewController alloc] init];
@@ -208,6 +181,8 @@
                     _lastLocationDescription = [NSString stringWithFormat:@"%@ %@, %@", locationString, cityString, stateString];
                     
                     [_locationManager stopUpdatingLocation];
+                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kNotificationDidUpdateLocation object:nil userInfo:nil];
                 }
                 else {
                     _lastLocationDescription = @"";
@@ -225,6 +200,43 @@
     else {
         [_locationManager stopUpdatingLocation];
     }
+}
+
+#pragma mark - Actions
+
+- (void)registerPushNotifications {
+    UIMutableUserNotificationAction *action1;
+    action1 = [[UIMutableUserNotificationAction alloc] init];
+    [action1 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action1 setTitle:kLocalNotificationActionText];
+    [action1 setIdentifier:kLocalNotificationActionText];
+    [action1 setDestructive:NO];
+    [action1 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationAction *action2;
+    action2 = [[UIMutableUserNotificationAction alloc] init];
+    [action2 setActivationMode:UIUserNotificationActivationModeBackground];
+    [action2 setTitle:kLocalNotificationActionCall];
+    [action2 setIdentifier:kLocalNotificationActionCall];
+    [action2 setDestructive:NO];
+    [action2 setAuthenticationRequired:NO];
+    
+    UIMutableUserNotificationCategory *actionCategory;
+    actionCategory = [[UIMutableUserNotificationCategory alloc] init];
+    [actionCategory setIdentifier:kLocalNotificationActionCategory];
+    [actionCategory setActions:@[action1, action2]
+                    forContext:UIUserNotificationActionContextDefault];
+    
+    NSSet *categories = [NSSet setWithObject:actionCategory];
+    UIUserNotificationType types = (UIUserNotificationTypeAlert|
+                                    UIUserNotificationTypeSound|
+                                    UIUserNotificationTypeBadge);
+    
+    UIUserNotificationSettings *settings;
+    settings = [UIUserNotificationSettings settingsForTypes:types
+                                                 categories:categories];
+    
+    [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 
 @end

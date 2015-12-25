@@ -68,7 +68,7 @@ static NSString *kContactLocationKey = @"meeting_location";
 static NSString *kContactLocationAddressKey = @"address";
 static NSString *kContactLocationCoordinateKey = @"coordinate";
 
-// Notifications
+// Local Notifications
 static NSString *kLocalNotificationAlertActionName = @"reachAlert";
 static NSString *kLocalNotificationUserInfoUserID = @"reachUserID";
 static NSString *kLocalNotificationUserInfoDate = @"reachDate";
@@ -80,6 +80,9 @@ static NSString *kLocalNotificationActionText = @"Text";
 static NSString *kLocalNotificationActionCall = @"Call";
 static NSString *kLocalNotificationActionEmail = @"Email";
 static NSString *kLocalNotificationActionCategory = @"AlertCategory";
+
+// Other Notifications
+static NSString *kNotificationDidUpdateLocation = @"reachLocationUpdate";
 
 // URL Scheme
 static NSString *kURLSchemeNewContact = @"new";

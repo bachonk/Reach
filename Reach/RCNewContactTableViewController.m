@@ -36,6 +36,8 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 
 - (void)uploadUserPhoto:(id)sender;
 
+- (void)didReceiveLastKnownLocation;
+
 - (void)call;
 
 @property (nonatomic) CLLocationCoordinate2D coordinate;
@@ -158,6 +160,11 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     _tagImage = [[UIImageView alloc] initWithFrame:CGRectMake(kCellPadding, kCellPadding, kCellAccessoryImageWidth, kCellAccessoryImageWidth)];
     _tagImage.image = [[UIImage imageNamed:@"tag-active"] imageWithTintColor:COLOR_IMAGE_DEFAULT];
     
+    // Listen for location changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveLastKnownLocation)
+                                                 name:kNotificationDidUpdateLocation
+                                               object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -171,13 +178,13 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 - (void)prepareForNewContact {
     [self clearData];
     
-    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    _locationField.text = delegate.lastLocationDescription;
-    _coordinate = delegate.locationManager.location.coordinate;
-    
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.0065, 0.0065);
-    MKCoordinateRegion region = MKCoordinateRegionMake(delegate.locationManager.location.coordinate, span);
-    [_locationMap setRegion:region];
+    if (![CLLocationManager locationServicesEnabled]) {
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [delegate.locationManager requestWhenInUseAuthorization];
+    }
+    else {
+        [self didReceiveLastKnownLocation];
+    }
     
     // For some reason, the name field isn't immediately available
     [_nameField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
@@ -314,6 +321,16 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     
     UIActionSheet *ac = [[UIActionSheet alloc] initWithTitle:@"Set contact photo" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Take Photo", @"Choose from Existing", nil];
     [ac showInView:self.view];
+}
+
+- (void)didReceiveLastKnownLocation {
+    AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    _locationField.text = delegate.lastLocationDescription;
+    _coordinate = delegate.locationManager.location.coordinate;
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.0065, 0.0065);
+    MKCoordinateRegion region = MKCoordinateRegionMake(delegate.locationManager.location.coordinate, span);
+    [_locationMap setRegion:region];
 }
 
 #pragma mark - Table view data source

@@ -7,6 +7,7 @@
 //
 
 #import "RCReminderViewController.h"
+#import "AppDelegate.h"
 #import "Definitions.h"
 #import "MNMToast.h"
 #import "Contact.h"
@@ -87,6 +88,12 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    // Check if pushes are enabled
+    if (![[UIApplication sharedApplication] isRegisteredForRemoteNotifications]) {
+        AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [delegate registerPushNotifications];
+    }
     
 }
 

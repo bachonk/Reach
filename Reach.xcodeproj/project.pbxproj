@@ -20,13 +20,13 @@
 		C81C65AA19314C41008CEF15 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81C65A919314C41008CEF15 /* Accelerate.framework */; };
 		C81C65B11932F156008CEF15 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81C65B01932F156008CEF15 /* Social.framework */; };
 		C81C65B31932F16B008CEF15 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C81C65B21932F16B008CEF15 /* Accounts.framework */; };
-		C81C65B91932F5CE008CEF15 /* sample.png in Resources */ = {isa = PBXBuildFile; fileRef = C81C65B81932F5CE008CEF15 /* sample.png */; };
 		C81C65BC19330759008CEF15 /* RCContactDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65BB19330759008CEF15 /* RCContactDetailTableViewCell.m */; };
 		C81C65BF1933D726008CEF15 /* RCExternalRequestHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65BE1933D726008CEF15 /* RCExternalRequestHandler.m */; };
 		C81C65C919342F3C008CEF15 /* UIImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65C819342F3C008CEF15 /* UIImage+TintColor.m */; };
 		C81C65CD19345CAA008CEF15 /* RCTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65CB19345CAA008CEF15 /* RCTutorialViewController.m */; };
 		C81C65CE19345CAA008CEF15 /* RCTutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */; };
 		C82684FB194FF04700C36452 /* RCNewContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */; };
+		C82920561C2CDB7300015FD5 /* RCOnboardingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C82920551C2CDB7300015FD5 /* RCOnboardingTableViewController.m */; };
 		C8299A1E17B55C5600F16189 /* highlighter.png in Resources */ = {isa = PBXBuildFile; fileRef = C8299A1C17B55C5600F16189 /* highlighter.png */; };
 		C8299A1F17B55C5600F16189 /* highlighter@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C8299A1D17B55C5600F16189 /* highlighter@2x.png */; };
 		C832F3B71A4DEFD80035F6C7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C832F3A21A4DEB110035F6C7 /* NotificationCenter.framework */; };
@@ -196,7 +196,6 @@
 		C81C65A919314C41008CEF15 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		C81C65B01932F156008CEF15 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		C81C65B21932F16B008CEF15 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		C81C65B81932F5CE008CEF15 /* sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sample.png; path = Reach/Icons/sample.png; sourceTree = SOURCE_ROOT; };
 		C81C65BA19330759008CEF15 /* RCContactDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCContactDetailTableViewCell.h; sourceTree = "<group>"; };
 		C81C65BB19330759008CEF15 /* RCContactDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCContactDetailTableViewCell.m; sourceTree = "<group>"; };
 		C81C65BD1933D726008CEF15 /* RCExternalRequestHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCExternalRequestHandler.h; sourceTree = "<group>"; };
@@ -208,6 +207,8 @@
 		C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCTutorialViewController.xib; sourceTree = "<group>"; };
 		C82684F9194FF04700C36452 /* RCNewContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNewContactTableViewController.h; sourceTree = "<group>"; };
 		C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNewContactTableViewController.m; sourceTree = "<group>"; };
+		C82920541C2CDB7300015FD5 /* RCOnboardingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCOnboardingTableViewController.h; sourceTree = "<group>"; };
+		C82920551C2CDB7300015FD5 /* RCOnboardingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCOnboardingTableViewController.m; sourceTree = "<group>"; };
 		C8299A1C17B55C5600F16189 /* highlighter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = highlighter.png; sourceTree = "<group>"; };
 		C8299A1D17B55C5600F16189 /* highlighter@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "highlighter@2x.png"; sourceTree = "<group>"; };
 		C832F3A21A4DEB110035F6C7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -480,7 +481,6 @@
 				C8E816131994794800F789A8 /* text-inactive.png */,
 				C8E816141994794800F789A8 /* text-inactive@2x.png */,
 				C8E816151994794800F789A8 /* user-blank@2x.png */,
-				C81C65B81932F5CE008CEF15 /* sample.png */,
 			);
 			name = Resources;
 			path = Images;
@@ -842,6 +842,8 @@
 				C81C65CA19345CAA008CEF15 /* RCTutorialViewController.h */,
 				C81C65CB19345CAA008CEF15 /* RCTutorialViewController.m */,
 				C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */,
+				C82920541C2CDB7300015FD5 /* RCOnboardingTableViewController.h */,
+				C82920551C2CDB7300015FD5 /* RCOnboardingTableViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -998,7 +1000,6 @@
 				C8E816211994794800F789A8 /* navigation-bar-linkedin@2x.png in Resources */,
 				C80CAB331C14AA56001A4DBD /* tokenNormal.png in Resources */,
 				C88B923D19721B35006B78E6 /* RCContactDetailViewController.xib in Resources */,
-				C81C65B91932F5CE008CEF15 /* sample.png in Resources */,
 				C8B979D11AF6A76300B2C00D /* reminder-icon@2x.png in Resources */,
 				C8E815D3198FF20D00F789A8 /* RCMergeViewController.xib in Resources */,
 				C8E8162C1994794800F789A8 /* search-icon@2x.png in Resources */,
@@ -1122,6 +1123,7 @@
 				C884CC4E1971FA4500C92C88 /* RCTagView.m in Sources */,
 				C8E8166A1997F7B500F789A8 /* UIView+WebCacheOperation.m in Sources */,
 				C8843CCF194D3DD4008E6DC9 /* RCPhoneController.m in Sources */,
+				C82920561C2CDB7300015FD5 /* RCOnboardingTableViewController.m in Sources */,
 				C84AEF9B191EA2A300C7F017 /* RCReminderViewController.m in Sources */,
 				C8E8165D1997F7B500F789A8 /* SDImageCache.m in Sources */,
 				C8E8165B1997F7B500F789A8 /* MKAnnotationView+WebCache.m in Sources */,

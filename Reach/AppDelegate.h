@@ -25,4 +25,7 @@
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *lastLocationDescription;
 
+// Actions
+- (void)registerPushNotifications;
+
 @end
