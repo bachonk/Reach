@@ -178,16 +178,18 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
 - (void)prepareForNewContact {
     [self clearData];
     
-    if (![CLLocationManager locationServicesEnabled]) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // For some reason, the name field isn't immediately available
+        [_nameField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
+        
         AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        [delegate.locationManager requestWhenInUseAuthorization];
-    }
-    else {
-        [self didReceiveLastKnownLocation];
-    }
-    
-    // For some reason, the name field isn't immediately available
-    [_nameField performSelector:@selector(becomeFirstResponder) withObject:nil afterDelay:0.0];
+        if (![CLLocationManager locationServicesEnabled]) {
+            [delegate.locationManager requestWhenInUseAuthorization];
+        }
+        else {
+            [delegate.locationManager startUpdatingLocation];
+        }
+    });
 }
 
 - (void)clearData {
@@ -292,7 +294,8 @@ static const CGFloat kCellAccessoryImageWidth = 26.0f;
     
     NSDictionary *metadata = @{
                                kContactTagsKey: tags,
-                               kContactLocationKey: meetingDict ?: @{}
+                               kContactPersonalAddressKey: @{},
+                               kContactMeetingLocationKey: meetingDict ?: @{}
                                };
     
     NSError *err;

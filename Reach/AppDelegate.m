@@ -25,11 +25,15 @@
     
     // Set up the location manager
     self.locationManager = [[CLLocationManager alloc] init];
-    self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
     self.locationManager.delegate = self;
     self.lastLocationDescription = @"";
     if ([CLLocationManager locationServicesEnabled]) {
-        [self.locationManager startUpdatingLocation];
+        // Annoying hack
+        // -didChangeAuthorizationStatus now gets called when location managers are init'ed
+        // not actually when authorization status changes
+        // so, we'll use this so we know when authorization status _actually_ changes
+        self.locationServicesEnabledOnLaunch = YES;
     }
     
     // Red nav bar appearance
@@ -104,7 +108,6 @@
     
     [self.viewController applicationDidBecomeActiveSinceDate:_dateSinceLastOpen];
     
-    [_locationManager startUpdatingLocation];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -194,12 +197,16 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorized) {
-        [_locationManager startUpdatingLocation];
-    }
-    else {
-        [_locationManager stopUpdatingLocation];
-    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        if (status == kCLAuthorizationStatusAuthorizedWhenInUse || status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusAuthorizedAlways) {
+            if (!self.locationServicesEnabledOnLaunch) {
+                [_locationManager startUpdatingLocation];
+            }
+        }
+        else {
+            [_locationManager stopUpdatingLocation];
+        }
+    });
 }
 
 #pragma mark - Actions

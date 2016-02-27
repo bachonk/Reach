@@ -31,8 +31,13 @@
 @property (nonatomic, strong) NSString *highlightedTag;
 @property (nonatomic, strong) NSString *contactId;
 @property (nonatomic, strong) NSString *linkedInId;
+
 @property (nonatomic, strong) NSString *meetingAddress;
 @property (nonatomic) CLLocationCoordinate2D meetingCoordinate;
+
+@property (nonatomic, strong) NSString *address;
+@property (nonatomic) CLLocationCoordinate2D addressCoordinate;
+
 //@property (nonatomic, strong) NSString *facebookId;
 //@property (nonatomic, strong) NSString *twitterId;
 
@@ -47,5 +52,6 @@
 - (void)saveNotes:(NSString *)notes;
 - (void)savePhoto:(UIImage *)img;
 - (void)saveLinkedInId:(NSString *)liId;
+- (void)saveNotesAndTags;
 
 @end

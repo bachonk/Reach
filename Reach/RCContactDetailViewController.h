@@ -14,6 +14,7 @@
 #import "JSTokenField.h"
 #import "FXBlurView.h"
 #import "RCMergeViewController.h"
+#import "DRCPlaceSearchTableViewController.h"
 
 #import "Contact.h"
 
@@ -23,7 +24,7 @@
 
 @end
 
-@interface RCContactDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, MCSwipeTableViewCellDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, RCReminderViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, JSTokenFieldDelegate>
+@interface RCContactDetailViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, MCSwipeTableViewCellDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate, RCReminderViewControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, JSTokenFieldDelegate, DRCPlaceSearchDelegate>
 
 @property (nonatomic, strong) UITableView *theTableView;
 

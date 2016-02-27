@@ -31,6 +31,7 @@ typedef enum {
     RCContactSectionTags,
     RCContactSectionLinkedIn,
     RCContactSectionNotes,
+    RCContactSectionAddress,
     RCContactSectionMeetingLocation,
     RCContactSectionMeta
 } RCContactSection;
@@ -44,6 +45,8 @@ static const CGFloat kButtonPadding = 9.0f;
 static const CGFloat kMainLabelHeight = kButtonWidth;
 static const CGFloat kCellHeight = kButtonPadding + kButtonWidth + kButtonPadding;
 
+static const CGFloat kMapHeight = 240.0f;
+
 static const CGFloat kNotesTextViewHeight = 142.0f;
 
 @interface RCContactDetailViewController ()
@@ -51,6 +54,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
 @property (nonatomic, strong) UIImagePickerController *imgPicker;
+
+@property (nonatomic, strong) MKMapView *addressMap;
+@property (nonatomic, strong) MKMapView *meetingLocationMap;
 
 @property (nonatomic) BOOL shouldUpdateOnAppear;
 
@@ -76,9 +82,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
         _contactHeaderView = [[UIView alloc] initWithFrame:frame];
         _contactHeaderView.backgroundColor = [UIColor clearColor];
-        //_contactHeaderView.layer.shadowOffset = CGSizeMake(0, 0);
-        //_contactHeaderView.layer.shadowRadius = 1.5;
-        //_contactHeaderView.layer.shadowOpacity = 0.3;
         
         _userImage = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMidX(_contactHeaderView.frame) - (kUserImageHeight / 2), 60, kUserImageHeight, kUserImageHeight)];
         _userImage.layer.cornerRadius = CGRectGetWidth(_userImage.frame) / 2;
@@ -112,6 +115,14 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _tagField.textField.textColor = [UIColor whiteColor];
         _tagField.delegate = self;
         
+        // Map for address
+        _addressMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), kMapHeight)];
+        _addressMap.userInteractionEnabled = NO;
+        
+        // Map for meeting location
+        _meetingLocationMap = [[MKMapView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), kMapHeight)];
+        _meetingLocationMap.userInteractionEnabled = NO;
+        
         // Set up the main table view container
         _theTableView = [[UITableView alloc] initWithFrame:frame style:UITableViewStylePlain];
         _theTableView.dataSource = self;
@@ -131,9 +142,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIBarButtonItem *remindBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reminder-icon"] style:UIBarButtonItemStyleBordered target:self action:@selector(remind:)];
+    UIBarButtonItem *remindBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"reminder-icon"] style:UIBarButtonItemStylePlain target:self action:@selector(remind:)];
     
-    UIBarButtonItem *barBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon"] style:UIBarButtonItemStyleBordered target:self action:@selector(editContact)];
+    UIBarButtonItem *barBut = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit-icon"] style:UIBarButtonItemStylePlain target:self action:@selector(editContact)];
     
     [self.navigationItem setRightBarButtonItems:@[barBut, remindBut]];
     
@@ -239,8 +250,6 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         _largeUserImage.image = _contact.thumbnail;
     }
     else {
-        //_userImage.layer.borderWidth = 0.0f;
-        //_userImage.layer.borderColor = nil;
         _userImage.layer.borderWidth = 1.0f;
         _userImage.layer.borderColor = [[UIColor colorWithWhite:1.0f alpha:0.36f] CGColor];
         [_userImage setImageWithString:_contact.fullName color:nil];
@@ -260,12 +269,26 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         
     });
     
+    _notesTextView.text = _contact.notes;
+    
     // Temporarily disable delegate
     _tagField.delegate = nil;
     
     [_tagField removeAllTokens];
     for (NSString *tag in _contact.tags) {
         [_tagField addTokenWithTitle:tag representedObject:nil];
+    }
+    
+    if (_contact.addressCoordinate.latitude) {
+        MKCoordinateSpan span = MKCoordinateSpanMake(0.0065, 0.0065);
+        MKCoordinateRegion region = MKCoordinateRegionMake(_contact.addressCoordinate, span);
+        [_addressMap setRegion:region];
+    }
+    
+    if (_contact.meetingCoordinate.latitude) {
+        MKCoordinateSpan span = MKCoordinateSpanMake(0.0065, 0.0065);
+        MKCoordinateRegion region = MKCoordinateRegionMake(_contact.meetingCoordinate, span);
+        [_meetingLocationMap setRegion:region];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -586,9 +609,12 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
  *      Notes
  *
  * Section 5:
- *      Meeting location
+ *      Address
  *
  * Section 6:
+ *      Meeting location
+ *
+ * Section 7:
  *      Meta
  *
  */
@@ -596,7 +622,7 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 7;
+    return 8;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -621,9 +647,13 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             break;
         case RCContactSectionNotes:
             return 1;
+           
+        case RCContactSectionAddress:
+            return [_contact.address length] ? 2 : 1;
             
+            break;
         case RCContactSectionMeetingLocation:
-            return [_contact.meetingAddress length] ? 1 : 0;
+            return [_contact.meetingAddress length] ? 2 : 0;
             
             break;
         case RCContactSectionMeta:
@@ -645,6 +675,10 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         indexPath.section == RCContactSectionLinkedIn ||
         indexPath.section == RCContactSectionTags) {
         return kMainLabelHeight;
+    }
+    if ((indexPath.section == RCContactSectionMeetingLocation && indexPath.row == 1) ||
+        (indexPath.section == RCContactSectionAddress && indexPath.row == 1)) {
+        return kMapHeight;
     }
     return kCellHeight;
 }
@@ -682,6 +716,8 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     static NSString *CellID = @"CellID";
     static NSString *NotesCellID = @"NotesCellID";
     static NSString *LabelCellID = @"LabelCellID";
+    static NSString *AddressMapCellID = @"AddressMapCellID";
+    static NSString *MeetingMapCellID = @"MeetingMapCellID";
     static NSString *TagCellID = @"TagCellID";
     
     if (indexPath.section == RCContactSectionTags) {
@@ -703,8 +739,9 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         return cell;
     }
     
-    if (indexPath.section == RCContactSectionMeetingLocation ||
-        indexPath.section == RCContactSectionMeta) {
+    if (indexPath.section == RCContactSectionMeta ||
+        (indexPath.section == RCContactSectionMeetingLocation && indexPath.row == 0) ||
+        (indexPath.section == RCContactSectionAddress && indexPath.row == 0)) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:LabelCellID];
         
         if (cell == nil) {
@@ -723,10 +760,56 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
             cell.textLabel.text = @"Date added";
             cell.detailTextLabel.text = [_dateFormatter stringFromDate:_contact.createdAt];
         }
-        else {
+        else if (indexPath.section == RCContactSectionMeetingLocation) {
             cell.textLabel.text = @"Meeting location";
             cell.detailTextLabel.text = _contact.meetingAddress;
+        }
+        else {
+            cell.textLabel.text = @"Address";
+            cell.detailTextLabel.text = [_contact.address length] ? _contact.address : @"Set address";
+        }
+        
+        return cell;
+    }
+    
+    if (indexPath.section == RCContactSectionMeetingLocation && indexPath.row == 1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MeetingMapCellID];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MeetingMapCellID];
             
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [cell.contentView addSubview:_meetingLocationMap];
+            
+            // Add circle indicator surrounding location
+            UIView *indicatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 112, 112)];
+            indicatorView.layer.cornerRadius = CGRectGetHeight(indicatorView.frame) / 2;
+            indicatorView.layer.borderColor = [[COLOR_DEFAULT_RED colorWithAlphaComponent:0.4f] CGColor];
+            indicatorView.layer.borderWidth = 21.0f;
+            indicatorView.center = _meetingLocationMap.center;
+            [cell.contentView addSubview:indicatorView];
+        }
+        
+        return cell;
+    }
+    
+    if (indexPath.section == RCContactSectionAddress && indexPath.row == 1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:AddressMapCellID];
+        
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:AddressMapCellID];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [cell.contentView addSubview:_addressMap];
+            
+            // Add circle indicator surrounding location
+            UIView *indicatorView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 36, 36)];
+            indicatorView.backgroundColor = [COLOR_DEFAULT_RED colorWithAlphaComponent:0.4f];
+            indicatorView.layer.cornerRadius = CGRectGetHeight(indicatorView.frame) / 2;
+            indicatorView.center = _addressMap.center;
+            [cell.contentView addSubview:indicatorView];
         }
         
         return cell;
@@ -999,6 +1082,22 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
         case RCContactSectionTags:
         {
             [_tagField.textField becomeFirstResponder];
+            
+            break;
+        }
+        case RCContactSectionAddress:
+        {
+            if (indexPath.row == 0) {
+                DRCPlaceSearchTableViewController *search = [[DRCPlaceSearchTableViewController alloc] initWithStyle:UITableViewStylePlain];
+                search.delegate = self;
+                
+                UINavigationController *navCntrl = [[UINavigationController alloc] initWithRootViewController:search];
+                [self presentViewController:navCntrl animated:YES completion:nil];
+            }
+            else {
+                NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"maps://?daddr=%f,%f", _contact.addressCoordinate.latitude, _contact.addressCoordinate.longitude]];
+                [[UIApplication sharedApplication] openURL:url];
+            }
             
             break;
         }
@@ -1466,6 +1565,26 @@ static const CGFloat kNotesTextViewHeight = 142.0f;
     
     [self configureViewForContact:_contact];
     
+}
+
+#pragma mark -
+#pragma mark Place Search Delegate
+
+- (void)placeSearchViewController:(DRCPlaceSearchTableViewController *)controller didReturnPlace:(NSString *)result location:(CLLocationCoordinate2D)coordinate {
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    _contact.address = result;
+    _contact.addressCoordinate = coordinate;
+    
+    [_contact saveNotesAndTags];
+    
+    [[RCContactManager shared] saveAddressBook];
+    
+    [self configureViewForContact:_contact];
+}
+
+- (void)placeSearchViewControllerDidCancel:(DRCPlaceSearchTableViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - External Request Delegates

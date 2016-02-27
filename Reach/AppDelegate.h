@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) NSString *lastLocationDescription;
+@property (assign, nonatomic) BOOL locationServicesEnabledOnLaunch;
 
 // Actions
 - (void)registerPushNotifications;

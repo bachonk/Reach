@@ -64,7 +64,9 @@ static NSString *kContactMetadataSeparator = @"\n•••\n";
 static NSString *kContactTagsKey = @"tags";
 
 // Location keys
-static NSString *kContactLocationKey = @"meeting_location";
+static NSString *kContactMeetingLocationKey = @"meeting_location";
+static NSString *kContactPersonalAddressKey = @"personal_address";
+
 static NSString *kContactLocationAddressKey = @"address";
 static NSString *kContactLocationCoordinateKey = @"coordinate";
 

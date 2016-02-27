@@ -25,6 +25,10 @@
 		C81C65C919342F3C008CEF15 /* UIImage+TintColor.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65C819342F3C008CEF15 /* UIImage+TintColor.m */; };
 		C81C65CD19345CAA008CEF15 /* RCTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81C65CB19345CAA008CEF15 /* RCTutorialViewController.m */; };
 		C81C65CE19345CAA008CEF15 /* RCTutorialViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */; };
+		C81FF97E1C824079008DF9DE /* DRCPlaceSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81FF9781C824079008DF9DE /* DRCPlaceSearchTableViewController.m */; };
+		C81FF97F1C824079008DF9DE /* Geocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = C81FF97B1C824079008DF9DE /* Geocoder.m */; };
+		C81FF9801C824079008DF9DE /* powered-by-google-on-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C81FF97C1C824079008DF9DE /* powered-by-google-on-white.png */; };
+		C81FF9811C824079008DF9DE /* powered-by-google-on-white@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C81FF97D1C824079008DF9DE /* powered-by-google-on-white@2x.png */; };
 		C82684FB194FF04700C36452 /* RCNewContactTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */; };
 		C82920561C2CDB7300015FD5 /* RCOnboardingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C82920551C2CDB7300015FD5 /* RCOnboardingTableViewController.m */; };
 		C8299A1E17B55C5600F16189 /* highlighter.png in Resources */ = {isa = PBXBuildFile; fileRef = C8299A1C17B55C5600F16189 /* highlighter.png */; };
@@ -205,6 +209,12 @@
 		C81C65CA19345CAA008CEF15 /* RCTutorialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCTutorialViewController.h; sourceTree = "<group>"; };
 		C81C65CB19345CAA008CEF15 /* RCTutorialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCTutorialViewController.m; sourceTree = "<group>"; };
 		C81C65CC19345CAA008CEF15 /* RCTutorialViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RCTutorialViewController.xib; sourceTree = "<group>"; };
+		C81FF9771C824079008DF9DE /* DRCPlaceSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRCPlaceSearchTableViewController.h; sourceTree = "<group>"; };
+		C81FF9781C824079008DF9DE /* DRCPlaceSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRCPlaceSearchTableViewController.m; sourceTree = "<group>"; };
+		C81FF97A1C824079008DF9DE /* Geocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Geocoder.h; sourceTree = "<group>"; };
+		C81FF97B1C824079008DF9DE /* Geocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Geocoder.m; sourceTree = "<group>"; };
+		C81FF97C1C824079008DF9DE /* powered-by-google-on-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powered-by-google-on-white.png"; sourceTree = "<group>"; };
+		C81FF97D1C824079008DF9DE /* powered-by-google-on-white@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powered-by-google-on-white@2x.png"; sourceTree = "<group>"; };
 		C82684F9194FF04700C36452 /* RCNewContactTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCNewContactTableViewController.h; sourceTree = "<group>"; };
 		C82684FA194FF04700C36452 /* RCNewContactTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RCNewContactTableViewController.m; sourceTree = "<group>"; };
 		C82920541C2CDB7300015FD5 /* RCOnboardingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RCOnboardingTableViewController.h; sourceTree = "<group>"; };
@@ -510,6 +520,27 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		C81FF9761C824079008DF9DE /* PlacesAutocomplete */ = {
+			isa = PBXGroup;
+			children = (
+				C81FF9771C824079008DF9DE /* DRCPlaceSearchTableViewController.h */,
+				C81FF9781C824079008DF9DE /* DRCPlaceSearchTableViewController.m */,
+				C81FF9791C824079008DF9DE /* Geocoder */,
+			);
+			path = PlacesAutocomplete;
+			sourceTree = "<group>";
+		};
+		C81FF9791C824079008DF9DE /* Geocoder */ = {
+			isa = PBXGroup;
+			children = (
+				C81FF97A1C824079008DF9DE /* Geocoder.h */,
+				C81FF97B1C824079008DF9DE /* Geocoder.m */,
+				C81FF97C1C824079008DF9DE /* powered-by-google-on-white.png */,
+				C81FF97D1C824079008DF9DE /* powered-by-google-on-white@2x.png */,
+			);
+			path = Geocoder;
+			sourceTree = "<group>";
+		};
 		C82684FC19507A6900C36452 /* New Contact */ = {
 			isa = PBXGroup;
 			children = (
@@ -810,6 +841,7 @@
 				C81C65BE1933D726008CEF15 /* RCExternalRequestHandler.m */,
 				C8E8153D198B2C5C00F789A8 /* LinkedIn */,
 				C8BF0649197254BC00A6BA09 /* ImageEffects */,
+				C81FF9761C824079008DF9DE /* PlacesAutocomplete */,
 				C80CAB231C14AA56001A4DBD /* JSTokenField */,
 				C884CC4B1971FA3300C92C88 /* Tags */,
 				C81C65C019342E67008CEF15 /* Categories */,
@@ -983,6 +1015,7 @@
 				C8E4FA9F17131898006FEEE0 /* Default@2x.png in Resources */,
 				C8E8162A1994794800F789A8 /* remind-small@2x.png in Resources */,
 				C8E816341994794800F789A8 /* user-blank@2x.png in Resources */,
+				C81FF9811C824079008DF9DE /* powered-by-google-on-white@2x.png in Resources */,
 				C8E4FAA117131898006FEEE0 /* Default-568h@2x.png in Resources */,
 				C8B979D31AF6AA9600B2C00D /* LaunchScreen.xib in Resources */,
 				C8E4FAD817131909006FEEE0 /* InfoPlist.strings in Resources */,
@@ -1024,6 +1057,7 @@
 				C8E816361997E81F00F789A8 /* linkedin-active@2x.png in Resources */,
 				C8E816F4199EA89E00F789A8 /* RCMergeTableViewCell.xib in Resources */,
 				C8E816191994794800F789A8 /* close-profile-icon@2x.png in Resources */,
+				C81FF9801C824079008DF9DE /* powered-by-google-on-white.png in Resources */,
 				C8E816281994794800F789A8 /* privacy-warning@2x.png in Resources */,
 				C8E8162D1994794800F789A8 /* settings-logo@2x.png in Resources */,
 				C8E816241994794800F789A8 /* phone-home-active.png in Resources */,
@@ -1096,8 +1130,10 @@
 			files = (
 				C8E4FA9717131898006FEEE0 /* main.m in Sources */,
 				C88B923C19721B35006B78E6 /* RCContactDetailViewController.m in Sources */,
+				C81FF97E1C824079008DF9DE /* DRCPlaceSearchTableViewController.m in Sources */,
 				C8E4FA9B17131898006FEEE0 /* AppDelegate.m in Sources */,
 				C8E816631997F7B500F789A8 /* SDWebImagePrefetcher.m in Sources */,
+				C81FF97F1C824079008DF9DE /* Geocoder.m in Sources */,
 				C8E4FAD617131909006FEEE0 /* Contact.m in Sources */,
 				C8E815D619905B9300F789A8 /* RCListSelectorTableViewController.m in Sources */,
 				C8E816F3199EA89E00F789A8 /* RCMergeTableViewCell.m in Sources */,

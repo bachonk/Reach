@@ -12,8 +12,6 @@
 
 @interface Contact ()
 
-- (void)saveNotesAndTags;
-
 @end
 
 @implementation Contact
@@ -116,12 +114,18 @@
             // Tags
             contact.tags = [[NSMutableArray alloc] initWithArray:metadata[kContactTagsKey] ?: @[]];
             
-            // Location
-            NSDictionary *location = metadata[kContactLocationKey];
-            contact.meetingAddress = location[kContactLocationAddressKey];
+            // Locations
+            NSDictionary *address = metadata[kContactPersonalAddressKey];
+            contact.address = address[kContactLocationAddressKey];
             
-            NSArray *latLons = location[kContactLocationCoordinateKey];
-            contact.meetingCoordinate = CLLocationCoordinate2DMake([latLons[0] doubleValue], [latLons[1] doubleValue]);
+            NSArray *latLons = address[kContactLocationCoordinateKey];
+            contact.addressCoordinate = CLLocationCoordinate2DMake([latLons[0] doubleValue], [latLons[1] doubleValue]);
+            
+            NSDictionary *meetingLocation = metadata[kContactMeetingLocationKey];
+            contact.meetingAddress = meetingLocation[kContactLocationAddressKey];
+            
+            NSArray *meetLatLons = meetingLocation[kContactLocationCoordinateKey];
+            contact.meetingCoordinate = CLLocationCoordinate2DMake([meetLatLons[0] doubleValue], [meetLatLons[1] doubleValue]);
         }
 
     } else {
@@ -206,6 +210,17 @@
         }
     }
     
+    NSDictionary *addressDict;
+    if ([self.address length]) {
+        // Stores meeting location
+        
+        addressDict = @{
+                        kContactLocationAddressKey: self.address,
+                        kContactLocationCoordinateKey: @[ [NSNumber numberWithDouble:self.addressCoordinate.latitude], [NSNumber numberWithDouble:self.addressCoordinate.longitude] ]
+                        };
+        
+    }
+    
     NSDictionary *meetingDict;
     if ([self.meetingAddress length]) {
         // Stores meeting location
@@ -215,12 +230,12 @@
                         kContactLocationCoordinateKey: @[ [NSNumber numberWithDouble:self.meetingCoordinate.latitude], [NSNumber numberWithDouble:self.meetingCoordinate.longitude] ]
                         };
         
-        
     }
     
     NSDictionary *metadata = @{
                                kContactTagsKey: tags,
-                               kContactLocationKey: meetingDict ?: @{}
+                               kContactPersonalAddressKey: addressDict ?: @{},
+                               kContactMeetingLocationKey: meetingDict ?: @{}
                                };
     
     NSError *err;
